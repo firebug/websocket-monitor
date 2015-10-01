@@ -9,7 +9,7 @@
   ],
   "license": "BSD License",
   "homepage": "https://github.com/firebug/websocket-monitor/wiki",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "lib/index",
   "repository": {
     "type": "git",
