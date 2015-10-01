@@ -1,6 +1,7 @@
 WebSocket Monitor
 =================
-WebSocket monitor can be used to a web socket connection(s) on the current page.
+WebSocket monitor can be used to inspect web socket connections
+on the current page.
 This extension requires platform API introduced in:
 [Bug 1203802](https://bugzilla.mozilla.org/show_bug.cgi?id=1203802) -
 Websocket Frame Listener API for devtool Network Inspector
