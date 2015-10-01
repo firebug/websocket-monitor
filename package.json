@@ -3,10 +3,21 @@
   "title": "WebSocket Monitor",
   "id": "websocketmonitor@getfirebug.com",
   "description": "Monitor WebSocket connections",
-  "author": "Jan Odvarko",
-  "license": "BSD",
+  "author": "Firebug Working Group",
+  "contributors": [
+    "Jan Odvarko (Mozilla Corp.)"
+  ],
+  "license": "BSD License",
+  "homepage": "https://github.com/firebug/websocket-monitor/wiki",
   "version": "0.2.1",
   "main": "lib/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firebug/websocket-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/firebug/websocket-monitor/issues"
+  },
   "dependencies": {
     "firebug.sdk": "0.x",
     "socket.io-parser": "^2.2.4"
