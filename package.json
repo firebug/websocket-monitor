@@ -1,0 +1,14 @@
+{
+  "name": "websocketmonitor",
+  "title": "WebSocket Monitor",
+  "id": "websocketmonitor@getfirebug.com",
+  "description": "Monitor WebSocket connections",
+  "author": "Jan Odvarko",
+  "license": "BSD",
+  "version": "0.2.1",
+  "main": "lib/index",
+  "dependencies": {
+    "firebug.sdk": "0.x",
+    "socket.io-parser": "^2.2.4"
+  }
+}

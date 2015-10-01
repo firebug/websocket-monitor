@@ -1,0 +1,170 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* Frame Table */
+
+.frameTable {
+  font-family: Lucida Grande, Tahoma, sans-serif;
+  font-size: 11px;
+  width: 100%;
+  border-spacing: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.frameTHead th {
+  min-height: 17px;
+  cursor: pointer;
+  -moz-user-select: none;
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.2);*/
+  padding: 2px;
+  font-weight: bold;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.05),
+    rgba(0, 0, 0, 0.05)),
+    radial-gradient(1px 60% at right,
+    rgba(0, 0, 0, 0.8) 0%,
+    transparent 80%) repeat-x #C8D2DC;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.frameTHead th[sorted] {
+  background-color: #AAC3DC;
+}
+
+.frameTHead th:not(:active)[sorted=descending] {
+  background: url(chrome://firebug/skin/arrowDown.svg) no-repeat calc(100% - 4px);
+}
+
+.frameTHead th:not(:active)[sorted=ascending] {
+  background: url(chrome://firebug/skin/arrowUp.svg) no-repeat calc(100% - 4px);
+}
+
+.frameTHead th:hover:active {
+  background-image: linear-gradient(
+          rgba(0, 0, 0, 0.1),
+          transparent),
+      radial-gradient(1px 60% at right,
+          rgba(0, 0, 0, 0.8) 0%,
+          transparent 80%);
+}
+
+/******************************************************************************/
+/* Frame Rows */
+
+.frameRow td {
+  height: 17px;
+  line-height: 15px;
+  border-bottom: 1px solid #EFEFEF;
+  margin: 0;
+  padding: 1px;
+}
+
+.frameRow:hover td {
+  background: #EFEFEF;
+}
+
+.frameRow.selected td {
+  background: #EFEFEF;
+  color: black;
+}
+
+/******************************************************************************/
+/* Frame Columns */
+
+.frameTHead th {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.frameRow .direction {
+  width: 20px;
+}
+
+.frameRow .direction div {
+  background-image: url('./send.png');
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.frameRow.send td.direction div {
+  background-position: -12px 2px;
+}
+
+.frameRow.receive td.direction div {
+  transform: scaleX(-1);
+  background-position: -14px 2px;
+}
+
+.frameTHead th.socketId,
+.frameRow td.socketId {
+  text-align: center;
+  width: 20px;
+}
+
+.frameTHead th.payload,
+.frameRow td.payload {
+  text-align: left;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.frameTHead th.bit,
+.frameRow td.bit {
+  text-align: center;
+  width: 20px;
+}
+
+.frameTHead th.opcode,
+.frameRow td.opcode {
+  text-align: center;
+  width: 55px;
+}
+
+.frameRow td.opcode {
+  color: gray;
+}
+
+.frameTHead th.payloadSize,
+.frameRow td.payloadSize {
+  text-align: center;
+  width: 55px;
+}
+
+.frameTHead th.time,
+.frameRow td.time {
+  text-align: center;
+  width: 50px;
+}
+
+.frameRow td.time {
+  padding-right: 3px;
+}
+
+/******************************************************************************/
+/* Theme Dark & Light */
+
+.theme-light .frameRow td,
+.theme-dark .frameRow td {
+  border-bottom: none;
+}
+
+.theme-light .frameRow:hover td,
+.theme-dark .frameRow:hover td {
+  background-color: var(--theme-selection-background-semitransparent);
+}
+
+.theme-light .frameRow.selected td,
+.theme-dark .frameRow.selected td {
+  color: var(--theme-selection-color);
+  background-color: var(--theme-selection-background);
+}
+
+.theme-light .frameTHead th,
+.theme-dark .frameTHead th {
+  font-weight: normal;
+  color: var(--theme-body-color-alt);
+  background-color: var(--theme-toolbar-background);
+}
