@@ -12,7 +12,10 @@ const FRAME_LIMIT = 500;
 
 const initialState = {
   frames: [],
-  selection: null
+  selection: null,
+  filter: {
+    text: ""
+  }
 };
 
 function frames(state = initialState, action) {
@@ -23,10 +26,18 @@ function frames(state = initialState, action) {
   case types.ADD_FRAMES:
     return addFrames(state, action.frames);
 
+  case types.FILTER_FRAMES:
+    return {
+      frames: state.frames,
+      selection: state.selection,
+      filter: action.filter || ""
+    }
+
   case types.CLEAR:
     return {
       frames: [],
-      selection: null
+      selection: null,
+      filter: state.filter
     }
 
   default:
@@ -45,7 +56,8 @@ function addFrames(state, newFrames) {
   // Return new state
   return {
     frames: frames,
-    selection: state.selection
+    selection: state.selection,
+    filter: state.filter
   }
 }
 

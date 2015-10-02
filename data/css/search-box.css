@@ -1,0 +1,19 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* Search Box */
+
+/* The search box is only visible in light and dark themes since 
+there is no shared search box for panels. */
+.theme-firebug .devtools-searchinput {
+  display: none;
+}
+
+.toolbar .devtools-searchinput {
+  vertical-align: middle;
+  width: 160px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  margin-right: 7px;
+  float: right;
+}

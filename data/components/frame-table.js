@@ -26,6 +26,17 @@ var FrameTable = React.createClass({
 
   render: function() {
     var frames = this.props.frames.frames;
+    var filter = this.props.frames.filter;
+
+    // Filter messages in case of non empty 'filter.text'.
+    // Only frames that have the filter text in the payload
+    // should be displayed.
+    if (filter.text) {
+      frames = frames.filter(frame => {
+        var data = frame.header ? frame.header : frame.maskBit;
+        return data.payload.indexOf(filter.text) != -1;
+      });
+    }
 
     // Render list frames.
     var rows = frames.map(frame => FrameRow({

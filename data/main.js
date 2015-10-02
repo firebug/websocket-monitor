@@ -17,7 +17,7 @@ const { Provider } = createFactories(require("react-redux"));
 // WebSockets Monitor
 const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
-const { addFrames } = require("./actions/frames");
+const { addFrames, filterFrames } = require("./actions/frames");
 
 var store = configureStore();
 
@@ -42,27 +42,29 @@ var WebSocketsView = createView(PanelView,
    * Render the top level application component.
    */
   initialize: function() {
-    this.onFrameReceived = this.onFrameReceived.bind(this);
-    this.onFrameSent = this.onFrameSent.bind(this);
     this.onAddFrames = this.onAddFrames.bind(this);
 
-    addEventListener("frameReceived", this.onFrameReceived);
-    addEventListener("frameSent", this.onFrameSent);
-
+    // Render the top level application component.
     var content = document.getElementById("content");
-    var theApp = React.render(Provider({store: store},
+    this.theApp = React.render(Provider({store: store},
       () => App({})
     ), content);
   },
 
   // nsIWebSocketFrameService events
 
-  onFrameReceived: function(event) {
-    this.lazyAdd(JSON.parse(event.data));
+  /**
+   * Event handlers are executed directly according to the
+   * event types sent from the chrome scope.
+   * See panel-view.js and panel-frame-script.js for details
+   * about the mapping event -> method.
+   */
+  frameReceived: function(frame) {
+    this.lazyAdd(JSON.parse(frame));
   },
 
-  onFrameSent: function(event) {
-    this.lazyAdd(JSON.parse(event.data));
+  frameSent: function(frame) {
+    this.lazyAdd(JSON.parse(frame));
   },
 
   lazyAdd: function(frame) {
@@ -78,6 +80,12 @@ var WebSocketsView = createView(PanelView,
 
     this.newFrames = [];
     this.timeout = null;
+  },
+
+  // Search/Filter
+
+  onSearch: function(filter) {
+    store.dispatch(filterFrames(filter));
   }
 });
 
