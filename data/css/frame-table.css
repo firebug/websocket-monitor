@@ -144,6 +144,22 @@
 }
 
 /******************************************************************************/
+/* Summary */
+
+.frameTFoot td {
+  height: 16px;
+  font-weight: bold;
+  background-color: #C8D2DC;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 1px;
+}
+
+.frameTFoot td span {
+  margin-left: 5px;
+  margin-right: 11px;
+}
+
+/******************************************************************************/
 /* Theme Dark & Light */
 
 .theme-light .frameRow td,
@@ -167,4 +183,12 @@
   font-weight: normal;
   color: var(--theme-body-color-alt);
   background-color: var(--theme-toolbar-background);
+}
+
+.theme-light .frameTFoot td,
+.theme-dark .frameTFoot td {
+  background-color: var(--theme-toolbar-background);
+  border: 1px solid var(--table-splitter-color);
+  height: 18px;
+  padding-bottom: 2px;
 }

@@ -15,7 +15,7 @@ const { TreeView } = require("reps/tree-view");
 const { selectFrame } = require("../actions/selection");
 
 // Constants
-const { table, thead, th, tbody, tr, td, tfoot, div } = React.DOM;
+const { table, thead, th, tbody, tr, td, tfoot, div, span } = React.DOM;
 
 /**
  * This components implements the main table layout for list of frames.
@@ -28,6 +28,7 @@ var FrameTable = React.createClass({
   render: function() {
     var frames = this.props.frames.frames;
     var filter = this.props.frames.filter;
+    var summary = this.props.frames.summary;
 
     // Filter messages in case of non empty 'filter.text'.
     // Only frames that have the filter text in the payload
@@ -46,6 +47,20 @@ var FrameTable = React.createClass({
       dispatch: this.props.dispatch
     }));
 
+    // Render summary info
+    var tableFooter;
+    if (summary.frameCount) {
+      tableFooter = tfoot({className: "frameTFoot"},
+        tr({},
+          td({colSpan: 8},
+            span({}, Locale.$STRP("websocketmonitor.summary.frameCount", [summary.frameCount])),
+            span({}, Str.formatSize(summary.totalSize)),
+            span({}, Str.formatTime((summary.endTime - summary.startTime) / 1000))
+          )
+        )
+      )
+    }
+
     return (
       table({className: "frameTable"},
         thead({className: "frameTHead"},
@@ -62,12 +77,8 @@ var FrameTable = React.createClass({
         ),
         tbody({className: "frameTBody"},
           rows
-        )/*,
-        tfoot({className: "frameTFoot"},
-          tr({},
-            td({colSpan: 5}, "Summary: ")
-          )
-        )*/
+        ),
+        tableFooter
       )
     );
   }
