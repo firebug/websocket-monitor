@@ -85,3 +85,8 @@ code {
   padding: 3px;
   font-family: monospace;
 }
+
+/* Do not display the bottom border for inline tree-preview for payload */
+.payload .domTable > tbody > tr > td {
+  border-bottom: none;
+}

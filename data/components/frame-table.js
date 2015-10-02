@@ -9,6 +9,7 @@ const React = require("react");
 
 // Firebug SDK
 const { Str } = require("reps/core/string");
+const { TreeView } = require("reps/tree-view");
 
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
@@ -125,6 +126,12 @@ var FrameRow = React.createFactory(React.createClass({
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
+
+    // Test support for inline previews
+    /*if (frame.socketIo) {
+      var data = { payload: frame.socketIo };
+      payload = TreeView({key: "detailsTabTree", data: data})
+    }*/
 
     return (
       tr({className: className, onClick: onClick},
