@@ -21,5 +21,15 @@
   "dependencies": {
     "firebug.sdk": "0.x",
     "socket.io-parser": "^2.2.4"
-  }
+  },
+  "preferences-branch": "websocketmonitor",
+  "preferences": [
+    {
+      "name": "max_entries",
+      "title": "Maximum entries displayed",
+      "description": "Maximum entries displayed in the WebSockets panel",
+      "type": "integer",
+      "value": 1000
+    }
+  ]
 }

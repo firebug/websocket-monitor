@@ -7,9 +7,9 @@ define(function(require, exports/*, module*/) {
 // WebSockets Monitor
 const { types } = require("../actions/frames");
 
-// Constants
-const FRAME_LIMIT = 500;
-
+/**
+ * Initial state definition
+ */
 const initialState = {
   frames: [],
   selection: null,
@@ -48,9 +48,11 @@ function frames(state = initialState, action) {
 // Helpers
 
 function addFrames(state, newFrames) {
+  const maxEntries = Options.get("max_entries");
+
   var frames = [...state.frames, ...newFrames];
-  if (frames.length > FRAME_LIMIT) {
-    frames.splice(0, frames.length - FRAME_LIMIT);
+  if (frames.length > maxEntries) {
+    frames.splice(0, frames.length - maxEntries);
   }
 
   // Return new state
