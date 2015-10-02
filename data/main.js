@@ -41,13 +41,13 @@ var WebSocketsView = createView(PanelView,
   /**
    * Render the top level application component.
    */
-  initialize: function() {
+  initialize: function(config) {
     this.onAddFrames = this.onAddFrames.bind(this);
 
     // Render the top level application component.
     var content = document.getElementById("content");
     this.theApp = React.render(Provider({store: store},
-      () => App({})
+      () => App(config)
     ), content);
   },
 

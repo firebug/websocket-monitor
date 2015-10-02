@@ -161,6 +161,24 @@
 }
 
 /******************************************************************************/
+/* Warning */
+
+.frameTable .warningRow {
+  height: 50px;
+  padding: 50px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.frameTable .warningRow .bugLink {
+  color: #00c;
+}
+
+.frameTable .warningRow .bugLink:hover {
+  text-decoration: underline;
+}
+
+/******************************************************************************/
 /* Theme Dark & Light */
 
 .theme-light .frameRow td,

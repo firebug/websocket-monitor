@@ -15,7 +15,7 @@ const { TreeView } = require("reps/tree-view");
 const { selectFrame } = require("../actions/selection");
 
 // Constants
-const { table, thead, th, tbody, tr, td, tfoot, div, span } = React.DOM;
+const { table, thead, th, tbody, tr, td, tfoot, div, span, code, a } = React.DOM;
 
 /**
  * This components implements the main table layout for list of frames.
@@ -59,6 +59,12 @@ var FrameTable = React.createClass({
           )
         )
       )
+    }
+
+    // If the underlying nsIWebSocketFrameService service isn't
+    // available in the platform display a warning.
+    if (!this.props.frameServiceAvailable) {
+      rows = [WarningRow()];
     }
 
     return (
@@ -156,6 +162,36 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "bit"}, data.maskBit ? "true" : "false"),
         td({className: "bit"}, data.finBit ? "true" : "false"),
         td({className: "time"}, timeText)
+      )
+    );
+  }
+}));
+
+/**
+ * Used to display a warning if "@mozilla.org/websocketframe/service;1"
+ * needed by this extension isn't available on the platform.
+ */
+var WarningRow = React.createFactory(React.createClass({
+/** @lends WarningRow */
+
+  displayName: "WarningRow",
+
+  render: function() {
+    var text = "Your Firefox doesn't support ";
+    return (
+      tr({},
+        td({colSpan: 8, className: "warningRow"},
+          span({}, "Your Firefox doesn't support "),
+          code({}, "@mozilla.org/websocketframe/service;1"),
+          span({}, " component that is required by this extension. " +
+            "You need to install newer Firefox version. If you are unsure " +
+            "what to do you might want to take a look at "),
+          a({className: "bugLink", target: "_blank",
+            href: "https://bugzilla.mozilla.org/show_bug.cgi?id=1203802"},
+            "Bug 1203802"
+          ),
+          span({}, ".")
+        )
       )
     );
   }
