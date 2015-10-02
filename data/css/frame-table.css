@@ -150,8 +150,9 @@
   height: 16px;
   font-weight: bold;
   background-color: #C8D2DC;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 1px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 2px;
 }
 
 .frameTFoot td span {
@@ -188,7 +189,7 @@
 .theme-light .frameTFoot td,
 .theme-dark .frameTFoot td {
   background-color: var(--theme-toolbar-background);
-  border: 1px solid var(--table-splitter-color);
+  border-top: 1px solid var(--table-splitter-color);
+  border-bottom: 1px solid var(--table-splitter-color);
   height: 18px;
-  padding-bottom: 2px;
 }
