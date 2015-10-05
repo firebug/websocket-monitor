@@ -185,10 +185,10 @@ var WarningRow = React.createFactory(React.createClass({
           code({}, "@mozilla.org/websocketframe/service;1"),
           span({}, " component that is required by this extension. " +
             "You need to install newer Firefox version. If you are unsure " +
-            "what to do you might want to take a look at "),
+            "what to do you might want see the "),
           a({className: "bugLink", target: "_blank",
-            href: "https://bugzilla.mozilla.org/show_bug.cgi?id=1203802"},
-            "Bug 1203802"
+            href: "https://github.com/firebug/websocket-monitor/wiki"},
+            "home page"
           ),
           span({}, ".")
         )
