@@ -30,6 +30,12 @@
       "description": "Maximum entries displayed in the WebSockets panel",
       "type": "integer",
       "value": 1000
+    }, {
+      "name": "tabularView",
+      "title": "Display frames in a table",
+      "description": "Display sent and received frames in tabular format",
+      "type": "bool",
+      "value": true
     }
   ]
 }

@@ -40,17 +40,21 @@ var App = React.createClass({
   },
 
   render: function() {
-    const { dispatch, frames, selection } = this.props;
+    const { dispatch, frames, selection, tabularView } = this.props;
 
+    // There are two ways how to display frames as a table or as a list.
+    var panelContent = tabularView ?
+      FrameTable(this.props) :
+      FrameList(this.props);
+
+    // Render main panel content.
     var leftPanel =
       div({className: "mainPanel"},
         MainToolbar(this.props),
-        div({className: "mainPanelContent"},
-          //FrameTable(this.props)
-          FrameList(this.props)
-        )
+        div({className: "mainPanelContent"}, panelContent)
       );
 
+    // Render side bar with side panels.
     var rightPanel =
       div({className: "sidePanel"},
         Sidebar(this.props)
