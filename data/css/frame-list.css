@@ -94,6 +94,12 @@
   color: gray;
 }
 
+.frameBubble .body .payload {
+  color: green;
+  font-family: monospace;
+  padding: 4px 0 4px 0;
+}
+
 .frameBubble.error .body {
   background-color: rgb(255, 221, 221);
 }
@@ -111,7 +117,6 @@
   display: inline-flex;
   font-family: monospace;
   float: right;
-  padding-top: 4px;
 }
 
 .frameBubble .stack:hover {

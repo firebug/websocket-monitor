@@ -124,6 +124,17 @@ var FrameBubble = React.createFactory(React.createClass({
       classNames.push("selected");
     }
 
+    // Render inline frame preview.
+    var preview = [
+      TreeView({data: {"Frame": frame}, mode: "tiny"})
+    ];
+
+    if (frame.socketIo) {
+      preview.push(
+        TreeView({data: {"Socket IO": frame.socketIo}, mode: "tiny"})
+      );
+    }
+
     var label = (type == "send") ?
       Locale.$STR("websocketmonitor.label.sent") :
       Locale.$STR("websocketmonitor.label.received");
@@ -135,8 +146,11 @@ var FrameBubble = React.createFactory(React.createClass({
             div({className: "body"},
               span({className: "text"}, label),
               span({className: "type"}, getOpCodeLabel(frame)),
+              div({className: "payload"},
+                Str.cropString(data.payload)
+              ),
               div({className: "preview"},
-                TreeView({data: {frame: frame}, mode: "tiny"})
+                preview
               ),
               div({},
                 span({className: "info"}, timeText + ", " + size)
