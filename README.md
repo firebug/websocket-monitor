@@ -18,6 +18,14 @@ Instructions
 
 You might want to check out online [demo page](http://janodvarko.cz/test/websockets/)
 
+Hacking on WebSocket Monitor
+----------------------------
+1. Get [JPM](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm): `git clone https://github.com/mozilla/jpm` ([CFX](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/cfx) is not supported anymore)
+2. Switch to the JPM folder and [install](https://www.npmjs.org/doc/cli/npm-install.html) and [link](https://www.npmjs.org/doc/cli/npm-link.html) it via `npm install` and `npm link`. (Also needs to be done after fetching the latest changes to the JPM repo.)
+3. Get the WebSocketMonitor repo: `git clone https://github.com/firebug/websocket-monitor.git`
+4. Run `jpm run -b <file path to your Firefox binary>` in the source directory to launch Firefox (you need custom Firefox build see [releases](https://github.com/firebug/websocket-monitor/releases) at the moment), which automatically creates a clean profile.
+If you wish to run it with an existing profile, first create a new profile via the [Profile Manager](https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles), and then run `jpm run -b <file path to your Firefox binary> -p <path to your Firefox profile (needs to start with /)>`.
+
 Further Resources
 -----------------
 * RDP: https://wiki.mozilla.org/Remote_Debugging_Protocol
