@@ -139,7 +139,6 @@ var FrameRow = React.createFactory(React.createClass({
 
     var payload = Str.cropString(data.payload, 50);
     var size = Str.formatSize(data.payload.length);
-    var onClick = this.onClick.bind(this);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
@@ -151,7 +150,7 @@ var FrameRow = React.createFactory(React.createClass({
     }*/
 
     return (
-      tr({className: className, onClick: onClick},
+      tr({className: className, onClick: this.onClick},
         td({className: "direction"},
           div({title: tooltipText})
         ),

@@ -1,0 +1,175 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* Packets Panel */
+
+.frameList {
+  font-family: Lucida Grande, Tahoma, sans-serif;
+  font-size: 11px;
+  padding: 15px 20px 15px 20px;
+}
+
+/******************************************************************************/
+/* Frame Bubble */
+
+.frameBubble {
+  margin-bottom: 6px;
+  line-height: 15px;
+}
+
+.frameBubble .frameBox {
+  display: inline-block;
+  max-width: 90%;
+}
+
+.frameBubble .frameContent {
+  display: flex;
+}
+
+.frameBubble.receive .boxArrow {
+  background-image: url("./received-arrow.png");
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  margin-right: -1px;
+  order: 1;
+  width: 8px;
+  z-index: 2;
+  min-width: 8px;
+}
+
+.frameBubble.receive.selected .boxArrow {
+  background-image: url("./received-arrow-selected.png");
+}
+
+.frameBubble.send .boxArrow {
+  background-image: url("./sent-arrow.png");
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  margin-left: -1px;
+  order: 3;
+  width: 9px;
+  min-width: 9px;
+  z-index: 2;
+}
+
+.frameBubble.send.selected .boxArrow {
+  background-image: url("./sent-arrow-selected.png");
+}
+
+.frameBubble .body {
+  display: inline-block;
+  padding: 2px 5px 2px 5px;
+  border: 1px solid #bfccd1;
+  border-radius: 3px;
+  min-width: 320px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.0));
+  order: 2;
+  z-index: 1;
+}
+
+.frameBubble.receive .body {
+  background-color: rgb(252, 248, 227);
+}
+
+.frameBubble.send .body {
+  background-color: rgb(223, 240, 216);
+  text-align: left;
+}
+
+.frameBubble.send {
+  text-align: left;
+}
+
+.frameBubble.send {
+  text-align: right;
+}
+
+.frameBubble .body .text {
+  color: gray;
+}
+
+.frameBubble.error .body {
+  background-color: rgb(255, 221, 221);
+}
+
+.frameBubble.selected .body {
+  border-color: rgb(0, 170, 214);
+  background-color: rgb(173, 211, 232);
+}
+
+.frameBubble .info {
+  color: gray;
+  font-size: 10px;
+  text-align: right;
+  margin-left: 20px;
+  display: inline-flex;
+  font-family: monospace;
+  float: right;
+  padding-top: 4px;
+}
+
+.frameBubble .stack:hover {
+  text-decoration: underline;
+}
+
+.frameBubble .arrow {
+  margin: 0 5px 0 5px;
+}
+
+.frameBubble .arrow.hide {
+  display: none;
+}
+
+.frameBubble .errorMessage {
+  color: red;
+  margin-bottom: 5px;
+}
+
+/******************************************************************************/
+/* Inline Packet Details Preview */
+
+.frameBubble .preview {
+  overflow: auto;
+  width: 100%;
+  max-height: 200px;
+}
+
+.frameBubble .memberRow:hover {
+  background-color: transparent;
+}
+
+.frameBubble .domTable {
+  width: auto;
+}
+
+.frameBubble .domTable > tbody > tr > td {
+  border-bottom: transparent;
+}
+
+/******************************************************************************/
+
+.packetsPanelBox {
+  height: 100%;
+}
+
+.packetsPanelBox TD {
+  vertical-align: top;
+}
+
+.packetsPanelBox .list {
+  /* xxxHonza: minus the toolbar height*/
+  height: calc(100% - 30px);
+  overflow: auto;
+  padding: 10px;
+}
+
+.packetsPanelBox .details {
+  border-left: 1px solid #EFEFEF;
+  height: 100%;
+  overflow: auto;
+}
+
+.tabPacketsPane {
+  height: 100%;
+  padding: 0px;
+}

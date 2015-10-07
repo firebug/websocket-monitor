@@ -17,6 +17,7 @@ const { Splitter } = createFactories(require("reps/splitter"));
 const { MainToolbar } = createFactories(require("../components/main-toolbar"));
 const { Sidebar } = createFactories(require("../components/sidebar"));
 const { FrameTable } = createFactories(require("../components/frame-table"));
+const { FrameList } = createFactories(require("../components/frame-list"));
 
 // Shortcuts
 const { div } = React.DOM;
@@ -45,7 +46,8 @@ var App = React.createClass({
       div({className: "mainPanel"},
         MainToolbar(this.props),
         div({className: "mainPanelContent"},
-          FrameTable(this.props)
+          //FrameTable(this.props)
+          FrameList(this.props)
         )
       );
 
