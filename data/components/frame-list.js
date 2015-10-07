@@ -48,11 +48,11 @@ var FrameList = React.createClass({
     var output = [];
     var frames = this.props.frames.frames;
     var summary = this.props.frames.summary;
-    var removedFrames = this.props.removedFrames;
+    var removedFrames = summary.frameCount - frames.length;
 
     if (removedFrames > 0) {
       output.push(FramesLimit({
-        removedframes: removedframes
+        removedFrames: removedFrames
       }));
     }
 
@@ -90,7 +90,8 @@ var FrameBubble = React.createFactory(React.createClass({
    * This is an optimization that makes the list rendering a lot faster.
    */
   shouldComponentUpdate: function(nextProps, nextState) {
-    return (this.props.selection != nextProps.selection);
+    // xxxHonza: TODO FIXME
+    return true;//(this.props.selection != nextProps.selection);
   },
 
   render: function() {
@@ -168,6 +169,30 @@ var FrameBubble = React.createFactory(React.createClass({
       }
     }
   },
+}));
+
+/**
+ * @template This template is responsible for rendering a message
+ * at the top of the frame list that informs the user about reaching
+ * the maximum limit of displayed frames. The message also displays
+ * number of frames removed from the list.
+ */
+var FramesLimit = React.createFactory(React.createClass({
+/** @lends FramesLimit */
+
+  displayName: "FramesLimit",
+
+  render: function() {
+    var removedFrames = this.props.removedFrames;
+    var label = Locale.$STR("websocketmonitor.label.outOfLimit");
+
+    // Render summary info
+    return (
+      div({className: "framesLimit"},
+        span({className: "text"}, removedFrames + " " + label)
+      )
+    );
+  }
 }));
 
 // Exports from this module

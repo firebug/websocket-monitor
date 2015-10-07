@@ -173,3 +173,21 @@
   height: 100%;
   padding: 0px;
 }
+
+/******************************************************************************/
+/* Frames Limit */
+
+.framesLimit {
+  text-align: center;
+  margin: 10px 0 20px 0;
+}
+
+.framesLimit .text {
+  padding: 2px 3px 2px 3px;
+  color: gray;
+  font-size: 12px;
+  border: 1px solid #bfccd1;
+  border-radius: 3px;
+  background-color: rgb(219, 234, 249) !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+}
