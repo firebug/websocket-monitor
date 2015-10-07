@@ -40,14 +40,15 @@ var App = React.createClass({
   },
 
   render: function() {
-    const { dispatch, frames, selection, tabularView } = this.props;
+    const { dispatch, frames, selection, perspective } = this.props;
 
     // There are two ways how to display frames as a table or as a list.
-    var panelContent = tabularView ?
+    var panelContent = (perspective == "table") ?
       FrameTable(this.props) :
       FrameList(this.props);
 
-    // Render main panel content.
+    // Render main panel content. It consists of a toolbar and content.
+    // The content displays list of frames.
     var leftPanel =
       div({className: "mainPanel"},
         MainToolbar(this.props),
@@ -79,7 +80,8 @@ var App = React.createClass({
 function mapStateToProps(state) {
   return {
     frames: state.frames,
-    selection: state.selection
+    selection: state.selection,
+    perspective: state.perspective
   };
 }
 

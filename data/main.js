@@ -18,6 +18,7 @@ const { Provider } = createFactories(require("react-redux"));
 const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
 const { addFrames, filterFrames } = require("./actions/frames");
+const { showTableView, showListView } = require("./actions/perspective");
 
 var store = configureStore();
 
@@ -86,6 +87,24 @@ var WebSocketsView = createView(PanelView,
 
   onSearch: function(filter) {
     store.dispatch(filterFrames(filter));
+  },
+
+  // Preferences
+
+  onPrefChanged: function(event) {
+    var prefName = event.prefName;
+    if (prefName != "tabularView") {
+      return;
+    }
+
+    console.log("update perspective " + event.newValue);
+
+    // Update the way how frames are displayed.
+    if (event.newValue) {
+      store.dispatch(showTableView());
+    } else {
+      store.dispatch(showListView());
+    }
   }
 });
 
