@@ -12,6 +12,9 @@ const { Reps } = require("reps/reps");
 const { Str } = require("reps/core/string");
 const { TreeView } = require("reps/tree-view");
 
+// WebSockets Monitor
+const { selectFrame } = require("../actions/selection");
+
 // Shortcuts
 const { div, span } = React.DOM;
 
@@ -48,20 +51,19 @@ var FrameList = React.createClass({
     var removedFrames = this.props.removedFrames;
 
     if (removedFrames > 0) {
-      output.push(PacketsLimit({
-        removedPackets: removedPackets
+      output.push(FramesLimit({
+        removedframes: removedframes
       }));
     }
 
     for (var i in frames) {
       var frame = frames[i];
 
-      output.push(Frame({
+      output.push(FrameBubble({
         key: frame.id,
         frame: frame,
-        actions: this.props.actions,
         selection: this.props.selection,
-        showInlineDetails: this.props.showInlineDetails
+        dispatch: this.props.dispatch
       }));
     }
 
@@ -74,34 +76,28 @@ var FrameList = React.createClass({
 });
 
 /**
- * @template TODO docs
+ * This template is responsible for rendering a frame with
+ * related information. It looks like a chat message
+ * bubble in standard chat UI applications.
  */
-var Frame = React.createFactory(React.createClass({
-/** @lends Frame */
+var FrameBubble = React.createFactory(React.createClass({
+/** @lends FrameBubble */
 
-  displayName: "Frame",
+  displayName: "FrameBubble",
 
   /**
-   * Packet needs to be re-rendered only if the selection or
-   * 'show inline details' option changes. This is an optimization
-   * the makes the packet-list rendering a lot faster.
+   * Frames need to be re-rendered only if the selection option changes.
+   * This is an optimization that makes the list rendering a lot faster.
    */
   shouldComponentUpdate: function(nextProps, nextState) {
-/*    var { contextMenu: prevContextMenu } = this.state || {};
-    var { contextMenu: nextContextMenu } = nextState || {};
-
-    return (this.props.selected != nextProps.selected ||
-      this.props.showInlineDetails != nextProps.showInlineDetails ||
-      prevContextMenu != nextContextMenu);*/
+    return (this.props.selection != nextProps.selection);
   },
 
   render: function() {
-    var packet = this.props.frame;
+    var frame = this.props.frame;
 
-    console.log("frame", packet);
-
-    var data = packet.header ? packet.header : packet.maskBit;
-    var type = packet.header ? "send" : "receive";
+    var data = frame.header ? frame.header : frame.maskBit;
+    var type = frame.header ? "send" : "receive";
     var mode = "tiny";
     var classNames = ["frameBubble", type];
     var size = Str.formatSize(data.payload.length);
@@ -113,16 +109,16 @@ var Frame = React.createFactory(React.createClass({
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
     var previewData = {
-      frame: packet
+      frame: frame
     };
 
-    // Error packets have its own styling
-    if (packet.error) {
+    // Error frames have its own styling
+    if (frame.error) {
       classNames.push("error");
     }
 
-    // Selected packets are highlighted
-    if (this.props.selection == packet) {
+    // Selected frames are highlighted
+    if (this.props.selection == frame) {
       classNames.push("selected");
     }
 
@@ -136,8 +132,7 @@ var Frame = React.createFactory(React.createClass({
       Locale.$STR("websocketmonitor.label.received");
 
     return (
-      div({className: classNames.join(" "), onClick: this.onClick,
-           onContextMenu: this.onContextMenu},
+      div({className: classNames.join(" "), onClick: this.onClick},
         div({className: "frameBox"},
           div({className: "frameContent"},
             div({className: "body"},
@@ -166,9 +161,11 @@ var Frame = React.createFactory(React.createClass({
 
     // If a 'memberLabel' is clicked inside the inline preview
     // tree, let's process it by the tree, so expansion and
-    // collapsing works. Otherwise just select the packet.
+    // collapsing works. Otherwise just select the frame.
     if (!target.classList.contains("memberLabel")) {
-      this.props.actions.selectPacket(this.props.data);
+      if (this.props.frame != this.props.selection) {
+        this.props.dispatch(selectFrame(this.props.frame));
+      }
     }
   },
 }));
