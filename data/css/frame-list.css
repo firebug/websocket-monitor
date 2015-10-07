@@ -177,12 +177,12 @@
 /******************************************************************************/
 /* Frames Limit */
 
-.framesLimit {
+.frameLimit {
   text-align: center;
   margin: 10px 0 20px 0;
 }
 
-.framesLimit .text {
+.frameLimit .text {
   padding: 2px 3px 2px 3px;
   color: gray;
   font-size: 12px;
@@ -190,4 +190,37 @@
   border-radius: 3px;
   background-color: rgb(219, 234, 249) !important;
   background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+}
+
+/******************************************************************************/
+/* Frame Summary */
+
+.frameSummary {
+  color: gray;
+  font-size: 10px;
+  border-top: 1px dotted #EFEFEF;
+  margin: 10px 0 20px 0;
+  padding: 2px 0 2px 0;
+}
+
+.frameSummary div {
+  display: inline-block;
+}
+
+.frameSummary .time {
+  float: right;
+  font-family: monospace;
+}
+
+.frameSummary .separator {
+  width: 20px;
+}
+
+.frameSummary .text {
+  padding-right: 3px;
+}
+
+.frameSummary .slash {
+  width: 10px;
+  text-align: center;
 }

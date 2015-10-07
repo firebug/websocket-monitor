@@ -50,20 +50,28 @@ var FrameList = React.createClass({
     var summary = this.props.frames.summary;
     var removedFrames = summary.frameCount - frames.length;
 
+    // Render number of removed frames from the list if any.
     if (removedFrames > 0) {
-      output.push(FramesLimit({
+      output.push(FrameLimit({
         removedFrames: removedFrames
       }));
     }
 
+    // Render all frames.
     for (var i in frames) {
       var frame = frames[i];
-
       output.push(FrameBubble({
         key: frame.id,
         frame: frame,
         selection: this.props.selection,
         dispatch: this.props.dispatch
+      }));
+    }
+
+    // Render summary at the end (if there are any frames displayed).
+    if (frames.length > 0) {
+      output.push(FrameSummary({
+        summary: summary
       }));
     }
 
@@ -177,10 +185,10 @@ var FrameBubble = React.createFactory(React.createClass({
  * the maximum limit of displayed frames. The message also displays
  * number of frames removed from the list.
  */
-var FramesLimit = React.createFactory(React.createClass({
-/** @lends FramesLimit */
+var FrameLimit = React.createFactory(React.createClass({
+/** @lends FrameLimit */
 
-  displayName: "FramesLimit",
+  displayName: "FrameLimit",
 
   render: function() {
     var removedFrames = this.props.removedFrames;
@@ -188,8 +196,38 @@ var FramesLimit = React.createFactory(React.createClass({
 
     // Render summary info
     return (
-      div({className: "framesLimit"},
+      div({className: "frameLimit"},
         span({className: "text"}, removedFrames + " " + label)
+      )
+    );
+  }
+}));
+
+/**
+ * @template This template is responsible for rendering frame summary
+ * information. It displays number of sent and received packets
+ * and total amount of sent and received data.
+ */
+var FrameSummary = React.createFactory(React.createClass({
+/** @lends FrameSummary */
+
+  displayName: "FrameSummary",
+
+  render: function() {
+    var summary = this.props.summary;
+    return (
+      div({className: "frameSummary"},
+        div({className: "text"},
+          Locale.$STRP("websocketmonitor.summary.frameCount", [summary.frameCount])
+        ),
+        div({className: "separator"}),
+        div({className: "text"},
+          Str.formatSize(summary.totalSize)
+        ),
+        div({className: "separator"}),
+        div({className: "time"},
+          Str.formatTime((summary.endTime - summary.startTime) / 1000)
+        )
       )
     );
   }
