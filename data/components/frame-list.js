@@ -14,6 +14,7 @@ const { TreeView } = require("reps/tree-view");
 
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
+const { getOpCodeLabel } = require("./frame-utils");
 
 // Shortcuts
 const { div, span } = React.DOM;
@@ -104,24 +105,16 @@ var FrameBubble = React.createFactory(React.createClass({
 
   render: function() {
     var frame = this.props.frame;
-
     var data = frame.header ? frame.header : frame.maskBit;
     var type = frame.header ? "send" : "receive";
-    var mode = "tiny";
-    var classNames = ["frameBubble", type];
     var size = Str.formatSize(data.payload.length);
-
     var payload = Str.cropString(data.payload, 50);
-    var size = Str.formatSize(data.payload.length);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
-    var previewData = {
-      frame: frame
-    };
-
     // Error frames have its own styling
+    var classNames = ["frameBubble", type];
     if (frame.error) {
       classNames.push("error");
     }
@@ -130,11 +123,6 @@ var FrameBubble = React.createFactory(React.createClass({
     if (this.props.selection == frame) {
       classNames.push("selected");
     }
-
-    // Inline preview component
-    this.props.showInlineDetails = true;
-    var preview = this.props.showInlineDetails ? TreeView(
-      {data: previewData, mode: mode}) : null;
 
     var label = (type == "send") ?
       Locale.$STR("websocketmonitor.label.sent") :
@@ -146,8 +134,9 @@ var FrameBubble = React.createFactory(React.createClass({
           div({className: "frameContent"},
             div({className: "body"},
               span({className: "text"}, label),
+              span({className: "type"}, getOpCodeLabel(frame)),
               div({className: "preview"},
-                preview
+                TreeView({data: {frame: frame}, mode: "tiny"})
               ),
               div({},
                 span({className: "info"}, timeText + ", " + size)

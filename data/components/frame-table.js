@@ -13,6 +13,7 @@ const { TreeView } = require("reps/tree-view");
 
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
+const { getOpCodeLabel } = require("./frame-utils");
 
 // Constants
 const { table, thead, th, tbody, tr, td, tfoot, div, span, code, a } = React.DOM;
@@ -104,29 +105,6 @@ var FrameRow = React.createFactory(React.createClass({
     }
   },
 
-  getOpCode: function() {
-    var frame = this.props.frame;
-    var data = frame.header ? frame.header : frame.maskBit;
-    var opCode = parseInt(data.opCode, 10);
-
-    switch (opCode) {
-      case data.OPCODE_CONTINUATION:
-        return "CONTINUATION";
-      case data.OPCODE_TEXT:
-        return "TEXT";
-      case data.OPCODE_BINARY:
-        return "BINARY";
-      case data.OPCODE_CLOSE:
-        return "CLOSE";
-      case data.OPCODE_PING:
-        return "PING";
-      case data.OPCODE_PONG:
-        return "PONG";
-    }
-
-    return "(unknown)";
-  },
-
   render: function() {
     var frame = this.props.frame;
     var data = frame.header ? frame.header : frame.maskBit;
@@ -157,7 +135,7 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "socketId"}, frame.webSocketSerialID),
         td({className: "payloadSize"}, size),
         td({className: "payload"}, payload),
-        td({className: "opcode"}, this.getOpCode()),
+        td({className: "opcode"}, getOpCodeLabel(frame)),
         td({className: "bit"}, data.maskBit ? "true" : "false"),
         td({className: "bit"}, data.finBit ? "true" : "false"),
         td({className: "time"}, timeText)

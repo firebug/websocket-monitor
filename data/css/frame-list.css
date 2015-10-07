@@ -84,6 +84,12 @@
   text-align: right;
 }
 
+.frameBubble .type {
+  color: red;
+  font-family: monospace;
+  float: right;
+}
+
 .frameBubble .body .text {
   color: gray;
 }
