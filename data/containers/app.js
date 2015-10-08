@@ -35,6 +35,20 @@ var App = React.createClass({
     return { data: [] };
   },
 
+  componentWillUpdate: function() {
+    var panelBox = this.getDOMNode();
+    var node = panelBox.querySelector(".mainPanelContent");
+    this.state.shouldScrollBottom = node.scrollTop == node.scrollTopMax;
+  },
+
+  componentDidUpdate: function() {
+    if (this.state.shouldScrollBottom) {
+      var panelBox = this.getDOMNode();
+      var node = panelBox.querySelector(".mainPanelContent");
+      node.scrollTop = node.scrollTopMax;
+    }
+  },
+
   onClickRow: function(frame) {
     this.store.dispatch(selectFrame(frame));
   },
