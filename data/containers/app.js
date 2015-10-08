@@ -40,9 +40,11 @@ var App = React.createClass({
   },
 
   render: function() {
-    const { dispatch, frames, selection, perspective } = this.props;
+    const { perspective } = this.props;
 
-    // There are two ways how to display frames as a table or as a list.
+    // There are two ways how to display frames:
+    // 1) table view
+    // 2) list view
     var panelContent = (perspective == "table") ?
       FrameTable(this.props) :
       FrameList(this.props);

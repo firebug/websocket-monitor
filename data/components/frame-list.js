@@ -46,10 +46,12 @@ var FrameList = React.createClass({
   },
 
   render: function() {
-    var output = [];
-    var frames = this.props.frames.frames;
-    var summary = this.props.frames.summary;
+    var { frames, summary, filter } = this.props.frames;
     var removedFrames = summary.frameCount - frames.length;
+
+    frames = filter.frames || frames;
+
+    var output = [];
 
     // Render number of removed frames from the list if any.
     if (removedFrames > 0) {
@@ -194,13 +196,14 @@ var FrameLimit = React.createFactory(React.createClass({
   displayName: "FrameLimit",
 
   render: function() {
-    var removedFrames = this.props.removedFrames;
-    var label = Locale.$STR("websocketmonitor.label.outOfLimit");
+    var { removedFrames } = this.props;
 
     // Render summary info
     return (
       div({className: "frameLimit"},
-        span({className: "text"}, removedFrames + " " + label)
+        span({className: "text"},
+          Locale.$STRP("websocketmonitor.limit.removedFrames", [removedFrames])
+        )
       )
     );
   }
@@ -217,7 +220,8 @@ var FrameSummary = React.createFactory(React.createClass({
   displayName: "FrameSummary",
 
   render: function() {
-    var summary = this.props.summary;
+    var { summary } = this.props;
+
     return (
       div({className: "frameSummary"},
         div({className: "text"},

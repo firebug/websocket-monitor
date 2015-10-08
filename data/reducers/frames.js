@@ -13,7 +13,8 @@ const { types } = require("../actions/frames");
 const initialState = {
   frames: [],
   filter: {
-    text: ""
+    text: "",
+    frames: null
   },
   summary: {
     totalSize: 0,
@@ -32,23 +33,10 @@ function frames(state = initialState, action) {
     return addFrames(state, action.frames);
 
   case types.FILTER_FRAMES:
-    return {
-      frames: state.frames,
-      filter: action.filter || "",
-      summary: state.summary
-    }
+    return filterFrames(state, action.filter);
 
   case types.CLEAR:
-    return {
-      frames: [],
-      filter: state.filter,
-      summary: {
-        totalSize: 0,
-        startTime: 0,
-        endTime: 0,
-        frameCount: 0
-      }
-    }
+    return clear(state);
 
   default:
     return state;
@@ -65,10 +53,7 @@ function addFrames(state, newFrames) {
     frames.splice(0, frames.length - maxEntries);
   }
 
-  var totalSize = state.summary.totalSize;
-  var frameCount = state.summary.frameCount;
-  var startTime = state.summary.startTime;
-  var endTime = state.summary.endTime;
+  var { totalSize, frameCount, startTime, endTime } = state.summary;
 
   // Update summary info
   newFrames.forEach(frame => {
@@ -80,17 +65,51 @@ function addFrames(state, newFrames) {
   });
 
   // Return new state
-  return {
+  var newState = Object.assign({}, state, {
     frames: frames,
-    selection: state.selection,
-    filter: state.filter,
     summary: {
       totalSize: totalSize,
       startTime: startTime,
       endTime: endTime,
       frameCount: frameCount
     }
+  });
+
+  // Apply filter on incoming frames.
+  if (newState.filter.text) {
+    return filterFrames(newState, newState.filter);
   }
+
+  return newState;
+}
+
+function filterFrames(state, filter) {
+  var frames;
+
+  if (filter.text) {
+    frames = state.frames.filter(frame => {
+      var data = frame.header ? frame.header : frame.maskBit;
+      return data.payload.indexOf(filter.text) != -1;
+    });
+  }
+
+  return Object.assign({}, state, {
+    filter: {
+      text: filter.text,
+      frames: frames
+    }
+  });
+}
+
+function clear(state) {
+  // All data are cleared except of the current filter.
+  var newState = clone(initialState);
+  newState.filter.text = state.filter.text;
+  return newState;
+}
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 // Exports from this module
