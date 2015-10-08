@@ -28,8 +28,8 @@ var FrameTable = React.createClass({
 
   render: function() {
     var {frames, summary, filter} = this.props.frames;
-
     frames = filter.frames || frames;
+    summary = filter.summary || summary;
 
     // Render list of frames.
     var rows = frames.map(frame => FrameRow({

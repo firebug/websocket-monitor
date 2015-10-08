@@ -47,13 +47,13 @@ var FrameList = React.createClass({
 
   render: function() {
     var { frames, summary, filter } = this.props.frames;
-    var removedFrames = summary.frameCount - frames.length;
-
     frames = filter.frames || frames;
+    summary = filter.summary || summary;
 
     var output = [];
 
     // Render number of removed frames from the list if any.
+    var removedFrames = summary.frameCount - frames.length;
     if (removedFrames > 0) {
       output.push(FrameLimit({
         removedFrames: removedFrames

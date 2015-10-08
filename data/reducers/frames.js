@@ -86,17 +86,34 @@ function addFrames(state, newFrames) {
 function filterFrames(state, filter) {
   var frames;
 
+  var summary = {
+    totalSize: 0,
+    startTime: 0,
+    endTime: 0,
+    frameCount: 0
+  };
+
   if (filter.text) {
     frames = state.frames.filter(frame => {
       var data = frame.header ? frame.header : frame.maskBit;
-      return data.payload.indexOf(filter.text) != -1;
+      if (data.payload.indexOf(filter.text) != -1) {
+        var data = frame.header ? frame.header : frame.maskBit;
+        summary.totalSize += data.payload.length;
+        summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
+        summary.endTime = data.timeStamp;
+        summary.frameCount++;
+        return true;
+      }
     });
+  } else {
+    summary = null;
   }
 
   return Object.assign({}, state, {
     filter: {
       text: filter.text,
-      frames: frames
+      frames: frames,
+      summary: summary,
     }
   });
 }
