@@ -38,6 +38,7 @@ var WebSocketsView = createView(PanelView,
    */
   timeout: null,
   newFrames: [],
+  uuid: 0,
 
   /**
    * Render the top level application component.
@@ -69,6 +70,8 @@ var WebSocketsView = createView(PanelView,
   },
 
   lazyAdd: function(frame) {
+    frame.id = ++this.uuid;
+
     this.newFrames.push(frame);
 
     if (!this.timeout) {

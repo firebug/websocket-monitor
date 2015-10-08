@@ -84,12 +84,12 @@ var FrameBubble = React.createFactory(React.createClass({
   displayName: "FrameBubble",
 
   /**
-   * Frames need to be re-rendered only if the selection option changes.
+   * Frames need to be re-rendered only if the selection changes.
    * This is an optimization that makes the list rendering a lot faster.
    */
   shouldComponentUpdate: function(nextProps, nextState) {
-    // xxxHonza: TODO FIXME
-    return true;//(this.props.selection != nextProps.selection);
+    return this.props.frame == nextProps.selection ||
+      this.props.frame == this.props.selection;
   },
 
   render: function() {

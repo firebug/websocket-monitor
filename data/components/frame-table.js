@@ -33,6 +33,7 @@ var FrameTable = React.createClass({
 
     // Render list of frames.
     var rows = frames.map(frame => FrameRow({
+      key: frame.id,
       selection: this.props.selection,
       frame: frame,
       dispatch: this.props.dispatch
@@ -89,6 +90,15 @@ var FrameRow = React.createFactory(React.createClass({
 
   displayName: "FrameRow",
 
+  /**
+   * Frames need to be re-rendered only if the selection changes.
+   * This is an optimization that makes the list rendering a lot faster.
+   */
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return this.props.frame == nextProps.selection ||
+      this.props.frame == this.props.selection;
+  },
+
   onClick: function() {
     if (this.props.frame != this.props.selection) {
       this.props.dispatch(selectFrame(this.props.frame));
@@ -111,7 +121,8 @@ var FrameRow = React.createFactory(React.createClass({
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
-    // Test support for inline previews
+    // Test support for inline previews. The problem is the
+    // state of the TreeView component.
     /*if (frame.socketIo) {
       var data = { payload: frame.socketIo };
       payload = TreeView({key: "detailsTabTree", data: data})
