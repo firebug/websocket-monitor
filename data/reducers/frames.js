@@ -12,7 +12,6 @@ const { types } = require("../actions/frames");
  */
 const initialState = {
   frames: [],
-  selection: null,
   filter: {
     text: ""
   },
@@ -35,7 +34,6 @@ function frames(state = initialState, action) {
   case types.FILTER_FRAMES:
     return {
       frames: state.frames,
-      selection: state.selection,
       filter: action.filter || "",
       summary: state.summary
     }
@@ -43,7 +41,6 @@ function frames(state = initialState, action) {
   case types.CLEAR:
     return {
       frames: [],
-      selection: null,
       filter: state.filter,
       summary: {
         totalSize: 0,
