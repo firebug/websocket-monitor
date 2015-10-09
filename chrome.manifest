@@ -1,5 +1,5 @@
+locale  websocketmonitor en-US        chrome/locale/en-US/
+skin    websocketmonitor              classic/1.0           chrome/skin/classic/
+
 skin    websocketmonitor-firebug.sdk  classic/1.0    node_modules/firebug.sdk/skin/classic/shared/
-
-locale  websocketmonitor en-US         chrome/locale/en-US/
-
 locale  websocketmonitor-firebug.sdk  en-US   node_modules/firebug.sdk/locale/en-US/
