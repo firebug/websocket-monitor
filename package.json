@@ -8,6 +8,7 @@
     "Jan Odvarko (Mozilla Corp.)"
   ],
   "license": "BSD-3-Clause",
+  "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
   "homepage": "https://github.com/firebug/websocket-monitor/wiki",
   "version": "0.3.2",
   "main": "lib/index",
