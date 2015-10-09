@@ -10,10 +10,12 @@ const React = require("react");
 // Firebug SDK
 const { Str } = require("reps/core/string");
 const { TreeView } = require("reps/tree-view");
+const { createFactories } = require("reps/rep-utils");
 
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
 const { getOpCodeLabel } = require("./frame-utils");
+const { NoServiceWarning } = createFactories(require("./no-service-warning"));
 
 // Constants
 const { table, thead, th, tbody, tr, td, tfoot, div, span, code, a } = React.DOM;
@@ -155,20 +157,10 @@ var WarningRow = React.createFactory(React.createClass({
   displayName: "WarningRow",
 
   render: function() {
-    var text = "Your Firefox doesn't support ";
     return (
       tr({},
-        td({colSpan: 8, className: "warningRow"},
-          span({}, "Your Firefox doesn't support "),
-          code({}, "@mozilla.org/websocketframe/service;1"),
-          span({}, " component that is required by this extension. " +
-            "You need to install newer Firefox version. If you are unsure " +
-            "what to do you might want see the "),
-          a({className: "bugLink", target: "_blank",
-            href: "https://github.com/firebug/websocket-monitor/wiki"},
-            "home page"
-          ),
-          span({}, ".")
+        td({colSpan: 8},
+          NoServiceWarning({})
         )
       )
     );

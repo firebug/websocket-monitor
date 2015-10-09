@@ -1,0 +1,19 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* No Frame Service Available Warning */
+
+.noServiceWarning {
+  height: 50px;
+  padding: 50px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.noServiceWarning .bugLink {
+  color: #00c;
+}
+
+.noServiceWarning .bugLink:hover {
+  text-decoration: underline;
+}

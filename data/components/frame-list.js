@@ -11,10 +11,12 @@ const React = require("react");
 const { Reps } = require("reps/reps");
 const { Str } = require("reps/core/string");
 const { TreeView } = require("reps/tree-view");
+const { createFactories } = require("reps/rep-utils");
 
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
 const { getOpCodeLabel } = require("./frame-utils");
+const { NoServiceWarning } = createFactories(require("./no-service-warning"));
 
 // Shortcuts
 const { div, span } = React.DOM;
@@ -38,6 +40,12 @@ var FrameList = React.createClass({
     summary = filter.summary || summary;
 
     var output = [];
+
+    // If the underlying nsIWebSocketFrameService service isn't
+    // available in the platform display a warning.
+    if (!this.props.frameServiceAvailable) {
+      output.push(NoServiceWarning({}));
+    }
 
     // Render number of removed frames from the list if any.
     var removedFrames = summary.frameCount - frames.length;
