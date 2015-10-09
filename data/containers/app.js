@@ -54,7 +54,7 @@ var App = React.createClass({
   },
 
   render: function() {
-    const { perspective } = this.props;
+    const perspective = this.props.perspective || this.props.defaultPerspective;
 
     // There are two ways how to display frames:
     // 1) table view
