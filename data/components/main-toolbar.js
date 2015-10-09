@@ -43,9 +43,18 @@ var MainToolbar = React.createClass({
     this.props.dispatch(clear());
   },
 
+  onSwitchPerspective: function() {
+    var newValue = (this.props.perspective == "table") ? false : true;
+    Options.set("tabularView", newValue);
+  },
+
   // Render
 
   render: function() {
+    var label = (this.props.perspective == "table") ?
+      Locale.$STR("websocketmonitor.perspective.listView") :
+      Locale.$STR("websocketmonitor.perspective.tableView")
+
     return (
       Toolbar({className: "toolbar", ref: "toolbar"},
         /*ToolbarButton({bsSize: "xsmall", onClick: this.onPause},
@@ -53,6 +62,9 @@ var MainToolbar = React.createClass({
         ),*/
         ToolbarButton({bsSize: "xsmall", onClick: this.onClear},
           Locale.$STR("websocketmonitor.Clear")
+        ),
+        ToolbarButton({bsSize: "xsmall", onClick: this.onSwitchPerspective},
+          label
         )
       )
     );
