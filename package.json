@@ -7,9 +7,9 @@
   "contributors": [
     "Jan Odvarko (Mozilla Corp.)"
   ],
-  "license": "BSD License",
+  "license": "BSD-3-Clause",
   "homepage": "https://github.com/firebug/websocket-monitor/wiki",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "lib/index",
   "repository": {
     "type": "git",
