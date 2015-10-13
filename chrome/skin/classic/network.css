@@ -2,3 +2,19 @@
 
 /******************************************************************************/
 /* Network Panel */
+
+.requests-menu-status.websocket {
+  background-image: url("./tool-websockets.svg");
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  width: 16px;
+  height: 16px;
+  transition: none;
+  border-radius: 0;
+  margin: 2px;
+}
+
+.theme-dark .requests-menu-status.websocket,
+.theme-light .requests-menu-status.websocket {
+  filter: url(chrome://devtools/skin/themes/images/filters.svg#invert);
+}
