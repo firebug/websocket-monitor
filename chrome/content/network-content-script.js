@@ -36,7 +36,7 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
   status.classList.add("websocket");
 
   // Register click handler and emit an event that is handled
-  // in the 'WsmNetworkOverlay' overlay.
+  // in the 'WsmNetMonitorOverlay' overlay.
   window.addEventListener("click", event => {
     if (event.target.classList.contains("websocket")) {
       // The 'window' object is decorated with event API by EventEmitter
