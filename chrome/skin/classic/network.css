@@ -12,9 +12,9 @@
   transition: none;
   border-radius: 0;
   margin: 2px;
+  filter: url(chrome://devtools/skin/themes/images/filters.svg#invert);
 }
 
-.theme-dark .requests-menu-status.websocket,
-.theme-light .requests-menu-status.websocket {
-  filter: url(chrome://devtools/skin/themes/images/filters.svg#invert);
+.theme-firebug box.requests-menu-status.websocket {
+  background-color: transparent !important;
 }
