@@ -37,10 +37,20 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
 
   // Register click handler and emit an event that is handled
   // in the 'WsmNetworkOverlay' overlay.
-  status.addEventListener("click", event => {
-    event.stopPropagation();
-    event.preventDefault();
+  window.addEventListener("click", event => {
+    if (event.target.classList.contains("websocket")) {
+      // The 'window' object is decorated with event API by EventEmitter
+      // in client/netmonitor/netmonitor-controller.js module.
+      window.emit("websocketmonitor:navigate", from);
+    }
+  });
 
-    window.emit("websocketmonitor:navigate", from);
-  })
+  // Do not open the Network panel side-bar if the user clicks
+  // on the WS icon.
+  window.addEventListener("mousedown", event => {
+    if (event.target.classList.contains("websocket")) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+  }, true);
 });
