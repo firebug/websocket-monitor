@@ -41,17 +41,20 @@ var Sidebar = React.createClass({
     var selectedFrame = this.props.selection || {};
 
     var tabs = [
-      TabPanel({className: "details", title: Locale.$STR("websocketmonitor.Details")},
+      TabPanel({className: "details", key: "details",
+        title: Locale.$STR("websocketmonitor.Details")},
         DetailsTab(this.props)
       ),
-      TabPanel({className: "payload", title: Locale.$STR("websocketmonitor.Payload")},
+      TabPanel({className: "payload", key: "payload",
+        title: Locale.$STR("websocketmonitor.Payload")},
         PayloadTab(this.props)
       )
     ];
 
     if (selectedFrame && selectedFrame.socketIo) {
       tabs.push(
-        TabPanel({className: "socketio", title: Locale.$STR("websocketmonitor.SocketIO")},
+        TabPanel({className: "socketio", key: "socketio",
+          title: Locale.$STR("websocketmonitor.SocketIO")},
           SocketIOTab(this.props)
       ));
     }

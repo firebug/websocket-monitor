@@ -51,6 +51,7 @@ var FrameList = React.createClass({
     var removedFrames = summary.frameCount - frames.length;
     if (removedFrames > 0) {
       output.push(FrameLimit({
+        key: "frame-limit",
         removedFrames: removedFrames
       }));
     }
@@ -59,7 +60,7 @@ var FrameList = React.createClass({
     for (var i in frames) {
       var frame = frames[i];
       output.push(FrameBubble({
-        key: frame.id,
+        key: "frame-" + frame.id,
         frame: frame,
         selection: this.props.selection,
         dispatch: this.props.dispatch
@@ -69,6 +70,7 @@ var FrameList = React.createClass({
     // Render summary at the end (if there are any frames displayed).
     if (frames.length > 0) {
       output.push(FrameSummary({
+        key: "frame-summary",
         summary: summary
       }));
     }
@@ -123,12 +125,20 @@ var FrameBubble = React.createFactory(React.createClass({
 
     // Render inline frame preview.
     var preview = [
-      TreeView({data: {"Frame": frame}, mode: "tiny"})
+      TreeView({
+        key: "preview-frame",
+        data: {"Frame": frame},
+        mode: "tiny"
+      })
     ];
 
     if (frame.socketIo) {
       preview.push(
-        TreeView({data: {"Socket IO": frame.socketIo}, mode: "tiny"})
+        TreeView({
+          key: "preview-socketio",
+          data: {"Socket IO": frame.socketIo},
+          mode: "tiny"
+        })
       );
     }
 

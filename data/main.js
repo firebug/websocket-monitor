@@ -100,8 +100,6 @@ var WebSocketsView = createView(PanelView,
       return;
     }
 
-    console.log("update perspective " + event.newValue);
-
     // Update the way how frames are displayed.
     if (event.newValue) {
       store.dispatch(showTableView());
