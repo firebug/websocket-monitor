@@ -30,7 +30,7 @@
       "title": "Maximum entries displayed",
       "description": "Maximum entries displayed in the WebSockets panel",
       "type": "integer",
-      "value": 1000
+      "value": 500
     }, {
       "name": "tabularView",
       "title": "Display frames in a table",
