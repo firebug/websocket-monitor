@@ -5,7 +5,8 @@
   "description": "Monitor WebSocket connections",
   "author": "Firebug Working Group",
   "contributors": [
-    "Jan Odvarko (Mozilla Corp.)"
+    "Jan Odvarko (Mozilla Corp.)",
+    "Helen V. Holmes (Mozilla Corp.)"
   ],
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
