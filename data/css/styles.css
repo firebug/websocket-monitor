@@ -24,6 +24,12 @@ code {
   outline: none !important;
 }
 
+.theme-light body,
+.theme-dark body {
+  background-color: var(--theme-body-background);
+  color: var(--theme-body-color);
+}
+
 /******************************************************************************/
 /* Main Layout */
 
@@ -38,8 +44,14 @@ code {
 
 /* Height of the main panel content exclude the toolbar. Height of
    the toolbar is 27px + 2px padding */
-#content .mainPanelContent {
+.theme-firebug #content .mainPanelContent {
   height: calc(100% - 31px);
+  overflow: auto;
+}
+
+.theme-light #content .mainPanelContent,
+.theme-dark #content .mainPanelContent {
+  height: calc(100% - 24px);
   overflow: auto;
 }
 
@@ -74,7 +86,8 @@ code {
   background-color: white !important;
 }
 
-.theme-firebug .tabs .tab-panel {
+/* Make sure there are scroll-bars in the side panel */
+.tabs .tab-panel {
   overflow: auto;
 }
 
