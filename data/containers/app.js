@@ -31,14 +31,11 @@ var App = React.createClass({
 
   displayName: "App",
 
-  getInitialState: function() {
-    return { data: [] };
-  },
-
-  componentWillUpdate: function() {
+  componentWillReceiveProps: function() {
     var panelBox = this.getDOMNode();
     var node = panelBox.querySelector(".mainPanelContent");
-    this.state.shouldScrollBottom = node.scrollTop == node.scrollTopMax;
+    var shouldScrollBottom = node.scrollTop == node.scrollTopMax;
+    this.setState({ shouldScrollBottom  });
   },
 
   componentDidUpdate: function() {
@@ -55,8 +52,7 @@ var App = React.createClass({
 
   render: function() {
     const perspective = this.props.perspective || this.props.defaultPerspective;
-    const newProps = Object.assign({}, this.props);
-    newProps.perspective = perspective;
+    const newProps = Object.assign({}, this.props, { perspective });
 
     // There are two ways how to display frames:
     // 1) table view

@@ -10,21 +10,25 @@ const { types } = require("../actions/frames");
 /**
  * Initial state definition
  */
-const initialState = {
-  frames: [],
-  filter: {
-    text: "",
-    frames: null
-  },
-  summary: {
-    totalSize: 0,
-    startTime: 0,
-    endTime: 0,
-    frameCount: 0
-  }
-};
+function getInitialState() {
+  return {
+    frames: [],
+    pausedFrames: [],
+    paused: false,
+    filter: {
+      text: "",
+      frames: null
+    },
+    summary: {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    }
+  };
+}
 
-function frames(state = initialState, action) {
+function frames(state = getInitialState(), action) {
   switch (action.type) {
   case types.ADD_FRAME:
     return addFrames(state, [action.frame]);
@@ -38,6 +42,9 @@ function frames(state = initialState, action) {
   case types.CLEAR:
     return clear(state);
 
+  case types.TOGGLE_PAUSE:
+    return togglePause(state);
+
   default:
     return state;
   }
@@ -48,7 +55,13 @@ function frames(state = initialState, action) {
 function addFrames(state, newFrames) {
   const maxEntries = Options.get("max_entries");
 
-  var frames = [...state.frames, ...newFrames];
+  var { frames, pausedFrames } = state;
+  if (!state.paused) {
+    frames = [...state.frames, ...newFrames];
+  } else {
+    pausedFrames = [...pausedFrames, ...newFrames];
+  }
+
   if (frames.length > maxEntries) {
     frames.splice(0, frames.length - maxEntries);
   }
@@ -56,17 +69,20 @@ function addFrames(state, newFrames) {
   var { totalSize, frameCount, startTime, endTime } = state.summary;
 
   // Update summary info
-  newFrames.forEach(frame => {
-    var data = frame.header ? frame.header : frame.maskBit;
-    totalSize += data.payload.length;
-    startTime = startTime ? startTime : data.timeStamp;
-    endTime = data.timeStamp;
-    frameCount++;
-  });
+  if (!state.paused) {
+    newFrames.forEach(frame => {
+      var data = frame.header ? frame.header : frame.maskBit;
+      totalSize += data.payload.length;
+      startTime = startTime ? startTime : data.timeStamp;
+      endTime = data.timeStamp;
+      frameCount++;
+    });
+  }
 
   // Return new state
   var newState = Object.assign({}, state, {
     frames: frames,
+    pausedFrames: pausedFrames,
     summary: {
       totalSize: totalSize,
       startTime: startTime,
@@ -120,13 +136,19 @@ function filterFrames(state, filter) {
 
 function clear(state) {
   // All data are cleared except of the current filter.
-  var newState = clone(initialState);
+  var newState = getInitialState();
   newState.filter.text = state.filter.text;
   return newState;
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
+function togglePause(state) {
+  let newState = Object.assign({}, state, { paused: !state.paused });
+  if (!newState.paused) {
+    let pausedFrames = newState.pausedFrames;
+    newState.pausedFrames = [];
+    newState = addFrames(newState, pausedFrames);
+  }
+  return newState;
 }
 
 // Exports from this module
