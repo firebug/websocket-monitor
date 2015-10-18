@@ -48,6 +48,7 @@ var WebSocketsView = createView(PanelView,
 
     // Render the top level application component.
     this.content = document.getElementById("content");
+    config.togglePause = this.onTogglePause.bind(this);
     this.theApp = React.render(Provider({store: store},
       () => App(config)
     ), this.content);
@@ -95,6 +96,10 @@ var WebSocketsView = createView(PanelView,
 
     this.newFrames = [];
     this.timeout = null;
+  },
+
+  onTogglePause: function (paused) {
+    this.postChromeMessage("togglePause", paused);
   },
 
   // Search/Filter

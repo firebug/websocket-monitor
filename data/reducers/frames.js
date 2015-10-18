@@ -11,22 +11,24 @@ const { types: selectionTypes } = require("../actions/selection");
 /**
  * Initial state definition
  */
-const initialState = {
-  frames: [],
-  selection: null,
-  filter: {
-    text: "",
-    frames: null
-  },
-  summary: {
-    totalSize: 0,
-    startTime: 0,
-    endTime: 0,
-    frameCount: 0
-  }
-};
+function getInitialState() {
+  return {
+    frames: [],
+    selection: null,
+    filter: {
+      text: "",
+      frames: null
+    },
+    summary: {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    }
+  };
+}
 
-function frames(state = initialState, action) {
+function frames(state = getInitialState(), action) {
   switch (action.type) {
   case types.ADD_FRAME:
     return addFrames(state, [action.frame]);
@@ -60,6 +62,7 @@ function addFrames(state, newFrames) {
   const maxEntries = Options.get("max_entries");
 
   var frames = [...state.frames, ...newFrames];
+
   if (frames.length > maxEntries) {
     frames.splice(0, frames.length - maxEntries);
   }
@@ -131,7 +134,7 @@ function filterFrames(state, filter) {
 
 function clear(state) {
   // All data are cleared except of the current filter.
-  var newState = clone(initialState);
+  var newState = getInitialState();
   newState.filter.text = state.filter.text;
   return newState;
 }
@@ -178,10 +181,6 @@ function selectPrevFrame(state) {
   return Object.assign({}, state, {
     selection: state.frames[index]
   });
-}
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
 }
 
 // Exports from this module

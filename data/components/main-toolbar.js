@@ -24,6 +24,12 @@ var MainToolbar = React.createClass({
 
   displayName: "MainToolbar",
 
+  getInitialState: function () {
+    return {
+      paused: false
+    }
+  },
+
   componentDidMount: function() {
     var toolbar = this.refs.toolbar.getDOMNode();
     SearchBox.create(toolbar);
@@ -36,7 +42,10 @@ var MainToolbar = React.createClass({
 
   // Commands
 
-  onPause: function() {
+  onTogglePause: function() {
+    var paused = !this.state.paused;
+    this.props.togglePause(paused);
+    this.setState({ paused });
   },
 
   onClear: function() {
@@ -51,20 +60,24 @@ var MainToolbar = React.createClass({
   // Render
 
   render: function() {
-    var label = (this.props.perspective == "table") ?
+    var perspectiveLabel = (this.props.perspective == "table") ?
       Locale.$STR("websocketmonitor.perspective.listView") :
       Locale.$STR("websocketmonitor.perspective.tableView")
 
+    var pauseLabel = this.state.paused ?
+      Locale.$STR("websocketmonitor.Unpause"):
+      Locale.$STR("websocketmonitor.Pause");
+
     return (
       Toolbar({className: "toolbar", ref: "toolbar"},
-        /*ToolbarButton({bsSize: "xsmall", onClick: this.onPause},
-          Locale.$STR("websocketmonitor.Pause")
-        ),*/
+        ToolbarButton({bsSize: "xsmall", onClick: this.onTogglePause},
+          pauseLabel
+        ),
         ToolbarButton({bsSize: "xsmall", onClick: this.onClear},
           Locale.$STR("websocketmonitor.Clear")
         ),
         ToolbarButton({bsSize: "xsmall", onClick: this.onSwitchPerspective},
-          label
+          perspectiveLabel
         )
       )
     );

@@ -33,10 +33,6 @@ var App = React.createClass({
 
   displayName: "App",
 
-  getInitialState: function() {
-    return { data: [] };
-  },
-
   onClickRow: function(frame) {
     this.store.dispatch(selectFrame(frame));
   },
@@ -63,8 +59,7 @@ var App = React.createClass({
 
   render: function() {
     const perspective = this.props.perspective || this.props.defaultPerspective;
-    const newProps = Object.assign({}, this.props);
-    newProps.perspective = perspective;
+    const newProps = Object.assign({}, this.props, { perspective });
 
     // There are two ways how to display frames:
     // 1) table view
