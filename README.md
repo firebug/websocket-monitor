@@ -24,7 +24,7 @@ Hacking on WebSocket Monitor
 
 2. Switch to the JPM folder and [install](https://www.npmjs.org/doc/cli/npm-install.html) and [link](https://www.npmjs.org/doc/cli/npm-link.html) it via `npm install` and `npm link`. (Also needs to be done after fetching the latest changes to the JPM repo.)
 
-3. Get the WebSocketMonitor repo: `git clone https://github.com/firebug/websocket-monitor.git`
+3. Get the WebSocketMonitor repo: `git clone https://github.com/firebug/websocket-monitor.git` and install its dependencies via `npm install`
 
 4. Run `jpm run -b <file path to your Firefox binary>` in the source directory to launch Firefox (you need custom Firefox build see [releases](https://github.com/firebug/websocket-monitor/releases) at the moment), which automatically creates a clean profile.
 
