@@ -65,8 +65,6 @@ var App = React.createClass({
         Sidebar(this.props)
       );
 
-    Trace.sysout("app.render");
-
     return (
       div({className: "mainPanelBox"},
         Splitter({
