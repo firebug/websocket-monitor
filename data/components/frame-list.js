@@ -142,6 +142,16 @@ var FrameBubble = React.createFactory(React.createClass({
       );
     }
 
+    if (frame.sockJs) {
+      preview.push(
+        TreeView({
+          key: "preview-sockjs",
+          data: {"SockJS": frame.sockJs},
+          mode: "tiny"
+        })
+      );
+    }
+
     var label = (type == "send") ?
       Locale.$STR("websocketmonitor.label.sent") :
       Locale.$STR("websocketmonitor.label.received");

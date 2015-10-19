@@ -16,6 +16,8 @@ const { DetailsTab } = createFactories(require("./details-tab"));
 const { StackTab } = createFactories(require("./stack-tab"));
 const { PayloadTab } = createFactories(require("./payload-tab"));
 const { SocketIOTab } = createFactories(require("./socketio-tab"));
+const { SockJSTab } = createFactories(require("./sockjs-tab"));
+const { JSONTab } = createFactories(require("./json-tab"));
 
 /**
  * @template This template represents a list of packets displayed
@@ -56,6 +58,22 @@ var Sidebar = React.createClass({
         TabPanel({className: "socketio", key: "socketio",
           title: Locale.$STR("websocketmonitor.SocketIO")},
           SocketIOTab(this.props)
+      ));
+    }
+
+    if (selectedFrame && selectedFrame.sockJs) {
+      tabs.push(
+        TabPanel({className: "sockjs", key: "sockjs",
+          title: Locale.$STR("websocketmonitor.SockJS")},
+          SockJSTab(this.props)
+      ));
+    }
+
+    if (selectedFrame && selectedFrame.json) {
+      tabs.push(
+        TabPanel({className: "json", key: "json",
+          title: Locale.$STR("websocketmonitor.JSON")},
+          JSONTab(this.props)
       ));
     }
 
