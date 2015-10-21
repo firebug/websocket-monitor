@@ -63,7 +63,7 @@ var WebSocketsView = createView(PanelView,
    */
   frameReceived: function(frame) {
     frame = JSON.parse(frame);
-    frame.sent = false;
+    frame.received = true;
     this.lazyAdd(frame);
   },
 

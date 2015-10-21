@@ -57,9 +57,10 @@ function addFrames(state, newFrames) {
 
   // Update summary info
   newFrames.forEach(frame => {
-    totalSize += frame.payload.length;
-    startTime = startTime ? startTime : frame.timeStamp;
-    endTime = frame.timeStamp;
+    var data = frame.data;
+    totalSize += data.payload.length;
+    startTime = startTime ? startTime : data.timeStamp;
+    endTime = data.timeStamp;
     frameCount++;
   });
 
@@ -94,10 +95,11 @@ function filterFrames(state, filter) {
 
   if (filter.text) {
     frames = state.frames.filter(frame => {
-      if (frame.payload.indexOf(filter.text) != -1) {
-        summary.totalSize += frame.payload.length;
-        summary.startTime = summary.startTime ? summary.startTime : frame.timeStamp;
-        summary.endTime = frame.timeStamp;
+      var data = frame.data;
+      if (data.payload.indexOf(filter.text) != -1) {
+        summary.totalSize += data.payload.length;
+        summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
+        summary.endTime = data.timeStamp;
         summary.frameCount++;
         return true;
       }

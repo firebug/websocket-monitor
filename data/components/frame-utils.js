@@ -5,20 +5,21 @@ define(function(require, exports/*, module*/) {
 "use strict";
 
 function getOpCodeLabel(frame) {
-  var opCode = parseInt(frame.opCode, 10);
+  var data = frame.data;
+  var opCode = parseInt(data.opCode, 10);
 
   switch (opCode) {
-    case frame.OPCODE_CONTINUATION:
+    case data.OPCODE_CONTINUATION:
       return "CONTINUATION";
-    case frame.OPCODE_TEXT:
+    case data.OPCODE_TEXT:
       return "TEXT";
-    case frame.OPCODE_BINARY:
+    case data.OPCODE_BINARY:
       return "BINARY";
-    case frame.OPCODE_CLOSE:
+    case data.OPCODE_CLOSE:
       return "CLOSE";
-    case frame.OPCODE_PING:
+    case data.OPCODE_PING:
       return "PING";
-    case frame.OPCODE_PONG:
+    case data.OPCODE_PONG:
       return "PONG";
   }
 

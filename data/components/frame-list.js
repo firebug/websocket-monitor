@@ -104,10 +104,12 @@ var FrameBubble = React.createFactory(React.createClass({
 
   render: function() {
     var frame = this.props.frame;
+    var data = frame.data;
+
     var type = frame.sent ? "send" : "receive";
-    var size = Str.formatSize(frame.payload.length);
-    var payload = Str.cropString(frame.payload, 50);
-    var time = new Date(frame.timeStamp / 1000);
+    var size = Str.formatSize(data.payload.length);
+    var payload = Str.cropString(data.payload, 50);
+    var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
@@ -163,7 +165,7 @@ var FrameBubble = React.createFactory(React.createClass({
               span({className: "text"}, label),
               span({className: "type"}, getOpCodeLabel(frame)),
               div({className: "payload"},
-                Str.cropString(frame.payload)
+                Str.cropString(data.payload)
               ),
               div({className: "preview"},
                 preview

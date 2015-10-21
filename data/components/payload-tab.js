@@ -20,9 +20,11 @@ var PayloadTab = React.createClass({
 
   render: function() {
     var frame = this.props.selection || {};
+    var data = frame.data;
+
     return (
       div({className: "payloadTabContent"},
-        frame.payload ? frame.payload : ""
+        data.payload ? data.payload : ""
       )
     );
   }

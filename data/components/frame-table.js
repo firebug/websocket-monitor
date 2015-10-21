@@ -109,6 +109,8 @@ var FrameRow = React.createFactory(React.createClass({
 
   render: function() {
     var frame = this.props.frame;
+    var data = frame.data;
+
     var className = "frameRow " + (frame.sent ? "send" : "receive");
     var tooltipText = frame.sent ? "Sent" : "Received";
 
@@ -116,9 +118,9 @@ var FrameRow = React.createFactory(React.createClass({
       className += " selected";
     }
 
-    var payload = Str.cropString(frame.payload, 50);
-    var size = Str.formatSize(frame.payload.length);
-    var time = new Date(frame.timeStamp / 1000);
+    var payload = Str.cropString(data.payload, 50);
+    var size = Str.formatSize(data.payload.length);
+    var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
@@ -126,7 +128,7 @@ var FrameRow = React.createFactory(React.createClass({
     // state of the TreeView component.
     /*if (frame.socketIo) {
       var data = { payload: frame.socketIo };
-      payload = TreeView({key: "detailsTabTree", data: frame})
+      payload = TreeView({key: "detailsTabTree", data: data})
     }*/
 
     return (
@@ -138,8 +140,8 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "payloadSize"}, size),
         td({className: "payload"}, payload),
         td({className: "opcode"}, getOpCodeLabel(frame)),
-        td({className: "bit"}, frame.maskBit ? "true" : "false"),
-        td({className: "bit"}, frame.finBit ? "true" : "false"),
+        td({className: "bit"}, data.maskBit ? "true" : "false"),
+        td({className: "bit"}, data.finBit ? "true" : "false"),
         td({className: "time"}, timeText)
       )
     );
