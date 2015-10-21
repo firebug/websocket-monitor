@@ -55,9 +55,9 @@ var FrameTable = React.createClass({
       )
     }
 
-    // If the underlying nsIWebSocketFrameService service isn't
+    // If the underlying nsIWebSocketService service isn't
     // available in the platform display a warning.
-    if (!this.props.frameServiceAvailable) {
+    if (!this.props.wsServiceAvailable) {
       rows = [WarningRow()];
     }
 
@@ -109,17 +109,16 @@ var FrameRow = React.createFactory(React.createClass({
 
   render: function() {
     var frame = this.props.frame;
-    var data = frame.header ? frame.header : frame.maskBit;
-    var className = "frameRow " + (frame.header ? "send" : "receive");
-    var tooltipText = frame.header ? "Sent" : "Received";
+    var className = "frameRow " + (frame.sent ? "send" : "receive");
+    var tooltipText = frame.sent ? "Sent" : "Received";
 
     if (this.props.selection == frame) {
       className += " selected";
     }
 
-    var payload = Str.cropString(data.payload, 50);
-    var size = Str.formatSize(data.payload.length);
-    var time = new Date(data.timeStamp / 1000);
+    var payload = Str.cropString(frame.payload, 50);
+    var size = Str.formatSize(frame.payload.length);
+    var time = new Date(frame.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
 
@@ -127,7 +126,7 @@ var FrameRow = React.createFactory(React.createClass({
     // state of the TreeView component.
     /*if (frame.socketIo) {
       var data = { payload: frame.socketIo };
-      payload = TreeView({key: "detailsTabTree", data: data})
+      payload = TreeView({key: "detailsTabTree", data: frame})
     }*/
 
     return (
@@ -139,8 +138,8 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "payloadSize"}, size),
         td({className: "payload"}, payload),
         td({className: "opcode"}, getOpCodeLabel(frame)),
-        td({className: "bit"}, data.maskBit ? "true" : "false"),
-        td({className: "bit"}, data.finBit ? "true" : "false"),
+        td({className: "bit"}, frame.maskBit ? "true" : "false"),
+        td({className: "bit"}, frame.finBit ? "true" : "false"),
         td({className: "time"}, timeText)
       )
     );
@@ -148,7 +147,7 @@ var FrameRow = React.createFactory(React.createClass({
 }));
 
 /**
- * Used to display a warning if "@mozilla.org/websocketframe/service;1"
+ * Used to display a warning if "@mozilla.org/websocket/service;1"
  * needed by this extension isn't available on the platform.
  */
 var WarningRow = React.createFactory(React.createClass({
