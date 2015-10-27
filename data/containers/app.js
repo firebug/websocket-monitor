@@ -12,12 +12,14 @@ const { connect } = require("react-redux");
 const { createFactories } = require("reps/rep-utils");
 const { Reps } = require("reps/reps");
 const { Splitter } = createFactories(require("reps/splitter"));
+const { Events } = require("reps/core/events");
 
 // WebSockets Monitor
 const { MainToolbar } = createFactories(require("../components/main-toolbar"));
 const { Sidebar } = createFactories(require("../components/sidebar"));
 const { FrameTable } = createFactories(require("../components/frame-table"));
 const { FrameList } = createFactories(require("../components/frame-list"));
+const { selectNextFrame, selectPrevFrame } = require("../actions/selection");
 
 // Shortcuts
 const { div } = React.DOM;
@@ -37,6 +39,26 @@ var App = React.createClass({
 
   onClickRow: function(frame) {
     this.store.dispatch(selectFrame(frame));
+  },
+
+  componentDidMount: function() {
+    key("up", this.onKeyUp);
+    key("down", this.onKeyDown);
+  },
+
+  componentWillUnmount: function() {
+    key.unbind("up", this.onKeyUp);
+    key.unbind("down", this.onKeyDown);
+  },
+
+  onKeyUp: function(event) {
+    this.props.dispatch(selectPrevFrame());
+    Events.cancelEvent(event);
+  },
+
+  onKeyDown: function(event) {
+    this.props.dispatch(selectNextFrame());
+    Events.cancelEvent(event);
   },
 
   render: function() {
@@ -84,7 +106,7 @@ var App = React.createClass({
 function mapStateToProps(state) {
   return {
     frames: state.frames,
-    selection: state.selection,
+    selection: state.frames.selection,
     perspective: state.perspective
   };
 }

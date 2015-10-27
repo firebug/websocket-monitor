@@ -9,12 +9,10 @@ const { combineReducers } = require("redux");
 
 // WebSockets Monitor
 const { frames } = require("./frames");
-const { selection } = require("./selection");
 const { perspective } = require("./perspective");
 
 var rootReducer = combineReducers({
   frames,
-  selection,
   perspective
 });
 

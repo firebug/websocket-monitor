@@ -6,12 +6,14 @@ define(function(require, exports/*, module*/) {
 
 // WebSockets Monitor
 const { types } = require("../actions/frames");
+const { types: selectionTypes } = require("../actions/selection");
 
 /**
  * Initial state definition
  */
 const initialState = {
   frames: [],
+  selection: null,
   filter: {
     text: "",
     frames: null
@@ -37,6 +39,15 @@ function frames(state = initialState, action) {
 
   case types.CLEAR:
     return clear(state);
+
+  case selectionTypes.SELECT_FRAME:
+    return selectFrame(state, action.frame);
+
+  case selectionTypes.SELECT_NEXT_FRAME:
+    return selectNextFrame(state);
+
+  case selectionTypes.SELECT_PREV_FRAME:
+    return selectPrevFrame(state);
 
   default:
     return state;
@@ -123,6 +134,50 @@ function clear(state) {
   var newState = clone(initialState);
   newState.filter.text = state.filter.text;
   return newState;
+}
+
+// Selection
+
+function selectFrame(state, frame) {
+  return Object.assign({}, state, {
+    selection: frame
+  });
+}
+
+function selectNextFrame(state) {
+  if (!state.frames.length) {
+    return state;
+  }
+
+  var frame;
+  var index = state.frames.indexOf(state.selection);
+  if (index == -1) {
+    index = 0;
+  } else {
+    index = Math.min(++index, state.frames.length-1);
+  }
+
+  return Object.assign({}, state, {
+    selection: state.frames[index]
+  });
+}
+
+function selectPrevFrame(state) {
+  if (!state.frames.length) {
+    return state;
+  }
+
+  var frame;
+  var index = state.frames.indexOf(state.selection);
+  if (index == -1) {
+    index = 0;
+  } else {
+    index = Math.max(--index, 0);
+  }
+
+  return Object.assign({}, state, {
+    selection: state.frames[index]
+  });
 }
 
 function clone(obj) {
