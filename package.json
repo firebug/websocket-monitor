@@ -6,7 +6,8 @@
   "author": "Firebug Working Group",
   "contributors": [
     "Jan Odvarko (Mozilla Corp.)",
-    "Helen V. Holmes (Mozilla Corp.)"
+    "Helen V. Holmes (Mozilla Corp.)",
+    "Florent Fayolle"
   ],
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
