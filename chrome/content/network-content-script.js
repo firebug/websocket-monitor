@@ -16,22 +16,13 @@
  * panel.
  */
 window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
-  var requestItem = NetMonitorView.RequestsMenu.getItemByValue(from);
-  var attachment = requestItem.attachment;
-  var requestHeaders = attachment.requestHeaders;
-
-  // Find the 'upgrade' header.
-  var upgradeHeader = requestHeaders.headers.find(header => {
-    return (header.name == "Upgrade");
-  });
-
-  // Bail out if there is no such header of if its value isn't 'websocket'.
-  if (!upgradeHeader || upgradeHeader.value != "websocket") {
+  var item = NetMonitorView.RequestsMenu.getItemByValue(from);
+  if (!isWsUpgradeRequest(item)) {
     return;
   }
 
   // Append WebSocket icon in the UI
-  var hbox = requestItem._target;
+  var hbox = item._target;
   var status = hbox.querySelector(".requests-menu-status");
   status.classList.add("websocket");
 
@@ -39,9 +30,7 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
   // in the 'WsmNetMonitorOverlay' overlay.
   window.addEventListener("click", event => {
     if (event.target.classList.contains("websocket")) {
-      // The 'window' object is decorated with event API by EventEmitter
-      // in client/netmonitor/netmonitor-controller.js module.
-      window.emit("websocketmonitor:navigate", from);
+      navigateToWebSocketPanel(from);
     }
   });
 
@@ -54,3 +43,78 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
     }
   }, true);
 });
+
+/**
+ * Handle Response body displayed event.
+ *
+ * The Response tab displays a link to the WebSockets panel
+ * for HTTP upgrade requests.
+ */
+window.on(EVENTS.RESPONSE_BODY_DISPLAYED, (event) => {
+  var wsBox = $("#response-content-ws-box");
+
+  var item = NetMonitorView.RequestsMenu.selectedItem;
+  if (!isWsUpgradeRequest(item)) {
+    if (wsBox) {
+      $("#response-content-ws-box").hidden = true;
+    }
+    return;
+  }
+
+  // Hide the default Response content.
+  $("#response-content-textarea-box").hidden = true;
+
+  var wsBox = $("#response-content-ws-box");
+  if (wsBox) {
+    $("#response-content-ws-box").hidden = false;
+    return;
+  }
+
+  wsBox = document.createElement("vbox");
+  wsBox.setAttribute("flex", "1");
+  wsBox.setAttribute("id", "response-content-ws-box");
+
+  // xxxHonza: localization
+  wsBox.innerHTML =
+    '<div xmlns="http://www.w3.org/1999/xhtml" class="webSocketsInfo">' +
+    '<div class="title">WebSockets Upgrade Request</div>' +
+    '<div class="desc">No content for this request. If you want to ' +
+    'monitor WebSockets communication you need to switch to the ' +
+    '<a class="link">Web Sockets</a> panel.</div>' +
+    '</div>';
+
+  // Append into the DOM
+  var imageBox = $("#response-content-image-box");
+  var parentNode = imageBox.parentNode;
+  parentNode.appendChild(wsBox);
+
+  var link = parentNode.querySelector(".link");
+  link.addEventListener("click", event => {
+    navigateToWebSocketPanel(item._value);
+  });
+});
+
+// Helpers
+
+function navigateToWebSocketPanel(requestId) {
+  // The 'window' object is decorated with event API by EventEmitter
+  // in client/netmonitor/netmonitor-controller.js module.
+  window.emit("websocketmonitor:navigate", requestId);
+}
+
+function isWsUpgradeRequest(item) {
+  var attachment = item.attachment;
+  var requestHeaders = attachment.requestHeaders;
+
+  // Find the 'upgrade' header.
+  var upgradeHeader = requestHeaders.headers.find(header => {
+    return (header.name == "Upgrade");
+  });
+
+  // Return false if there is no such header of if its value isn't 'websocket'.
+  if (!upgradeHeader || upgradeHeader.value != "websocket") {
+    return false;
+  }
+
+  return true;
+}
