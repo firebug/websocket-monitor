@@ -60,15 +60,6 @@
   padding: 1px;
 }
 
-.frameRow:hover td {
-  background: #EFEFEF;
-}
-
-.frameRow.selected td {
-  background: #EFEFEF;
-  color: black;
-}
-
 /******************************************************************************/
 /* Frame Columns */
 
@@ -140,6 +131,19 @@
 
 .frameRow td.time {
   padding-right: 3px;
+}
+
+/******************************************************************************/
+/* Frame Row Selection */
+
+.frameRow:not(.selected):hover td {
+  background: #EFEFEF;
+}
+
+.frameRow.selected td.opcode,
+.frameRow.selected td {
+  background: #3399ff;
+  color: white;
 }
 
 /******************************************************************************/
