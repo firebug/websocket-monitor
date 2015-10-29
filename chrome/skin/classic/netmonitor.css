@@ -3,6 +3,7 @@
 /******************************************************************************/
 /* Network Panel */
 
+/* Web Socket Icon */
 .requests-menu-status.websocket {
   background-image: url("./tool-websockets.svg");
   background-repeat: no-repeat;
@@ -18,6 +19,9 @@
 .theme-firebug box.requests-menu-status.websocket {
   background-color: transparent !important;
 }
+
+/******************************************************************************/
+/* Response Side Panel */
 
 .theme-firebug #response-tabpanel #response-content-ws-box {
   background-color: white;
@@ -44,4 +48,13 @@
 
 #response-tabpanel #response-content-ws-box .link:hover {
   text-decoration: underline;
+}
+
+.theme-light #response-tabpanel #response-content-ws-box .desc,
+.theme-dark #response-tabpanel #response-content-ws-box .desc {
+  color: var(--theme-body-color-alt);
+}
+
+.theme-dark #response-tabpanel #response-content-ws-box .link {
+  color: white
 }
