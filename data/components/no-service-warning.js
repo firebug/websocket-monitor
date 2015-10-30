@@ -13,6 +13,9 @@ const {div, span, code, a } = React.DOM;
 /**
  * Used to display a warning if "@mozilla.org/websocketevent/service;1"
  * needed by this extension isn't available on the platform.
+ *
+ * The service has been introduced in Firefox 44 and so, this warning
+ * can be removed as soon as Fx44 is the minimum required version.
  */
 var NoServiceWarning = React.createClass({
 /** @lends NoServiceWarning */

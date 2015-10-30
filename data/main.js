@@ -24,20 +24,19 @@ var store = configureStore();
 
 /**
  * This object represents a view that is responsible for rendering
- * Toolbox panel's content. The view is running inside panel's frame
- * and so, within content scope with no extra privileges.
+ * WebSockets panel content. The view is running inside panel's frame
+ * with content scope privileges.
  *
- * Rendering is done through standard web technologies like e.g.
- * React and Redux.
+ * Rendering logic is based on React and Redux.
  */
 var WebSocketsView = createView(PanelView,
 /** @lends WebSocketsView */
 {
-  /**
-   * New frames are rendered asynchronously in batches.
-   */
+  // New frames are rendered asynchronously in batches.
   timeout: null,
   newFrames: [],
+
+  // Every frame has assigned unique ID.
   uuid: 0,
 
   /**
@@ -46,9 +45,12 @@ var WebSocketsView = createView(PanelView,
   initialize: function(config) {
     this.onAddFrames = this.onAddFrames.bind(this);
 
+    // Pass additional properties/callbacks down to
+    // the hierarchy of React components.
+    config.togglePause = this.onTogglePause.bind(this);
+
     // Render the top level application component.
     this.content = document.getElementById("content");
-    config.togglePause = this.onTogglePause.bind(this);
     this.theApp = React.render(Provider({store: store},
       App(config)
     ), this.content);

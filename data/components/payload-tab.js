@@ -11,7 +11,8 @@ const React = require("react");
 const { div } = React.DOM;
 
 /**
- * TODO: docs
+ * This component represents Payload side panel and is responsible
+ * for rendering frame's payload. It's displayed as a plain text.
  */
 var PayloadTab = React.createClass({
 /** @lends PayloadTab */

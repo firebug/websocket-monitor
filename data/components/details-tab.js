@@ -15,7 +15,8 @@ const { TreeView } = require("reps/tree-view");
 const { DIV } = Reps.DOM;
 
 /**
- * TODO: docs
+ * This component represents Details side panel and is responsible
+ * for rendering all properties of a frame as an expandable tree.
  */
 var DetailsTab = React.createClass({
 /** @lends DetailsTab */

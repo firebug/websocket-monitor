@@ -44,7 +44,17 @@ var MainToolbar = React.createClass({
 
   onTogglePause: function() {
     var paused = !this.state.paused;
+
+    // xxxHonza: the 'toggle-pause' actions is asynchronous since
+    // it needs to be sent to the backend actor. The UI should
+    // reflect that by e.g. disabling the button till a confirmation
+    // is received from the backend.
+    // See also:
+    // http://rackt.org/redux/docs/advanced/AsyncActions.html
+    // http://danmaz74.me/2015/08/19/from-flux-to-redux-async-actions-the-easy-way/
+    // http://www.code-experience.com/async-requests-with-react-js-and-flux/
     this.props.togglePause(paused);
+
     this.setState({ paused });
   },
 

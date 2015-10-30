@@ -15,7 +15,11 @@ const { TreeView } = require("reps/tree-view");
 const { div } = React.DOM;
 
 /**
- * TODO: docs
+ * This component represents a Stack side panel that displays
+ * stack frames for sent frames. This allows the user to find
+ * out which line caused the action.
+ *
+ * xxxHonza: TBD
  */
 var StackTab = React.createClass({
 /** @lends StackTab */
