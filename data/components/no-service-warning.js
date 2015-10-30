@@ -8,7 +8,7 @@ define(function(require, exports/*, module*/) {
 const React = require("react");
 
 // Constants
-const {div, span, code, a } = React.DOM;
+const {div, span, code, a, b, br} = React.DOM;
 
 /**
  * Used to display a warning if "@mozilla.org/websocketevent/service;1"
@@ -25,11 +25,11 @@ var NoServiceWarning = React.createClass({
   render: function() {
     return (
       div({className: "noServiceWarning"},
-        span({}, "Your Firefox doesn't support "),
-        code({}, "@mozilla.org/websocketevent/service;1"),
-        span({}, " component that is required by this extension. " +
-          "You need to install newer Firefox version. If you are unsure " +
-          "what to do you might want see the "),
+        span({}, "You need to install "),
+        b({}, "Firefox 44+"),
+        br({}),
+        br({}),
+        span({}, "If you are unsure what to do you might want see the "),
         a({className: "bugLink", target: "_blank",
           href: "https://github.com/firebug/websocket-monitor/wiki"},
           "home page"
