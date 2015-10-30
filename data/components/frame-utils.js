@@ -5,7 +5,7 @@ define(function(require, exports/*, module*/) {
 "use strict";
 
 function getOpCodeLabel(frame) {
-  var data = frame.header ? frame.header : frame.maskBit;
+  var data = frame.data;
   var opCode = parseInt(data.opCode, 10);
 
   switch (opCode) {

@@ -11,7 +11,7 @@ const React = require("react");
 const {div, span, code, a } = React.DOM;
 
 /**
- * Used to display a warning if "@mozilla.org/websocketframe/service;1"
+ * Used to display a warning if "@mozilla.org/websocketevent/service;1"
  * needed by this extension isn't available on the platform.
  */
 var NoServiceWarning = React.createClass({
@@ -23,7 +23,7 @@ var NoServiceWarning = React.createClass({
     return (
       div({className: "noServiceWarning"},
         span({}, "Your Firefox doesn't support "),
-        code({}, "@mozilla.org/websocketframe/service;1"),
+        code({}, "@mozilla.org/websocketevent/service;1"),
         span({}, " component that is required by this extension. " +
           "You need to install newer Firefox version. If you are unsure " +
           "what to do you might want see the "),

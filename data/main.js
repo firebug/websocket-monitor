@@ -50,11 +50,11 @@ var WebSocketsView = createView(PanelView,
     this.content = document.getElementById("content");
     config.togglePause = this.onTogglePause.bind(this);
     this.theApp = React.render(Provider({store: store},
-      () => App(config)
+      App(config)
     ), this.content);
   },
 
-  // nsIWebSocketFrameService events
+  // nsIWebSocketEventService events
 
   /**
    * Event handlers are executed directly according to the
@@ -63,11 +63,15 @@ var WebSocketsView = createView(PanelView,
    * about the mapping event -> method.
    */
   frameReceived: function(frame) {
-    this.lazyAdd(JSON.parse(frame));
+    frame = JSON.parse(frame);
+    frame.received = true;
+    this.lazyAdd(frame);
   },
 
   frameSent: function(frame) {
-    this.lazyAdd(JSON.parse(frame));
+    frame = JSON.parse(frame);
+    frame.sent = true;
+    this.lazyAdd(frame);
   },
 
   lazyAdd: function(frame) {

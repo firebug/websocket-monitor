@@ -41,9 +41,9 @@ var FrameList = React.createClass({
 
     var output = [];
 
-    // If the underlying nsIWebSocketFrameService service isn't
+    // If the underlying nsIWebSocketEventService service isn't
     // available in the platform display a warning.
-    if (!this.props.frameServiceAvailable) {
+    if (!this.props.wsServiceAvailable) {
       output.push(NoServiceWarning({}));
     }
 
@@ -104,8 +104,9 @@ var FrameBubble = React.createFactory(React.createClass({
 
   render: function() {
     var frame = this.props.frame;
-    var data = frame.header ? frame.header : frame.maskBit;
-    var type = frame.header ? "send" : "receive";
+    var data = frame.data;
+
+    var type = frame.sent ? "send" : "receive";
     var size = Str.formatSize(data.payload.length);
     var payload = Str.cropString(data.payload, 50);
     var time = new Date(data.timeStamp / 1000);
