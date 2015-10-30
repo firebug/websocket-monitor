@@ -81,7 +81,6 @@ function addFrames(state, newFrames) {
   // Return new state
   var newState = Object.assign({}, state, {
     frames: frames,
-    pausedFrames: pausedFrames,
     summary: {
       totalSize: totalSize,
       startTime: startTime,

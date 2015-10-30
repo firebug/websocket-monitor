@@ -9,7 +9,6 @@ const types = {
   ADD_FRAME: "ADD_FRAME",
   ADD_FRAMES: "ADD_FRAMES",
   FILTER_FRAMES: "FILTER_FRAMES",
-  TOGGLE_PAUSE: "TOGGLE_PAUSE",
 }
 
 function clear() {
