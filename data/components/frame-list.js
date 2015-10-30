@@ -34,6 +34,25 @@ var FrameList = React.createClass({
     return { data: [] };
   },
 
+  componentDidUpdate: function() {
+    var bubble = document.querySelector(".frameBubble.selected");
+    if (bubble) {
+      this.ensureVisible(bubble);
+    }
+  },
+
+  ensureVisible: function(bubble) {
+    var content = document.querySelector(".mainPanelContent");
+
+    if (bubble.offsetTop < content.scrollTop) {
+      content.scrollTop = bubble.offsetTop - 45; // minus padding
+    }
+
+    if (bubble.offsetTop + bubble.offsetHeight > content.scrollTop + content.clientHeight) {
+      content.scrollTop = bubble.offsetTop + bubble.offsetHeight - content.clientHeight;
+    }
+  },
+
   render: function() {
     var { frames, summary, filter } = this.props.frames;
     frames = filter.frames || frames;

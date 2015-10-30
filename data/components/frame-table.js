@@ -28,6 +28,25 @@ var FrameTable = React.createClass({
 
   displayName: "FrameTable",
 
+  componentDidUpdate: function() {
+    var row = document.querySelector(".frameRow.selected");
+    if (row) {
+      this.ensureVisible(row);
+    }
+  },
+
+  ensureVisible: function(row) {
+    var content = document.querySelector(".mainPanelContent");
+
+    if (row.offsetTop < content.scrollTop) {
+      content.scrollTop = row.offsetTop;
+    }
+
+    if (row.offsetTop + row.offsetHeight > content.scrollTop + content.clientHeight) {
+      content.scrollTop = row.offsetTop + row.offsetHeight - content.clientHeight;
+    }
+  },
+
   render: function() {
     var {frames, summary, filter} = this.props.frames;
     frames = filter.frames || frames;
