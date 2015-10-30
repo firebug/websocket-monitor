@@ -59,6 +59,10 @@ code {
   width: 30%;
 }
 
+#content .frameRow {
+  cursor: default;
+}
+
 /******************************************************************************/
 /* Sidebar tabs customization - Firebug Theme */
 

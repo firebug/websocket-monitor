@@ -28,16 +28,11 @@ function filterFrames(filter) {
   return { type: types.FILTER_FRAMES, filter: filter };
 }
 
-function togglePause() {
-  return { type: types.TOGGLE_PAUSE };
-}
-
 // Exports from this module
 exports.clear = clear;
 exports.addFrame = addFrame;
 exports.addFrames = addFrames;
 exports.filterFrames = filterFrames;
-exports.togglePause = togglePause;
 exports.types = types;
 });
 

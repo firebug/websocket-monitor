@@ -47,10 +47,11 @@ var WebSocketsView = createView(PanelView,
     this.onAddFrames = this.onAddFrames.bind(this);
 
     // Render the top level application component.
-    var content = document.getElementById("content");
+    this.content = document.getElementById("content");
+    config.togglePause = this.onTogglePause.bind(this);
     this.theApp = React.render(Provider({store: store},
       () => App(config)
-    ), content);
+    ), this.content);
   },
 
   // nsIWebSocketFrameService events
@@ -80,10 +81,25 @@ var WebSocketsView = createView(PanelView,
   },
 
   onAddFrames: function() {
+    // Support for auto-scroll to the bottom. If the vertical
+    // scrollbar of the main panel content is at the bottom
+    // keep it at the bottom after new frames are rendered.
+    var node = this.content.querySelector(".mainPanelContent");
+    var shouldScrollBottom = node.scrollTop == node.scrollTopMax;
+
     store.dispatch(addFrames(this.newFrames));
+
+    // Scroll to the bottom if required.
+    if (shouldScrollBottom) {
+      node.scrollTop = node.scrollTopMax;
+    }
 
     this.newFrames = [];
     this.timeout = null;
+  },
+
+  onTogglePause: function (paused) {
+    this.postChromeMessage("togglePause", paused);
   },
 
   // Search/Filter

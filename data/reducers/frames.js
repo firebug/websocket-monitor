@@ -6,6 +6,7 @@ define(function(require, exports/*, module*/) {
 
 // WebSockets Monitor
 const { types } = require("../actions/frames");
+const { types: selectionTypes } = require("../actions/selection");
 
 /**
  * Initial state definition
@@ -13,8 +14,7 @@ const { types } = require("../actions/frames");
 function getInitialState() {
   return {
     frames: [],
-    pausedFrames: [],
-    paused: false,
+    selection: null,
     filter: {
       text: "",
       frames: null
@@ -42,8 +42,14 @@ function frames(state = getInitialState(), action) {
   case types.CLEAR:
     return clear(state);
 
-  case types.TOGGLE_PAUSE:
-    return togglePause(state);
+  case selectionTypes.SELECT_FRAME:
+    return selectFrame(state, action.frame);
+
+  case selectionTypes.SELECT_NEXT_FRAME:
+    return selectNextFrame(state);
+
+  case selectionTypes.SELECT_PREV_FRAME:
+    return selectPrevFrame(state);
 
   default:
     return state;
@@ -55,12 +61,7 @@ function frames(state = getInitialState(), action) {
 function addFrames(state, newFrames) {
   const maxEntries = Options.get("max_entries");
 
-  var { frames, pausedFrames } = state;
-  if (!state.paused) {
-    frames = [...state.frames, ...newFrames];
-  } else {
-    pausedFrames = [...pausedFrames, ...newFrames];
-  }
+  var frames = [...state.frames, ...newFrames];
 
   if (frames.length > maxEntries) {
     frames.splice(0, frames.length - maxEntries);
@@ -141,14 +142,48 @@ function clear(state) {
   return newState;
 }
 
-function togglePause(state) {
-  let newState = Object.assign({}, state, { paused: !state.paused });
-  if (!newState.paused) {
-    let pausedFrames = newState.pausedFrames;
-    newState.pausedFrames = [];
-    newState = addFrames(newState, pausedFrames);
+// Selection
+
+function selectFrame(state, frame) {
+  return Object.assign({}, state, {
+    selection: frame
+  });
+}
+
+function selectNextFrame(state) {
+  if (!state.frames.length) {
+    return state;
   }
-  return newState;
+
+  var frame;
+  var index = state.frames.indexOf(state.selection);
+  if (index == -1) {
+    index = 0;
+  } else {
+    index = Math.min(++index, state.frames.length-1);
+  }
+
+  return Object.assign({}, state, {
+    selection: state.frames[index]
+  });
+}
+
+function selectPrevFrame(state) {
+  if (!state.frames.length) {
+    return state;
+  }
+
+  var frame;
+  var index = state.frames.indexOf(state.selection);
+  if (index == -1) {
+    index = 0;
+  } else {
+    index = Math.max(--index, 0);
+  }
+
+  return Object.assign({}, state, {
+    selection: state.frames[index]
+  });
 }
 
 // Exports from this module

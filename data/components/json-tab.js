@@ -15,25 +15,26 @@ const { TreeView } = require("reps/tree-view");
 const { DIV } = Reps.DOM;
 
 /**
- * Component responsible for rendering the SocketIO tab.
+ * Component responsible for rendering the JSON tab.
  */
-var SocketIOTab = React.createClass({
-/** @lends SocketIOTab */
+var JSONTab = React.createClass({
+/** @lends JSONTab */
 
-  displayName: "SocketIOTab",
+  displayName: "JSONTab",
 
   render: function() {
     var selectedFrame = this.props.selection || {};
-    var data = selectedFrame.socketIo;
+    var data = selectedFrame.json;
 
     return (
       DIV({className: "details"},
-        TreeView({key: "SocketIOTabTree", data: data})
+        TreeView({key: "JSONTabTree", data: data})
       )
     );
   }
 });
 
 // Exports from this module
-exports.SocketIOTab = SocketIOTab;
+exports.JSONTab = JSONTab;
 });
+

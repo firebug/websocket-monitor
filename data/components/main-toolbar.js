@@ -12,7 +12,7 @@ const { createFactories } = require("reps/rep-utils");
 const { Toolbar, ToolbarButton } = createFactories(require("reps/toolbar"));
 
 // WebSockets Monitor
-const { clear, togglePause } = require("../actions/frames");
+const { clear } = require("../actions/frames");
 const { SearchBox } = require("./search-box");
 
 /**
@@ -23,6 +23,12 @@ var MainToolbar = React.createClass({
 /** @lends MainToolbar */
 
   displayName: "MainToolbar",
+
+  getInitialState: function () {
+    return {
+      paused: false
+    }
+  },
 
   componentDidMount: function() {
     var toolbar = this.refs.toolbar.getDOMNode();
@@ -36,8 +42,10 @@ var MainToolbar = React.createClass({
 
   // Commands
 
-  onPause: function() {
-    this.props.dispatch(togglePause());
+  onTogglePause: function() {
+    var paused = !this.state.paused;
+    this.props.togglePause(paused);
+    this.setState({ paused });
   },
 
   onClear: function() {
@@ -56,17 +64,13 @@ var MainToolbar = React.createClass({
       Locale.$STR("websocketmonitor.perspective.listView") :
       Locale.$STR("websocketmonitor.perspective.tableView")
 
-    var pauseLabel = this.props.frames.paused ?
+    var pauseLabel = this.state.paused ?
       Locale.$STR("websocketmonitor.Unpause"):
       Locale.$STR("websocketmonitor.Pause");
 
     return (
       Toolbar({className: "toolbar", ref: "toolbar"},
-        ToolbarButton({
-          bsSize: "xsmall",
-          onClick: this.onPause,
-          active: this.props.frames.paused
-        },
+        ToolbarButton({bsSize: "xsmall", onClick: this.onTogglePause},
           pauseLabel
         ),
         ToolbarButton({bsSize: "xsmall", onClick: this.onClear},

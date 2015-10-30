@@ -6,7 +6,8 @@
   "author": "Firebug Working Group",
   "contributors": [
     "Jan Odvarko (Mozilla Corp.)",
-    "Helen V. Holmes (Mozilla Corp.)"
+    "Helen V. Holmes (Mozilla Corp.)",
+    "Florent Fayolle"
   ],
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "firebug.sdk": "0.x",
+    "keymaster": "^1.6.2",
     "socket.io-parser": "^2.2.4"
   },
   "preferences-branch": "websocketmonitor",
@@ -32,7 +34,8 @@
       "description": "Maximum entries displayed in the WebSockets panel",
       "type": "integer",
       "value": 500
-    }, {
+    },
+    {
       "name": "tabularView",
       "title": "Display frames in a table",
       "description": "Display sent and received frames in tabular format",
