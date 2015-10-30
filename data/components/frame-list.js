@@ -41,7 +41,7 @@ var FrameList = React.createClass({
 
     var output = [];
 
-    // If the underlying nsIWebSocketService service isn't
+    // If the underlying nsIWebSocketEventService service isn't
     // available in the platform display a warning.
     if (!this.props.wsServiceAvailable) {
       output.push(NoServiceWarning({}));

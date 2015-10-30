@@ -55,7 +55,7 @@ var FrameTable = React.createClass({
       )
     }
 
-    // If the underlying nsIWebSocketService service isn't
+    // If the underlying nsIWebSocketEventService service isn't
     // available in the platform display a warning.
     if (!this.props.wsServiceAvailable) {
       rows = [WarningRow()];
@@ -149,7 +149,7 @@ var FrameRow = React.createFactory(React.createClass({
 }));
 
 /**
- * Used to display a warning if "@mozilla.org/websocket/service;1"
+ * Used to display a warning if "@mozilla.org/websocketevent/service;1"
  * needed by this extension isn't available on the platform.
  */
 var WarningRow = React.createFactory(React.createClass({

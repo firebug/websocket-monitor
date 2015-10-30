@@ -53,7 +53,7 @@ var WebSocketsView = createView(PanelView,
     ), this.content);
   },
 
-  // nsIWebSocketService events
+  // nsIWebSocketEventService events
 
   /**
    * Event handlers are executed directly according to the
