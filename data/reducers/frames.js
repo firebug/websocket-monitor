@@ -68,7 +68,7 @@ function addFrames(state, newFrames) {
 
   // Update summary info
   newFrames.forEach(frame => {
-    var data = frame.header ? frame.header : frame.maskBit;
+    var data = frame.data;
     totalSize += data.payload.length;
     startTime = startTime ? startTime : data.timeStamp;
     endTime = data.timeStamp;
@@ -106,9 +106,8 @@ function filterFrames(state, filter) {
 
   if (filter.text) {
     frames = state.frames.filter(frame => {
-      var data = frame.header ? frame.header : frame.maskBit;
+      var data = frame.data;
       if (data.payload.indexOf(filter.text) != -1) {
-        var data = frame.header ? frame.header : frame.maskBit;
         summary.totalSize += data.payload.length;
         summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
         summary.endTime = data.timeStamp;
