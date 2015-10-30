@@ -70,6 +70,7 @@
 
 .frameRow .direction {
   width: 20px;
+  min-width: 20px;
 }
 
 .frameRow .direction div {
