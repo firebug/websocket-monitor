@@ -7,6 +7,8 @@ data sent and received.
 See [Home Page](https://github.com/firebug/websocket-monitor/wiki)
 for more details
 
+The extension isn't signed, so you might need to set `xpinstall.signatures.required` pref to false.
+
 Instructions
 ------------
 1. Install the extension
