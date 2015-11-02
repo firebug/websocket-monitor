@@ -1,7 +1,8 @@
 WebSocket Monitor
 =================
-WebSocket monitor can be used to inspect web socket connections
-on the current page.
+WebSocket monitor is an extension for Firefox developer tools that can be
+used to monitor WebSocket connections in Firefox. It allows to inspect all
+data sent and received.
 
 See [Home Page](https://github.com/firebug/websocket-monitor/wiki)
 for more details
