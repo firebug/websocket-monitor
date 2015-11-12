@@ -13,7 +13,12 @@
   transition: none;
   border-radius: 0;
   margin: 2px;
-  filter: url(chrome://devtools/skin/themes/images/filters.svg#invert);
+
+  /* Path to built-in theme resource has changed in Firefox 45
+  Befor: 45: chrome://devtools/skin/themes/images/filters.svg#invert
+  45+: chrome://devtools/skin//images/filters.svg#invert
+  The local copy can be remove as soon as the min Fx version is 45*/
+  filter: url(./filters.svg#invert);
 }
 
 .theme-firebug box.requests-menu-status.websocket {

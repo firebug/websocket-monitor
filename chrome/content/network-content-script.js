@@ -77,7 +77,7 @@ window.on(EVENTS.RESPONSE_BODY_DISPLAYED, (event) => {
   // xxxHonza: localization
   wsBox.innerHTML =
     '<div xmlns="http://www.w3.org/1999/xhtml" class="webSocketsInfo">' +
-    '<div class="title">WebSockets Upgrade Request</div>' +
+    '<div class="title">Web Socket Protocol Handshake (101)</div>' +
     '<div class="desc">No content for this request. If you want to ' +
     'monitor WebSockets communication you need to switch to the ' +
     '<a class="link">Web Sockets</a> panel.</div>' +
