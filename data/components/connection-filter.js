@@ -43,8 +43,8 @@ var ConnectionFilter = React.createClass({
 
     return (
       uniqueConnections.length > 1 ?
-        select({ onChange: this.handleChange },
-          option(Locale.$STR("websocketmonitor.ConnectionFilter.NoFilter")),
+        select({ className: 'ConnectionFilter', onChange: this.handleChange },
+          option({ value: null }, Locale.$STR("websocketmonitor.ConnectionFilter.NoFilter")),
           uniqueConnections.map(function(id, i) {
             return option({key: i, value: id}, id);
           })
