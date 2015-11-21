@@ -98,7 +98,7 @@ function addFrames(state, newFrames) {
 }
 
 function filterFrames(state, filter) {
-  var frames;
+  var { frames } = state;
 
   var summary = {
     totalSize: 0,
@@ -108,7 +108,7 @@ function filterFrames(state, filter) {
   };
 
   if (filter.text) {
-    frames = state.frames.filter(frame => {
+    frames = frames.filter(frame => {
       var data = frame.data;
       if (data.payload.indexOf(filter.text) != -1) {
         summary.totalSize += data.payload.length;
@@ -118,7 +118,30 @@ function filterFrames(state, filter) {
         return true;
       }
     });
-  } else {
+  }
+
+  if (filter.webSocketSerialID) {
+    // Reset in case it was set in above filter
+    summary = {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    };
+
+    frames = frames.filter(frame => {
+      var data = frame.data;
+      if (frame.webSocketSerialID === filter.webSocketSerialID) {
+        summary.totalSize += data.payload.length;
+        summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
+        summary.endTime = data.timeStamp;
+        summary.frameCount++;
+        return true;
+      }
+    });
+  }
+
+  if (!filter.text && !filter.connectionId) {
     summary = null;
   }
 
