@@ -33,7 +33,7 @@ var ConnectionFilter = React.createClass({
     // retain text filter alongside this filter.
     this.props.dispatch(filterFrames(
       Object.assign({}, currentFilter, {
-        webSocketSerialID: value ? Number(value) : null
+        webSocketSerialID: value !== null ? Number(value) : null
       })
     ));
   },
