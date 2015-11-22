@@ -90,11 +90,7 @@ function addFrames(state, newFrames) {
   });
 
   // Apply filter on incoming frames.
-  if (newState.filter.text || newState.filter.webSocketSerialID) {
-    return filterFrames(newState, newState.filter);
-  }
-
-  return newState;
+  return filterFrames(newState, newState.filter);
 }
 
 function filterFrames(state, filter) {
