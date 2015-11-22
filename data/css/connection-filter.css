@@ -3,6 +3,12 @@
 /******************************************************************************/
 /* Connection Filter Dropdown */
 
+.theme-dark .ConnectionFilter {
+  color: var(--theme-content-color1);
+  border: none;
+  background: rgba(170, 170, 170, .3);
+}
+
 .ConnectionFilter {
   float: right;
   height: 22px;
