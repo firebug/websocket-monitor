@@ -99,15 +99,16 @@ function addFrames(state, newFrames) {
 
 function filterFrames(state, filter) {
   var { frames } = state;
-
-  var summary = {
-    totalSize: 0,
-    startTime: 0,
-    endTime: 0,
-    frameCount: 0
-  };
+  var summary = null;
 
   if (filter.text) {
+    summary = {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    };
+
     frames = frames.filter(frame => {
       var data = frame.data;
       if (data.payload.indexOf(filter.text) != -1) {
@@ -121,7 +122,6 @@ function filterFrames(state, filter) {
   }
 
   if (filter.webSocketSerialID) {
-    // Reset in case it was set in above filter
     summary = {
       totalSize: 0,
       startTime: 0,
@@ -141,13 +141,10 @@ function filterFrames(state, filter) {
     });
   }
 
-  if (!filter.text && !filter.connectionId) {
-    summary = null;
-  }
-
   return Object.assign({}, state, {
     filter: {
       text: filter.text,
+      webSocketSerialID: filter.webSocketSerialID,
       frames: frames,
       summary: summary,
     }
@@ -158,6 +155,7 @@ function clear(state) {
   // All data are cleared except of the current filter.
   var newState = getInitialState();
   newState.filter.text = state.filter.text;
+  newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
   return newState;
 }
 
