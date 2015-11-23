@@ -6,6 +6,7 @@ define(function(require, exports/*, module*/) {
 
 // Dependencies
 const React = require("react");
+const ReactDOM = require("react-dom");
 
 // Firebug.SDK
 const { createFactories } = require("reps/rep-utils");
@@ -31,12 +32,12 @@ var MainToolbar = React.createClass({
   },
 
   componentDidMount: function() {
-    var toolbar = this.refs.toolbar.getDOMNode();
+    var toolbar = ReactDOM.findDOMNode(this.refs.toolbar);
     SearchBox.create(toolbar);
   },
 
   componentWillUnmount: function() {
-    var toolbar = this.refs.toolbar.getDOMNode();
+    var toolbar = ReactDOM.findDOMNode(this.refs.toolbar);
     SearchBox.destroy(toolbar);
   },
 

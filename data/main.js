@@ -12,6 +12,8 @@ const { PanelView, createView } = require("firebug.sdk/lib/panel-view");
 
 // ReactJS & Redux
 const React = require("react");
+const ReactDOM = require("react-dom");
+
 const { Provider } = createFactories(require("react-redux"));
 
 // WebSockets Monitor
@@ -51,7 +53,7 @@ var WebSocketsView = createView(PanelView,
 
     // Render the top level application component.
     this.content = document.getElementById("content");
-    this.theApp = React.render(Provider({store: store},
+    this.theApp = ReactDOM.render(Provider({store: store},
       App(config)
     ), this.content);
   },
