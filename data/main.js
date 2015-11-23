@@ -19,7 +19,7 @@ const { Provider } = createFactories(require("react-redux"));
 // WebSockets Monitor
 const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
-const { addFrames, filterFrames } = require("./actions/frames");
+const { addFrames, filterFrames, clear } = require("./actions/frames");
 const { showTableView, showListView } = require("./actions/perspective");
 
 var store = configureStore();
@@ -56,6 +56,12 @@ var WebSocketsView = createView(PanelView,
     this.theApp = ReactDOM.render(Provider({store: store},
       App(config)
     ), this.content);
+  },
+
+  // Chrome Messages
+
+  removeFrames: function() {
+    store.dispatch(clear());
   },
 
   // nsIWebSocketEventService events
