@@ -12,9 +12,8 @@
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
   "homepage": "https://github.com/firebug/websocket-monitor/wiki",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "lib/index",
-  "updateURL": "https://getfirebug.com/releases/websocketmonitor/update.rdf",
   "repository": {
     "type": "git",
     "url": "https://github.com/firebug/websocket-monitor.git"
