@@ -53,7 +53,7 @@ var FrameTable = React.createClass({
     summary = filter.summary || summary;
 
     // Render list of frames.
-    var rows = frames.map(frame => FrameRow({
+    var rows = frames.map(frame => this.getFrameTag(frame)({
       key: frame.id,
       selection: this.props.selection,
       frame: frame,
@@ -100,6 +100,15 @@ var FrameTable = React.createClass({
         tableFooter
       )
     );
+  },
+
+  getFrameTag: function(frame) {
+    switch (frame.type) {
+    case "event":
+      return EventRow;
+    case "frame":
+      return FrameRow;
+    }
   }
 });
 
@@ -162,6 +171,60 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "bit"}, data.maskBit ? "true" : "false"),
         td({className: "bit"}, data.finBit ? "true" : "false"),
         td({className: "time"}, timeText)
+      )
+    );
+  }
+}));
+
+/**
+ * Template for WS events (connect and disconnect) displayed in the
+ * frame list (table view)
+ */
+var EventRow = React.createFactory(React.createClass({
+/** @lends FrameRow */
+
+  displayName: "EventRow",
+
+  /**
+   * Frames need to be re-rendered only if the selection changes.
+   * This is an optimization that makes the list rendering a lot faster.
+   */
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return this.props.frame == nextProps.selection ||
+      this.props.frame == this.props.selection;
+  },
+
+  onClick: function() {
+    if (this.props.frame != this.props.selection) {
+      this.props.dispatch(selectFrame(this.props.frame));
+    }
+  },
+
+  render: function() {
+    var frame = this.props.frame;
+    var className = "frameRow eventRow";
+
+    if (this.props.selection == frame) {
+      className += " selected";
+    }
+
+    var label = frame.uri ?
+      Locale.$STR("websocketmonitor.event.connected") :
+      Locale.$STR("websocketmonitor.event.disconnected");
+
+    var uri = frame.uri ? frame.uri :
+      Locale.$STR("websocketmonitor.event.code") + " " + frame.code;
+
+    return (
+      tr({className: className, onClick: this.onClick},
+        td({}),
+        td({className: "socketId"},
+          frame.webSocketSerialID
+        ),
+        td({className: "", colSpan: 6},
+          span({className: "text"}, label),
+          span({className: "uri"}, uri)
+        )
       )
     );
   }

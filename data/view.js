@@ -66,6 +66,19 @@ var WebSocketsView = createView(PanelView,
 
   // nsIWebSocketEventService events
 
+  webSocketCreated: function(data) {
+    data.type = "event";
+    this.lazyAdd(data);
+  },
+
+  webSocketOpened: function(data) {
+  },
+
+  webSocketClosed: function(data) {
+    data.type = "event";
+    this.lazyAdd(data);
+  },
+
   /**
    * Event handlers are executed directly according to the
    * event types sent from the chrome scope.
@@ -75,12 +88,14 @@ var WebSocketsView = createView(PanelView,
   frameReceived: function(frame) {
     frame = JSON.parse(frame);
     frame.received = true;
+    frame.type = "frame";
     this.lazyAdd(frame);
   },
 
   frameSent: function(frame) {
     frame = JSON.parse(frame);
     frame.sent = true;
+    frame.type = "frame";
     this.lazyAdd(frame);
   },
 

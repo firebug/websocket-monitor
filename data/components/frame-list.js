@@ -78,7 +78,7 @@ var FrameList = React.createClass({
     // Render all frames.
     for (var i in frames) {
       var frame = frames[i];
-      output.push(FrameBubble({
+      output.push(this.getFrameTag(frame)({
         key: "frame-" + frame.id,
         frame: frame,
         selection: this.props.selection,
@@ -99,6 +99,15 @@ var FrameList = React.createClass({
         div({}, output)
       )
     );
+  },
+
+  getFrameTag: function(frame) {
+    switch (frame.type) {
+    case "event":
+      return EventBubble;
+    case "frame":
+      return FrameBubble;
+    }
   }
 });
 
@@ -217,6 +226,77 @@ var FrameBubble = React.createFactory(React.createClass({
       }
     }
   },
+}));
+
+/**
+ * Template for WS events (connect and disconnect) displayed in the
+ * frame list (list view)
+ */
+var EventBubble = React.createFactory(React.createClass({
+/** @lends FrameBubble */
+
+  displayName: "FrameBubble",
+
+  /**
+   * Frames need to be re-rendered only if the selection changes.
+   * This is an optimization that makes the list rendering a lot faster.
+   */
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return this.props.frame == nextProps.selection ||
+      this.props.frame == this.props.selection;
+  },
+
+  // Event Handlers
+
+  onClick: function(event) {
+    var target = event.target;
+
+    event.stopPropagation();
+    event.preventDefault();
+
+    // If a 'memberLabel' is clicked inside the inline preview
+    // tree, let's process it by the tree, so expansion and
+    // collapsing works. Otherwise just select the frame.
+    if (!target.classList.contains("memberLabel")) {
+      if (this.props.frame != this.props.selection) {
+        this.props.dispatch(selectFrame(this.props.frame));
+      }
+    }
+  },
+
+  render: function() {
+    var frame = this.props.frame;
+
+    // Frame classes
+    var classNames = ["frameBubble", "eventBubble", frame.type];
+    if (this.props.selection == frame) {
+      classNames.push("selected");
+    }
+
+    var label = frame.uri ?
+      Locale.$STR("websocketmonitor.event.connected") :
+      Locale.$STR("websocketmonitor.event.disconnected");
+
+    var uri = frame.uri ? frame.uri :
+      Locale.$STR("websocketmonitor.event.code") + " " + frame.code;
+
+    var socketIdLabel = Locale.$STR("websocketmonitor.SocketID") +
+      ": " + frame.webSocketSerialID;
+
+    return (
+      div({className: classNames.join(" "), onClick: this.onClick},
+        div({className: "frameBox"},
+          div({className: "frameContent"},
+            div({className: "body"},
+              div({className: "text"}, label),
+              div({className: "uri"}, uri),
+              div({className: "socketId"}, socketIdLabel)
+            )
+          )
+        )
+      )
+    );
+  }
 }));
 
 /**
