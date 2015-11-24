@@ -24,21 +24,25 @@ var SearchBox = React.createClass({
 
   displayName: "SearchBox",
 
-  componentWillMount() {
-    this.setState({ win: document.defaultView },
-                  () => this.state.win.addEventListener("theme-changed", this.handleThemeChange));
+  getInitialState() {
+    return {
+      text: ""
+    };
+  },
+
+  componentDidMount() {
+    document.defaultView.addEventListener("theme-changed", this.handleThemeChange);
   },
 
   componentWillUnmount() {
-    this.state.win.removeEventListener("theme-changed", this.handleThemeChange);
+    document.defaultView.removeEventListener("theme-changed", this.handleThemeChange);
   },
 
-  handleThemeChange(searchBox, event) {
+  handleThemeChange(event) {
     const data = event.data;
 
     // Reset the filter if Firebug theme has been activated or deactivated.
     if (data.newTheme == "firebug" || data.oldTheme == "firebug") {
-      searchBox.value = "";
       this.onChange("");
     }
   },
@@ -51,18 +55,17 @@ var SearchBox = React.createClass({
     this.props.dispatch(filterFrames(
       Object.assign({}, currentFilter, { text })
     ));
+    this.setState({ text });
   },
 
   render() {
-    const searchBox = input({
+    return input({
       className: "devtools-searchinput",
       type: "search",
       results: "true",
+      value: this.state.text,
       onChange: e => this.onChange(e.target.value)
     });
-
-    this.handleThemeChange = this.handleThemeChange.bind(this, searchBox);
-    return searchBox;
   }
 });
 
