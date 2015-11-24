@@ -112,7 +112,9 @@ function filterFrames(state, filter) {
 
     frames = frames.filter(frame => {
       var data = frame.data;
-      if (data.payload && data.payload.indexOf(filter.text) != -1) {
+
+      // Exclude where data is null (events). Events have no payload
+      if (data && data.payload && data.payload.indexOf(filter.text) != -1) {
         summary.totalSize += data.payload.length;
         summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
         summary.endTime = data.timeStamp;
@@ -133,10 +135,16 @@ function filterFrames(state, filter) {
     frames = frames.filter(frame => {
       var data = frame.data;
       if (frame.webSocketSerialID === filter.webSocketSerialID) {
-        summary.totalSize += data.payload.length;
-        summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
-        summary.endTime = data.timeStamp;
-        summary.frameCount++;
+
+        // If data is null, this is not an actual frame, but an event
+        // like "connect" or "disconnect". We still want to keep it
+        // in the list, though.
+        if (data) {
+          summary.totalSize += data.payload.length;
+          summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
+          summary.endTime = data.timeStamp;
+          summary.frameCount++;
+        }
         return true;
       }
     });
@@ -153,10 +161,9 @@ function filterFrames(state, filter) {
 }
 
 function clear(state) {
-  // All data are cleared except of the current filter.
+  // All data are cleared except of the current text filter.
   var newState = getInitialState();
   newState.filter.text = state.filter.text;
-  newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
   return newState;
 }
 
