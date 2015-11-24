@@ -6,6 +6,7 @@ define(function(require, exports/*, module*/) {
 
 // Dependencies
 const React = require("react");
+const ReactDOM = require("react-dom");
 
 // Firebug.SDK
 const { createFactories } = require("reps/rep-utils");

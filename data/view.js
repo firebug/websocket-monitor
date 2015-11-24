@@ -12,12 +12,14 @@ const { PanelView, createView } = require("firebug.sdk/lib/panel-view");
 
 // ReactJS & Redux
 const React = require("react");
+const ReactDOM = require("react-dom");
+
 const { Provider } = createFactories(require("react-redux"));
 
 // WebSockets Monitor
 const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
-const { addFrames, filterFrames } = require("./actions/frames");
+const { addFrames, filterFrames, clear } = require("./actions/frames");
 const { showTableView, showListView } = require("./actions/perspective");
 
 var store = configureStore();
@@ -51,12 +53,31 @@ var WebSocketsView = createView(PanelView,
 
     // Render the top level application component.
     this.content = document.getElementById("content");
-    this.theApp = React.render(Provider({store: store},
+    this.theApp = ReactDOM.render(Provider({store: store},
       App(config)
     ), this.content);
   },
 
+  // Chrome Messages
+
+  removeFrames: function() {
+    store.dispatch(clear());
+  },
+
   // nsIWebSocketEventService events
+
+  webSocketCreated: function(data) {
+    data.type = "event";
+    this.lazyAdd(data);
+  },
+
+  webSocketOpened: function(data) {
+  },
+
+  webSocketClosed: function(data) {
+    data.type = "event";
+    this.lazyAdd(data);
+  },
 
   /**
    * Event handlers are executed directly according to the
@@ -67,12 +88,14 @@ var WebSocketsView = createView(PanelView,
   frameReceived: function(frame) {
     frame = JSON.parse(frame);
     frame.received = true;
+    frame.type = "frame";
     this.lazyAdd(frame);
   },
 
   frameSent: function(frame) {
     frame = JSON.parse(frame);
     frame.sent = true;
+    frame.type = "frame";
     this.lazyAdd(frame);
   },
 

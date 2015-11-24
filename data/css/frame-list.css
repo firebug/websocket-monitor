@@ -235,3 +235,27 @@
   width: 10px;
   text-align: center;
 }
+
+/******************************************************************************/
+/* Frame Events */
+
+.frameBubble.event .body {
+  min-width: 200px;
+}
+
+.frameBubble.event {
+  text-align: center;
+}
+
+.frameBubble.event .uri {
+  color: green;
+}
+
+.frameBubble.event .text {
+  color: black;
+  font-weight: bold;
+}
+
+.frameBubble.event .socketId {
+  color: gray;
+}
