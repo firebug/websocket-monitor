@@ -39,7 +39,6 @@ var ConnectionFilter = React.createClass({
   },
 
   render: function() {
-
     var uniqueConnections = [];
     this.props.frames.frames.forEach(frame => {
       if (!uniqueConnections.includes(frame.webSocketSerialID)) {
@@ -49,7 +48,7 @@ var ConnectionFilter = React.createClass({
 
     return (
       uniqueConnections.length > 1 ?
-        select({ className: 'ConnectionFilter', onChange: this.handleChange },
+        select({ className: "ConnectionFilter", onChange: this.handleChange },
           option({ value: null }, Locale.$STR("websocketmonitor.ConnectionFilter.NoFilter")),
           uniqueConnections.map((id, i) => {
             return option({key: i, value: id}, id);
