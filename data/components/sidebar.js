@@ -18,6 +18,7 @@ const { PayloadTab } = createFactories(require("./payload-tab"));
 const { SocketIOTab } = createFactories(require("./socketio-tab"));
 const { SockJSTab } = createFactories(require("./sockjs-tab"));
 const { JSONTab } = createFactories(require("./json-tab"));
+const { WampTab } = createFactories(require("./wamp-tab"));
 
 /**
  * @template This template represents a list of packets displayed
@@ -66,6 +67,14 @@ var Sidebar = React.createClass({
         TabPanel({className: "sockjs", key: "sockjs",
           title: Locale.$STR("websocketmonitor.SockJS")},
           SockJSTab(this.props)
+      ));
+    }
+
+    if (selectedFrame && selectedFrame.wamp) {
+      tabs.push(
+        TabPanel({className: "wamp", key: "wamp",
+          title: Locale.$STR("websocketmonitor.WAMP")},
+          WampTab(this.props)
       ));
     }
 
