@@ -25,7 +25,7 @@ var ConnectionFilter = React.createClass({
 
   displayName: "ConnectionFilter",
 
-  handleChange: function(e) {
+  handleChange(e) {
     const { value } = e.target;
     const currentFilter = this.props.frames.filter;
 
@@ -38,8 +38,8 @@ var ConnectionFilter = React.createClass({
     ));
   },
 
-  render: function() {
-    var uniqueConnections = [];
+  render() {
+    const uniqueConnections = [];
     this.props.frames.frames.forEach(frame => {
       if (!uniqueConnections.includes(frame.webSocketSerialID)) {
         uniqueConnections.push(frame.webSocketSerialID);
