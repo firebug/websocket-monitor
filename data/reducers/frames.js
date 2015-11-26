@@ -161,9 +161,10 @@ function filterFrames(state, filter) {
 }
 
 function clear(state) {
-  // All data are cleared except of the current text filter.
+  // All data is cleared except for the current filters.
   var newState = getInitialState();
   newState.filter.text = state.filter.text;
+  newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
   return newState;
 }
 

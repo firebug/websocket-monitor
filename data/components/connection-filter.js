@@ -25,6 +25,12 @@ var ConnectionFilter = React.createClass({
 
   displayName: "ConnectionFilter",
 
+  getInitialState() {
+    return {
+      uniqueConnections: []
+    };
+  },
+
   handleChange(e) {
     const { value } = e.target;
     const currentFilter = this.props.frames.filter;
@@ -38,18 +44,31 @@ var ConnectionFilter = React.createClass({
     ));
   },
 
-  render() {
-    const uniqueConnections = [];
-    this.props.frames.frames.forEach(frame => {
-      if (!uniqueConnections.includes(frame.webSocketSerialID)) {
-        uniqueConnections.push(frame.webSocketSerialID);
-      }
-    });
+  // When the platform API supports it, this should be replaced
+  // with some API call listing only the current connections on
+  // the page.
+  componentWillReceiveProps({ frames }) {
+    if (frames && Array.isArray(frames.frames)) {
+      frames.frames.forEach(frame => {
+        const { uniqueConnections } = this.state;
+        if (!uniqueConnections.includes(frame.webSocketSerialID)) {
+          this.setState({
+            uniqueConnections: [...uniqueConnections, frame.webSocketSerialID]
+          });
+        }
+      })
+    }
+  },
 
+  render() {
+    const { uniqueConnections } = this.state;
     return (
       uniqueConnections.length > 1 ?
-        select({ className: "ConnectionFilter", onChange: this.handleChange },
-          option({ value: null }, Locale.$STR("websocketmonitor.ConnectionFilter.NoFilter")),
+        select({
+          className: "ConnectionFilter",
+          value: this.props.frames.filter.webSocketSerialID,
+          onChange: this.handleChange
+        }, option({ value: null }, Locale.$STR("websocketmonitor.ConnectionFilter.NoFilter")),
           uniqueConnections.map((id, i) => {
             return option({key: i, value: id}, id);
           })
