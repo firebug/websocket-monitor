@@ -8,7 +8,8 @@
     "Jan Odvarko (Mozilla Corp.)",
     "Helen V. Holmes (Mozilla Corp.)",
     "Florent Fayolle",
-    "Elad Zelingher"
+    "Elad Zelingher",
+    "Espen Henriksen"
   ],
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
