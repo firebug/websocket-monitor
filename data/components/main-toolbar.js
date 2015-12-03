@@ -14,7 +14,8 @@ const { Toolbar, ToolbarButton } = createFactories(require("reps/toolbar"));
 
 // WebSockets Monitor
 const { clear } = require("../actions/frames");
-const { SearchBox } = require("./search-box");
+const { SearchBox } = createFactories(require("./search-box"));
+const { ConnectionFilter } = createFactories(require("./connection-filter"));
 
 /**
  * @template This object is responsible for rendering the toolbar
@@ -29,16 +30,6 @@ var MainToolbar = React.createClass({
     return {
       paused: false
     }
-  },
-
-  componentDidMount: function() {
-    var toolbar = ReactDOM.findDOMNode(this.refs.toolbar);
-    SearchBox.create(toolbar);
-  },
-
-  componentWillUnmount: function() {
-    var toolbar = ReactDOM.findDOMNode(this.refs.toolbar);
-    SearchBox.destroy(toolbar);
   },
 
   // Commands
@@ -89,7 +80,9 @@ var MainToolbar = React.createClass({
         ),
         ToolbarButton({bsSize: "xsmall", onClick: this.onSwitchPerspective},
           perspectiveLabel
-        )
+        ),
+        SearchBox(this.props),
+        ConnectionFilter(this.props)
       )
     );
   },

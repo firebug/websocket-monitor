@@ -1,0 +1,26 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* Connection Filter Dropdown */
+
+.theme-dark .ConnectionFilter {
+  color: var(--theme-content-color1);
+  border: none;
+  background: rgba(170, 170, 170, .3);
+}
+
+.theme-firebug .ConnectionFilter {
+  color: #333;
+  border-radius: 2px;
+}
+
+.ConnectionFilter {
+  float: right;
+  height: 22px;
+  border: 1px solid rgb(204, 204, 204);
+
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+  color: rgb(85, 85, 85);
+}
+

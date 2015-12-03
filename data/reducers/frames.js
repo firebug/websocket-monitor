@@ -95,27 +95,26 @@ function addFrames(state, newFrames) {
   });
 
   // Apply filter on incoming frames.
-  if (newState.filter.text) {
-    return filterFrames(newState, newState.filter);
-  }
-
-  return newState;
+  return filterFrames(newState, newState.filter);
 }
 
 function filterFrames(state, filter) {
-  var frames;
-
-  var summary = {
-    totalSize: 0,
-    startTime: 0,
-    endTime: 0,
-    frameCount: 0
-  };
+  var { frames } = state;
+  var summary = null;
 
   if (filter.text) {
-    frames = state.frames.filter(frame => {
+    summary = {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    };
+
+    frames = frames.filter(frame => {
       var data = frame.data;
-      if (data.payload && data.payload.indexOf(filter.text) != -1) {
+
+      // Exclude where data is null (events). Events have no payload
+      if (data && data.payload && data.payload.indexOf(filter.text) != -1) {
         summary.totalSize += data.payload.length;
         summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
         summary.endTime = data.timeStamp;
@@ -123,13 +122,38 @@ function filterFrames(state, filter) {
         return true;
       }
     });
-  } else {
-    summary = null;
+  }
+
+  if (filter.webSocketSerialID) {
+    summary = {
+      totalSize: 0,
+      startTime: 0,
+      endTime: 0,
+      frameCount: 0
+    };
+
+    frames = frames.filter(frame => {
+      var data = frame.data;
+      if (frame.webSocketSerialID === filter.webSocketSerialID) {
+
+        // If data is null, this is not an actual frame, but an event
+        // like "connect" or "disconnect". We still want to keep it
+        // in the list, though.
+        if (data) {
+          summary.totalSize += data.payload.length;
+          summary.startTime = summary.startTime ? summary.startTime : data.timeStamp;
+          summary.endTime = data.timeStamp;
+          summary.frameCount++;
+        }
+        return true;
+      }
+    });
   }
 
   return Object.assign({}, state, {
     filter: {
       text: filter.text,
+      webSocketSerialID: filter.webSocketSerialID,
       frames: frames,
       summary: summary,
     }
@@ -137,9 +161,10 @@ function filterFrames(state, filter) {
 }
 
 function clear(state) {
-  // All data are cleared except of the current filter.
+  // All data is cleared except for the current filters.
   var newState = getInitialState();
   newState.filter.text = state.filter.text;
+  newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
   return newState;
 }
 
