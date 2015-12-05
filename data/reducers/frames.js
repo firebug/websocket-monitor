@@ -180,6 +180,7 @@ function clear(state, options = {}) {
   // Allow clearing on page reload
   if (options.resetIDfilter !== true) {
     newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
+    newState.uniqueConnections = state.uniqueConnections;
   }
 
   return newState;
