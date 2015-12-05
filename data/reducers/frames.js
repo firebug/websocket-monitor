@@ -15,6 +15,7 @@ function getInitialState() {
   return {
     frames: [],
     selection: null,
+    uniqueConnections: [],
     filter: {
       text: "",
       frames: null
@@ -40,7 +41,7 @@ function frames(state = getInitialState(), action) {
     return filterFrames(state, action.filter);
 
   case types.CLEAR:
-    return clear(state);
+    return clear(state, action.options);
 
   case selectionTypes.SELECT_FRAME:
     return selectFrame(state, action.frame);
@@ -68,6 +69,7 @@ function addFrames(state, newFrames) {
   }
 
   var { totalSize, frameCount, startTime, endTime } = state.summary;
+  var uniqueConnections = state.uniqueConnections;
 
   // Update summary info
   newFrames.forEach(frame => {
@@ -78,6 +80,15 @@ function addFrames(state, newFrames) {
       endTime = data.timeStamp;
     }
 
+    // Update uniqueConnections.
+    //
+    // When the platform API supports it, this should be replaced
+    // with some API call listing only the current connections on
+    // the page.
+    if (!uniqueConnections.includes(frame.webSocketSerialID)) {
+      uniqueConnections.push(frame.webSocketSerialID);
+    }
+
     if (frame.type == "frame") {
       frameCount++;
     }
@@ -85,7 +96,8 @@ function addFrames(state, newFrames) {
 
   // Return new state
   var newState = Object.assign({}, state, {
-    frames: frames,
+    frames,
+    uniqueConnections,
     summary: {
       totalSize: totalSize,
       startTime: startTime,
@@ -160,11 +172,16 @@ function filterFrames(state, filter) {
   });
 }
 
-function clear(state) {
+function clear(state, options = {}) {
   // All data is cleared except for the current filters.
   var newState = getInitialState();
   newState.filter.text = state.filter.text;
-  newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
+
+  // Allow clearing on page reload
+  if (options.resetIDfilter !== true) {
+    newState.filter.webSocketSerialID = state.filter.webSocketSerialID;
+  }
+
   return newState;
 }
 

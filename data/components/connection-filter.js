@@ -25,12 +25,6 @@ var ConnectionFilter = React.createClass({
 
   displayName: "ConnectionFilter",
 
-  getInitialState() {
-    return {
-      uniqueConnections: []
-    };
-  },
-
   handleChange(e) {
     const { value } = e.target;
     const currentFilter = this.props.frames.filter;
@@ -44,23 +38,8 @@ var ConnectionFilter = React.createClass({
     ));
   },
 
-  // When the platform API supports it, this should be replaced
-  // with some API call listing only the current connections on
-  // the page.
-  componentWillReceiveProps({ frames }) {
-    frames.frames.forEach(frame => {
-      const { uniqueConnections } = this.state;
-
-      if (!uniqueConnections.includes(frame.webSocketSerialID)) {
-        this.setState({
-          uniqueConnections: [...uniqueConnections, frame.webSocketSerialID]
-        });
-      }
-    })
-  },
-
   render() {
-    const { uniqueConnections } = this.state;
+    const { uniqueConnections } = this.props.frames;
     return (
       uniqueConnections.length > 1 ?
         select({

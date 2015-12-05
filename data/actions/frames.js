@@ -11,8 +11,8 @@ const types = {
   FILTER_FRAMES: "FILTER_FRAMES",
 }
 
-function clear() {
-  return { type: types.CLEAR };
+function clear(options) {
+  return { type: types.CLEAR, options };
 }
 
 function addFrame(frame) {

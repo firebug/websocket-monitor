@@ -60,8 +60,9 @@ var WebSocketsView = createView(PanelView,
 
   // Chrome Messages
 
-  removeFrames: function() {
-    store.dispatch(clear());
+  tabNavigated: function() {
+    // Clear on reload, and force ID filter reset
+    store.dispatch(clear({ resetIDfilter: true }));
   },
 
   // nsIWebSocketEventService events
