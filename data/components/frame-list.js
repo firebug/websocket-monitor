@@ -152,33 +152,31 @@ var FrameBubble = React.createFactory(React.createClass({
       classNames.push("selected");
     }
 
-    // Render inline frame preview.
-    var preview = [
-      TreeView({
-        key: "preview-frame",
-        data: {"Frame": frame},
-        mode: "tiny"
-      })
-    ];
+    // Render inline frame preview. There is just one preview displayed
+    var preview;
 
-    if (frame.socketIo) {
-      preview.push(
-        TreeView({
-          key: "preview-socketio",
-          data: {"Socket IO": frame.socketIo},
-          mode: "tiny"
-        })
-      );
+    if (!preview && frame.socketIo) {
+      preview = TreeView({
+        key: "preview-socketio",
+        data: {"Socket IO": frame.socketIo},
+        mode: "tiny"
+      });
     }
 
-    if (frame.sockJs) {
-      preview.push(
-        TreeView({
-          key: "preview-sockjs",
-          data: {"SockJS": frame.sockJs},
-          mode: "tiny"
-        })
-      );
+    if (!preview && frame.sockJs) {
+      preview = TreeView({
+        key: "preview-sockjs",
+        data: {"SockJS": frame.sockJs},
+        mode: "tiny"
+      });
+    }
+
+    if (!preview && frame.sockJs) {
+      preview = TreeView({
+        key: "preview-sockjs",
+        data: {"SockJS": frame.sockJs},
+        mode: "tiny"
+      });
     }
 
     var label = (type == "send") ?
