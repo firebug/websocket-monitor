@@ -217,7 +217,7 @@ var EventRow = React.createFactory(React.createClass({
 
     return (
       tr({className: className, onClick: this.onClick},
-        td({}),
+        td({className: "direction"}),
         td({className: "socketId"},
           frame.webSocketSerialID
         ),
