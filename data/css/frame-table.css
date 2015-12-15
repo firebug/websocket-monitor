@@ -231,3 +231,7 @@
   border-bottom: 1px solid var(--table-splitter-color);
   height: 18px;
 }
+
+.theme-dark .eventRow .text {
+  color: var(--theme-body-color-alt);
+}
