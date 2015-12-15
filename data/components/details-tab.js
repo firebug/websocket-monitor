@@ -28,7 +28,7 @@ var DetailsTab = React.createClass({
 
     return (
       DIV({className: "details"},
-        TreeView({key: "detailsTabTree", data: selectedFrame})
+        TreeView({key: "detailsTabTree", data: selectedFrame.data})
       )
     );
   }

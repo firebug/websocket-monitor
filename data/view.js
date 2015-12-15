@@ -89,6 +89,8 @@ var WebSocketsView = createView(PanelView,
     frame = JSON.parse(frame);
     frame.received = true;
     frame.type = "frame";
+    frame.data.webSocketSerialID = frame.webSocketSerialID;
+
     this.lazyAdd(frame);
   },
 
@@ -96,6 +98,8 @@ var WebSocketsView = createView(PanelView,
     frame = JSON.parse(frame);
     frame.sent = true;
     frame.type = "frame";
+    frame.data.webSocketSerialID = frame.webSocketSerialID;
+
     this.lazyAdd(frame);
   },
 

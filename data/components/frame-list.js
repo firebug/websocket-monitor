@@ -171,10 +171,10 @@ var FrameBubble = React.createFactory(React.createClass({
       });
     }
 
-    if (!preview && frame.sockJs) {
+    if (!preview && frame.json) {
       preview = TreeView({
-        key: "preview-sockjs",
-        data: {"SockJS": frame.sockJs},
+        key: "preview-json",
+        data: {"JSON": frame.json},
         mode: "tiny"
       });
     }
