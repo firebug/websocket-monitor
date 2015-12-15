@@ -62,17 +62,16 @@
   border: 1px solid #bfccd1;
   border-radius: 3px;
   min-width: 320px;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.0));
   order: 2;
   z-index: 1;
 }
 
 .frameBubble.receive .body {
-  background-color: rgb(252, 248, 227);
+  background-color: white;
 }
 
 .frameBubble.send .body {
-  background-color: rgb(223, 240, 216);
+  background-color: rgb(234, 245, 229);
   text-align: left;
 }
 
@@ -106,7 +105,7 @@
 
 .frameBubble.selected .body {
   border-color: rgb(0, 170, 214);
-  background-color: rgb(173, 211, 232);
+  background-color: rgb(200, 226, 240);
 }
 
 .frameBubble .info {
