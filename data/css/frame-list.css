@@ -259,3 +259,16 @@
 .frameBubble.event .socketId {
   color: gray;
 }
+
+/******************************************************************************/
+/* Themes */
+
+.theme-dark .frameBubble.event .body {
+  background-image: none;
+  background-color: var(--theme-toolbar-background);
+}
+
+.theme-dark .frameBubble.event .uri,
+.theme-dark .frameBubble.event .text {
+  color: var(--theme-body-color-alt);
+}
