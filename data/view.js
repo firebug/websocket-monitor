@@ -86,7 +86,7 @@ var WebSocketsView = createView(PanelView,
    * about the mapping event -> method.
    */
   frameReceived: function(frame) {
-    frame = JSON.parse(frame);
+    frame = JSON.parse(decodeURIComponent(escape(frame)));
     frame.received = true;
     frame.type = "frame";
     frame.data.webSocketSerialID = frame.webSocketSerialID;
@@ -95,7 +95,7 @@ var WebSocketsView = createView(PanelView,
   },
 
   frameSent: function(frame) {
-    frame = JSON.parse(frame);
+    frame = JSON.parse(decodeURIComponent(escape(frame)));
     frame.sent = true;
     frame.type = "frame";
     frame.data.webSocketSerialID = frame.webSocketSerialID;
