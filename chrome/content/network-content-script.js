@@ -23,8 +23,15 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
 
   // Append WebSocket icon in the UI
   var hbox = item._target;
-  var status = hbox.querySelector(".requests-menu-status");
-  status.classList.add("websocket");
+  var statusIconNode = hbox.querySelector(".requests-menu-status-icon");
+
+  // FF 45 changed the DOM layout in the network panel,
+  // so we fall back to old selector if no match with
+  // this one
+  if (!statusIconNode) {
+    statusIconNode = hbox.querySelector(".requests-menu-status");
+  }
+  statusIconNode.classList.add("websocket");
 
   // Register click handler and emit an event that is handled
   // in the 'WsmNetMonitorOverlay' overlay.

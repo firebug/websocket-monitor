@@ -4,6 +4,9 @@
 /* Network Panel */
 
 /* Web Socket Icon */
+/* FF 45 changed the DOM layout, so we fallback to using
+ * old .requests-menu-status in network-content-script.js */
+.requests-menu-status-icon.websocket,
 .requests-menu-status.websocket {
   background-image: url("./tool-websockets.svg");
   background-repeat: no-repeat;
@@ -19,6 +22,12 @@
   45+: chrome://devtools/skin//images/filters.svg#invert
   The local copy can be remove as soon as the min Fx version is 45*/
   filter: url(./filters.svg#invert);
+}
+
+/* Clear filter on icon for dark theme so it is white */
+.theme-dark .requests-menu-status-icon.websocket,
+.theme-dark .requests-menu-status.websocket {
+  filter: initial;
 }
 
 .theme-firebug box.requests-menu-status.websocket {
