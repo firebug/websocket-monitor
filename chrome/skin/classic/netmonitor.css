@@ -4,6 +4,9 @@
 /* Network Panel */
 
 /* Web Socket Icon */
+/* FF 45 changed the DOM layout, so we fallback to using
+ * old .requests-menu-status in network-content-script.js */
+.requests-menu-status-icon.websocket,
 .requests-menu-status.websocket {
   background-image: url("./tool-websockets.svg");
   background-repeat: no-repeat;
