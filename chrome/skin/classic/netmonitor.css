@@ -24,6 +24,12 @@
   filter: url(./filters.svg#invert);
 }
 
+/* Clear filter on icon for dark theme so it is white */
+.theme-dark .requests-menu-status-icon.websocket,
+.theme-dark .requests-menu-status.websocket {
+  filter: initial;
+}
+
 .theme-firebug box.requests-menu-status.websocket {
   background-color: transparent !important;
 }
