@@ -23,8 +23,18 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
 
   // Append WebSocket icon in the UI
   var hbox = item._target;
-  var status = hbox.querySelector(".requests-menu-method");
-  status.classList.add("websocket");
+
+  var method = hbox.querySelector(".requests-menu-method");
+  method.classList.add("websocket");
+
+  // Fx 45 changed the DOM layout in the network panel and also
+  // the WS icon isn't overlapping the original status icon now.
+  // But, we need a little indentation for pre Fx45.
+  var statusIconNode = hbox.querySelector(".requests-menu-status-icon");
+  if (!statusIconNode) {
+    // We are in pre Fx45 world, use a little indentation.
+    method.classList.add("websocket-indent");
+  }
 
   // Register click handler and emit an event that is handled
   // in the 'WsmNetMonitorOverlay' overlay.

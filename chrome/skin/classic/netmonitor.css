@@ -20,6 +20,13 @@
   filter: url(./filters.svg#invert);
 }
 
+/* The layout changed a bit in Fx45 and we need a little indentation
+ * of the background image for prev Fx45. See network-content-script.js
+ * for more details. */
+.requests-menu-method.websocket-indent {
+  background-position: 24px 1px;
+}
+
 .theme-firebug box.requests-menu-status.websocket {
   background-color: transparent !important;
 }
