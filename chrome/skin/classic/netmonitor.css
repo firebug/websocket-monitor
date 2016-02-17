@@ -4,20 +4,19 @@
 /* Network Panel */
 
 /* Web Socket Icon */
-.requests-menu-status.websocket {
+.requests-menu-method.websocket {
   background-image: url("./tool-websockets.svg");
   background-repeat: no-repeat;
-  background-position: 0 center;
-  width: 16px;
-  height: 16px;
-  transition: none;
-  border-radius: 0;
-  margin: 2px;
+  background-position: 0 1px;
+}
 
+/* Make sure the icon works in all themes */
+.theme-firebug .requests-menu-method.websocket,
+.theme-light .requests-menu-method.websocket {
   /* Path to built-in theme resource has changed in Firefox 45
-  Befor: 45: chrome://devtools/skin/themes/images/filters.svg#invert
+  Before: 45: chrome://devtools/skin/themes/images/filters.svg#invert
   45+: chrome://devtools/skin//images/filters.svg#invert
-  The local copy can be remove as soon as the min Fx version is 45*/
+  The local copy can be removed as soon as the min Fx version is 45 */
   filter: url(./filters.svg#invert);
 }
 

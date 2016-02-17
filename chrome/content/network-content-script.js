@@ -23,7 +23,7 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
 
   // Append WebSocket icon in the UI
   var hbox = item._target;
-  var status = hbox.querySelector(".requests-menu-status");
+  var status = hbox.querySelector(".requests-menu-method");
   status.classList.add("websocket");
 
   // Register click handler and emit an event that is handled
