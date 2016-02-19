@@ -27,7 +27,7 @@ Hacking on WebSocket Monitor
 
 3. Get the WebSocketMonitor repo: `git clone https://github.com/firebug/websocket-monitor.git` and install its dependencies via `npm install`
 
-4. Run `jpm run -b <file path to your Firefox binary>` in the source directory to launch Firefox, which automatically creates a clean profile.
+4. Run `jpm run -b <file path to your Firefox binary> --binary-args 'http://janodvarko.cz/test/websockets/'` in the source directory to launch Firefox, which automatically creates a clean profile and launches the [demo page](http://janodvarko.cz/test/websockets/).
 
 If you wish to run it with an existing profile, first create a new profile via the [Profile Manager](https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles), and then run `jpm run -b <file path to your Firefox binary> -p <path to your Firefox profile (needs to start with /)>`.
 
