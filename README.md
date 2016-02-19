@@ -7,7 +7,7 @@ data sent and received.
 See [Home Page](https://github.com/firebug/websocket-monitor/wiki)
 for more details
 
-The extension isn't signed, so you might need to set `xpinstall.signatures.required` pref to false.
+**This is the source code, the extension can be downloaded [here](https://addons.mozilla.org/en-US/firefox/addon/websocket-monitor).**
 
 Instructions
 ------------
@@ -21,13 +21,13 @@ You might want to check out online [demo page](http://janodvarko.cz/test/websock
 
 Hacking on WebSocket Monitor
 ----------------------------
-1. Get [JPM](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm): `git clone https://github.com/mozilla/jpm`
+1. Get [npm](https://www.npmjs.com/)
 
-2. Switch to the JPM folder and [install](https://www.npmjs.org/doc/cli/npm-install.html) and [link](https://www.npmjs.org/doc/cli/npm-link.html) it via `npm install` and `npm link`. (Also needs to be done after fetching the latest changes to the JPM repo.)
+2. Get [JPM](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm): `sudo npm install -g jpm`
 
 3. Get the WebSocketMonitor repo: `git clone https://github.com/firebug/websocket-monitor.git` and install its dependencies via `npm install`
 
-4. Run `jpm run -b <file path to your Firefox binary>` in the source directory to launch Firefox, which automatically creates a clean profile.
+4. Run `jpm run -b <file path to your Firefox binary> --binary-args 'http://janodvarko.cz/test/websockets/'` in the source directory to launch Firefox, which automatically creates a clean profile and launches the [demo page](http://janodvarko.cz/test/websockets/).
 
 If you wish to run it with an existing profile, first create a new profile via the [Profile Manager](https://support.mozilla.org/en-US/kb/profile-manager-create-and-remove-firefox-profiles), and then run `jpm run -b <file path to your Firefox binary> -p <path to your Firefox profile (needs to start with /)>`.
 
