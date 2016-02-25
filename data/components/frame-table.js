@@ -120,6 +120,32 @@ var FrameRow = React.createFactory(React.createClass({
 
   displayName: "FrameRow",
 
+  getInitialState() {
+    return {};
+  },
+
+  /**
+   * Create TreeView sub-components in lifecycle methods so we
+   * only generate them once and don't run into state issues
+   * with the TreeView component.
+   */
+  componentWillMount() {
+    if (this.props.frame) {
+      this.setState({ payload: this.buildPayload(this.props.frame) });
+    }
+  },
+
+  /**
+   * Create TreeView sub-components in lifecycle methods so we
+   * only generate them once and don't run into state issues
+   * with the TreeView component.
+   */
+  componentWillReceiveProps({ frame }) {
+    if (frame !== this.props.frame) {
+      this.setState({ payload: this.buildPayload(this.props.frame) });
+    }
+  },
+
   /**
    * Frames need to be re-rendered only if the selection changes.
    * This is an optimization that makes the list rendering a lot faster.
@@ -136,22 +162,8 @@ var FrameRow = React.createFactory(React.createClass({
     }
   },
 
-  render: function() {
-    var frame = this.props.frame;
-    var data = frame.data;
-
-    var className = "frameRow " + (frame.sent ? "send" : "receive");
-    var tooltipText = frame.sent ? "Sent" : "Received";
-
-    if (this.props.selection == frame) {
-      className += " selected";
-    }
-
+  buildPayload(frame) {
     var payload;
-    var size =  Str.formatSize(data.payload.length);
-    var time = new Date(data.timeStamp / 1000);
-    var timeText = time.getHours() + ":" + time.getMinutes() +
-      ":" + time.getSeconds() + "." + time.getMilliseconds();
 
     // Test support for inline previews.
     if (frame.socketIo) {
@@ -171,8 +183,27 @@ var FrameRow = React.createFactory(React.createClass({
       });
     } else {
       // Fall back to showing a string
-      payload = Str.cropString(data.payload, 50);
+      payload = Str.cropString(frame.data.payload, 50);
     }
+    return payload;
+  },
+
+  render: function() {
+    var frame = this.props.frame;
+    var payload = this.state.payload;
+    var data = frame.data;
+
+    var className = "frameRow " + (frame.sent ? "send" : "receive");
+    var tooltipText = frame.sent ? "Sent" : "Received";
+
+    if (this.props.selection == frame) {
+      className += " selected";
+    }
+
+    var size =  Str.formatSize(data.payload.length);
+    var time = new Date(data.timeStamp / 1000);
+    var timeText = time.getHours() + ":" + time.getMinutes() +
+      ":" + time.getSeconds() + "." + time.getMilliseconds();
 
     return (
       tr({className: className, onClick: this.onClick},
