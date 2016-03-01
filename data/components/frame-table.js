@@ -120,13 +120,40 @@ var FrameRow = React.createFactory(React.createClass({
 
   displayName: "FrameRow",
 
+  getInitialState() {
+    return {};
+  },
+
+  /**
+   * Create TreeView sub-components in lifecycle methods so we
+   * only generate them once and don't run into state issues
+   * with the TreeView component.
+   */
+  componentWillMount() {
+    if (this.props.frame) {
+      this.setState({ payload: this.buildPayload(this.props.frame) });
+    }
+  },
+
+  /**
+   * Create TreeView sub-components in lifecycle methods so we
+   * only generate them once and don't run into state issues
+   * with the TreeView component.
+   */
+  componentWillReceiveProps({ frame }) {
+    if (frame !== this.props.frame) {
+      this.setState({ payload: this.buildPayload(this.props.frame) });
+    }
+  },
+
   /**
    * Frames need to be re-rendered only if the selection changes.
    * This is an optimization that makes the list rendering a lot faster.
    */
   shouldComponentUpdate: function(nextProps, nextState) {
-    return this.props.frame == nextProps.selection ||
-      this.props.frame == this.props.selection;
+    return nextProps.selection !== this.props.selection && (
+      this.props.frame == nextProps.selection ||
+      this.props.frame == this.props.selection);
   },
 
   onClick: function() {
@@ -135,8 +162,35 @@ var FrameRow = React.createFactory(React.createClass({
     }
   },
 
+  buildPayload(frame) {
+    var payload;
+
+    // Test support for inline previews.
+    if (frame.socketIo) {
+      payload = TreeView({
+        key: "preview-socketio",
+        data: {"Socket IO": frame.socketIo},
+      });
+    } else if (frame.sockJs) {
+      payload = TreeView({
+        key: "preview-sockjs",
+        data: {"SockJS": frame.sockJs},
+      });
+    } else if (frame.json) {
+      payload = TreeView({
+        key: "preview-json",
+        data: {"JSON": frame.json},
+      });
+    } else {
+      // Fall back to showing a string
+      payload = Str.cropString(frame.data.payload, 50);
+    }
+    return payload;
+  },
+
   render: function() {
     var frame = this.props.frame;
+    var payload = this.state.payload;
     var data = frame.data;
 
     var className = "frameRow " + (frame.sent ? "send" : "receive");
@@ -146,18 +200,10 @@ var FrameRow = React.createFactory(React.createClass({
       className += " selected";
     }
 
-    var payload = Str.cropString(data.payload, 50);
-    var size = Str.formatSize(data.payload.length);
+    var size =  Str.formatSize(data.payload.length);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
-
-    // Test support for inline previews. The problem is the
-    // state of the TreeView component.
-    /*if (frame.socketIo) {
-      var data = { payload: frame.socketIo };
-      payload = TreeView({key: "detailsTabTree", data: data})
-    }*/
 
     return (
       tr({className: className, onClick: this.onClick},

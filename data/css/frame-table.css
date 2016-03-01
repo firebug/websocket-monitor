@@ -61,6 +61,27 @@
 }
 
 /******************************************************************************/
+/* Inline Packet Details Preview */
+
+.frameRow .preview {
+  overflow: auto;
+  width: 100%;
+  max-height: 200px;
+}
+
+.frameRow .memberRow:hover {
+  background-color: transparent;
+}
+
+.frameRow .domTable {
+  width: auto;
+}
+
+.frameRow .domTable > tbody > tr > td {
+  border-bottom: transparent;
+}
+
+/******************************************************************************/
 /* Events */
 
 .eventRow .uri {
@@ -149,21 +170,6 @@
 }
 
 /******************************************************************************/
-/* Frame Row Selection */
-
-.frameRow:not(.selected):hover td {
-  background: #EFEFEF;
-}
-
-.eventRow.selected .text,
-.eventRow.selected .uri,
-.frameRow.selected td.opcode,
-.frameRow.selected td {
-  background: #3399ff;
-  color: white;
-}
-
-/******************************************************************************/
 /* Summary */
 
 .frameTFoot td {
@@ -206,15 +212,15 @@
   border-bottom: none;
 }
 
-.theme-light .frameRow:hover td,
-.theme-dark .frameRow:hover td {
-  background-color: var(--theme-selection-background-semitransparent);
+.theme-light .frameRow:hover>td,
+.theme-dark .frameRow:hover>td {
+  background-color: var(--theme-toolbar-background);
 }
 
-.theme-light .frameRow.selected td,
-.theme-dark .frameRow.selected td {
-  color: var(--theme-selection-color);
-  background-color: var(--theme-selection-background);
+.theme-light .frameRow.selected>td,
+.theme-dark .frameRow.selected>td {
+  /* JSON text (blue) must be visible, so we can't use --theme-selection-background */
+  background-color: var(--theme-selection-background-semitransparent);
 }
 
 .theme-light .frameTHead th,
