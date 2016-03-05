@@ -169,7 +169,9 @@ var FrameRow = React.createFactory(React.createClass({
     if (frame.socketIo) {
       payload = TreeView({
         key: "preview-socketio",
-        data: {"Socket IO": frame.socketIo},
+        // We only show the data that is deemed interesting for the user in the
+        // inline previews, not the socketIO metadata
+        data: {"Socket IO": frame.socketIo.data},
       });
     } else if (frame.sockJs) {
       payload = TreeView({
