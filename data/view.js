@@ -87,21 +87,27 @@ var WebSocketsView = createView(PanelView,
    * about the mapping event -> method.
    */
   frameReceived: function(frame) {
-    frame = JSON.parse(decodeURIComponent(escape(frame)));
-    frame.received = true;
-    frame.type = "frame";
-    frame.data.webSocketSerialID = frame.webSocketSerialID;
-
-    this.lazyAdd(frame);
+    try {
+      frame = JSON.parse(decodeURIComponent(escape(frame)));
+      frame.received = true;
+      frame.type = "frame";
+      frame.data.webSocketSerialID = frame.webSocketSerialID;
+      this.lazyAdd(frame);
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   frameSent: function(frame) {
-    frame = JSON.parse(decodeURIComponent(escape(frame)));
-    frame.sent = true;
-    frame.type = "frame";
-    frame.data.webSocketSerialID = frame.webSocketSerialID;
-
-    this.lazyAdd(frame);
+    try {
+      frame = JSON.parse(decodeURIComponent(escape(frame)));
+      frame.sent = true;
+      frame.type = "frame";
+      frame.data.webSocketSerialID = frame.webSocketSerialID;
+      this.lazyAdd(frame);
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   lazyAdd: function(frame) {
