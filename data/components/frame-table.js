@@ -183,6 +183,11 @@ var FrameRow = React.createFactory(React.createClass({
         key: "preview-json",
         data: {"JSON": frame.json},
       });
+    } else if (frame.mqtt) {
+      payload = TreeView({
+        key: "preview-mqtt",
+        data: {"MQTT": frame.mqtt},
+      });
     } else {
       // Fall back to showing a string
       payload = Str.cropString(frame.data.payload, 50);

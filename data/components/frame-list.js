@@ -181,6 +181,14 @@ var FrameBubble = React.createFactory(React.createClass({
       });
     }
 
+    if (!preview && frame.mqtt) {
+      preview = TreeView({
+        key: "preview-mqtt",
+        data: {"MQTT": frame.mqtt},
+        mode: "tiny"
+      });
+    }
+
     var label = (type == "send") ?
       Locale.$STR("websocketmonitor.label.sent") :
       Locale.$STR("websocketmonitor.label.received");
