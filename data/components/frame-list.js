@@ -135,6 +135,7 @@ var FrameBubble = React.createFactory(React.createClass({
     var data = frame.data;
 
     var type = frame.sent ? "send" : "receive";
+    var op = getOpCodeLabel(frame);
     var size = Str.formatSize(data.payload.length);
     var payload = Str.cropString(data.payload, 50);
     var time = new Date(data.timeStamp / 1000);
@@ -182,9 +183,16 @@ var FrameBubble = React.createFactory(React.createClass({
     }
 
     if (!preview && frame.mqtt) {
+      var mqtt = frame.mqtt;
+      op = "MQTT " + mqtt.cmd;
+      if (mqtt.cmd === "publish") {
+        payload = mqtt.topic;
+      } else {
+        payload = mqtt.messageId || mqtt.clientId || mqtt.returnCode;
+      }
       preview = TreeView({
         key: "preview-mqtt",
-        data: {"MQTT": frame.mqtt},
+        data: {"MQTT": mqtt},
         mode: "tiny"
       });
     }
@@ -199,10 +207,8 @@ var FrameBubble = React.createFactory(React.createClass({
           div({className: "frameContent"},
             div({className: "body"},
               span({className: "text"}, label),
-              span({className: "type"}, getOpCodeLabel(frame)),
-              div({className: "payload"},
-                Str.cropString(data.payload)
-              ),
+              span({className: "type"}, op),
+              div({className: "payload"}, payload),
               div({className: "preview"},
                 preview
               ),
