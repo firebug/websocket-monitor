@@ -26,11 +26,6 @@ var DetailsTab = React.createClass({
   render: function() {
     var selectedFrame = this.props.selection || {};
 
-    // Show parsed mqtt payload
-    if (selectedFrame.mqtt) {
-      selectedFrame.data.payload = selectedFrame.mqtt.payload;
-    }
-
     return (
       DIV({className: "details"},
         TreeView({key: "detailsTabTree", data: selectedFrame.data})
