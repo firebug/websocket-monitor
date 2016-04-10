@@ -23,7 +23,7 @@ var PayloadTab = React.createClass({
     var frame = this.props.selection || {};
     var data = frame.data || {};
 
-    // Parse mqtt payload
+    // Show parsed mqtt payload
     if (frame.mqtt) {
       data.payload = frame.mqtt.payload;
     }
