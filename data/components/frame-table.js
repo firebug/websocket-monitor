@@ -207,7 +207,7 @@ var FrameRow = React.createFactory(React.createClass({
       className += " selected";
     }
 
-    var size =  Str.formatSize(data.payload.length);
+    var size =  Str.formatSize(data.payload ? data.payload.length : 0);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
