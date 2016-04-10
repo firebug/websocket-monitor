@@ -136,7 +136,7 @@ var FrameBubble = React.createFactory(React.createClass({
 
     var type = frame.sent ? "send" : "receive";
     var op = getOpCodeLabel(frame);
-    var size = Str.formatSize(data.payload.length);
+    var size = Str.formatSize(data.payload ? data.payload.length : 0);
     var payload = Str.cropString(data.payload, 50);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
