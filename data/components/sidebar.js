@@ -19,6 +19,7 @@ const { SocketIOTab } = createFactories(require("./socketio-tab"));
 const { SockJSTab } = createFactories(require("./sockjs-tab"));
 const { JSONTab } = createFactories(require("./json-tab"));
 const { WampTab } = createFactories(require("./wamp-tab"));
+const { MQTTTab } = createFactories(require("./mqtt-tab"));
 
 /**
  * @template This template represents a list of packets displayed
@@ -83,6 +84,14 @@ var Sidebar = React.createClass({
         TabPanel({className: "json", key: "json",
           title: Locale.$STR("websocketmonitor.JSON")},
           JSONTab(this.props)
+      ));
+    }
+
+    if (selectedFrame && selectedFrame.mqtt) {
+      tabs.push(
+        TabPanel({className: "mqtt", key: "mqtt",
+          title: Locale.$STR("websocketmonitor.MQTT")},
+          MQTTTab(this.props)
       ));
     }
 

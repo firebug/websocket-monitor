@@ -183,6 +183,11 @@ var FrameRow = React.createFactory(React.createClass({
         key: "preview-json",
         data: {"JSON": frame.json},
       });
+    } else if (frame.mqtt) {
+      payload = TreeView({
+        key: "preview-mqtt",
+        data: {"MQTT": frame.mqtt},
+      });
     } else {
       // Fall back to showing a string
       payload = Str.cropString(frame.data.payload, 50);
@@ -202,7 +207,7 @@ var FrameRow = React.createFactory(React.createClass({
       className += " selected";
     }
 
-    var size =  Str.formatSize(data.payload.length);
+    var size =  Str.formatSize(data.payload ? data.payload.length : 0);
     var time = new Date(data.timeStamp / 1000);
     var timeText = time.getHours() + ":" + time.getMinutes() +
       ":" + time.getSeconds() + "." + time.getMilliseconds();
