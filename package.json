@@ -9,12 +9,13 @@
     "Helen V. Holmes (Mozilla Corp.)",
     "Florent Fayolle",
     "Elad Zelingher",
-    "Espen Henriksen"
+    "Espen Henriksen",
+    "Tuukka Hastrup"
   ],
   "license": "BSD-3-Clause",
   "icon": "chrome://websocketmonitor/skin/icon-32-color.png",
   "homepage": "https://github.com/firebug/websocket-monitor/wiki",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "main": "lib/index",
   "repository": {
     "type": "git",
