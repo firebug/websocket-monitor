@@ -43,6 +43,35 @@
       "description": "Display sent and received frames in tabular format",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "enableSocketIo",
+      "title": "Socket.IO support",
+      "description": "Parse Socket.IO frames",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "name": "enableSockJs",
+      "title": "SockJS support",
+      "description": "Parse SockJS frames",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "name": "enableJson",
+      "title": "JSON support",
+      "description": "Parse JSON frames",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "name": "enableMqtt",
+      "title": "MQTT support",
+      "description": "Parse MQTT frames",
+      "type": "bool",
+      "value": true
     }
+
   ]
 }

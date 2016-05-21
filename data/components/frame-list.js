@@ -82,7 +82,8 @@ var FrameList = React.createClass({
         key: "frame-" + frame.id,
         frame: frame,
         selection: this.props.selection,
-        dispatch: this.props.dispatch
+        dispatch: this.props.dispatch,
+        config: this.props.dispatch
       }));
     }
 
@@ -156,7 +157,7 @@ var FrameBubble = React.createFactory(React.createClass({
     // Render inline frame preview. There is just one preview displayed
     var preview;
 
-    if (!preview && frame.socketIo) {
+    if (this.props.config.enableSocketIo !== false && frame.socketIo) {
       preview = TreeView({
         key: "preview-socketio",
         // We only show the data that is deemed interesting for the user in the
@@ -164,32 +165,29 @@ var FrameBubble = React.createFactory(React.createClass({
         data: {"Socket IO": frame.socketIo.data},
         mode: "tiny"
       });
-    }
-
-    if (!preview && frame.sockJs) {
+    } else if (this.props.config.enableSockJs !== false && frame.sockJs) {
       preview = TreeView({
         key: "preview-sockjs",
         data: {"SockJS": frame.sockJs},
         mode: "tiny"
       });
-    }
-
-    if (!preview && frame.json) {
+    } else if (this.props.config.enableJson !== false && frame.json) {
       preview = TreeView({
         key: "preview-json",
         data: {"JSON": frame.json},
         mode: "tiny"
       });
-    }
+    } else if (this.props.config.enableMqtt !== false && frame.mqtt) {
 
-    if (!preview && frame.mqtt) {
       var mqtt = frame.mqtt;
       op = "MQTT " + mqtt.cmd;
+
       if (mqtt.cmd === "publish") {
         payload = mqtt.topic;
       } else {
         payload = mqtt.messageId || mqtt.clientId || mqtt.returnCode;
       }
+
       preview = TreeView({
         key: "preview-mqtt",
         data: {"MQTT": mqtt},

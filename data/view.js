@@ -21,8 +21,10 @@ const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
 const { addFrames, filterFrames, clear } = require("./actions/frames");
 const { showTableView, showListView } = require("./actions/perspective");
+const { updateConfig } = require("./actions/config");
 
-var store = configureStore();
+/** Redux store, populated on view initialize */
+var store;
 
 /**
  * This object represents a view that is responsible for rendering
@@ -53,6 +55,18 @@ var WebSocketsView = createView(PanelView,
 
     // Render the top level application component.
     this.content = document.getElementById("content");
+
+    // Initialize the redux store with user preferences
+    store = configureStore({
+      config: {
+        enableSocketIo: Options.get('enableSocketIo'),
+        enableSockJs: Options.get('enableSockJs'),
+        enableJson: Options.get('enableJson'),
+        enableMqtt: Options.get('enableMqtt'),
+      }
+    });
+
+    // Render the app
     this.theApp = ReactDOM.render(Provider({store: store},
       App(config)
     ), this.content);
@@ -152,15 +166,19 @@ var WebSocketsView = createView(PanelView,
 
   onPrefChanged: function(event) {
     var prefName = event.prefName;
-    if (prefName != "tabularView") {
-      return;
-    }
 
-    // Update the way how frames are displayed.
-    if (event.newValue) {
-      store.dispatch(showTableView());
+    if (prefName === "tabularView") {
+
+      // Update the way how frames are displayed.
+      if (event.newValue) {
+        store.dispatch(showTableView());
+      } else {
+        store.dispatch(showListView());
+      }
     } else {
-      store.dispatch(showListView());
+
+      // Place generic config into config store
+      store.dispatch(updateConfig(prefName, event.newValue));
     }
   }
 });
