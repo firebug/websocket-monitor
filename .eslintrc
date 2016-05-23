@@ -1,0 +1,15 @@
+{
+  "extends": "./.eslintrc.mozilla",
+  "plugins": [
+    "react",
+    "mozilla"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "browser": true,
+    "amd": true,
+    "jquery": true
+  }
+}
