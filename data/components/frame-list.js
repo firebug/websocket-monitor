@@ -83,7 +83,7 @@ var FrameList = React.createClass({
         frame: frame,
         selection: this.props.selection,
         dispatch: this.props.dispatch,
-        config: this.props.dispatch
+        config: this.props.config
       }));
     }
 

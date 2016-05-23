@@ -59,10 +59,10 @@ var WebSocketsView = createView(PanelView,
     // Initialize the redux store with user preferences
     store = configureStore({
       config: {
-        enableSocketIo: Options.get('enableSocketIo'),
-        enableSockJs: Options.get('enableSockJs'),
-        enableJson: Options.get('enableJson'),
-        enableMqtt: Options.get('enableMqtt'),
+        enableSocketIo: Options.get("enableSocketIo"),
+        enableSockJs: Options.get("enableSockJs"),
+        enableJson: Options.get("enableJson"),
+        enableMqtt: Options.get("enableMqtt"),
       }
     });
 
@@ -167,18 +167,26 @@ var WebSocketsView = createView(PanelView,
   onPrefChanged: function(event) {
     var prefName = event.prefName;
 
-    if (prefName === "tabularView") {
+    switch (prefName) {
+      case "tabularView":
 
-      // Update the way how frames are displayed.
-      if (event.newValue) {
-        store.dispatch(showTableView());
-      } else {
-        store.dispatch(showListView());
-      }
-    } else {
+        // Update the way how frames are displayed.
+        if (event.newValue) {
+          store.dispatch(showTableView());
+        } else {
+          store.dispatch(showListView());
+        }
+        break;
+      case "enableSocketIo":
+      case "enableSockJs":
+      case "enableJson":
+      case "enableMqtt":
 
-      // Place generic config into config store
-      store.dispatch(updateConfig(prefName, event.newValue));
+        // Place protocol toggle prefs into config store
+        store.dispatch(updateConfig(prefName, event.newValue));
+        break;
+      default:
+        break;
     }
   }
 });
