@@ -1,4 +1,5 @@
 {
+  // Extend Firefox Devtools ESLintrc
   "extends": "./.eslintrc.mozilla",
   "plugins": [
     "react",
@@ -11,5 +12,13 @@
     "browser": true,
     "amd": true,
     "jquery": true
+  },
+  "globals": {
+    "NetMonitorView": true,
+    "Locale": true,
+    "Options": true,
+
+    // Used in network-content-script
+    "EVENTS": true,
   }
 }
