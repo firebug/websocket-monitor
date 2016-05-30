@@ -101,6 +101,7 @@ var App = React.createClass({
 function mapStateToProps(state) {
   return {
     frames: state.frames,
+    config: state.config,
     selection: state.frames.selection,
     perspective: state.perspective
   };

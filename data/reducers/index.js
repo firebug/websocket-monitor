@@ -10,10 +10,12 @@ const { combineReducers } = require("redux");
 // WebSockets Monitor
 const { frames } = require("./frames");
 const { perspective } = require("./perspective");
+const { config } = require("./config");
 
 var rootReducer = combineReducers({
   frames,
-  perspective
+  perspective,
+  config
 });
 
 // Exports from this module
