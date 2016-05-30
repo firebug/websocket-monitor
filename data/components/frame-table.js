@@ -57,7 +57,8 @@ var FrameTable = React.createClass({
       key: frame.id,
       selection: this.props.selection,
       frame: frame,
-      dispatch: this.props.dispatch
+      dispatch: this.props.dispatch,
+      config: this.props.config
     }));
 
     // Render summary info
@@ -166,24 +167,24 @@ var FrameRow = React.createFactory(React.createClass({
     var payload;
 
     // Test support for inline previews.
-    if (frame.socketIo) {
+    if (this.props.config.enableSocketIo !== false && frame.socketIo) {
       payload = TreeView({
         key: "preview-socketio",
         // We only show the data that is deemed interesting for the user in the
         // inline previews, not the socketIO metadata
         data: {"Socket IO": frame.socketIo.data},
       });
-    } else if (frame.sockJs) {
+    } else if (this.props.config.enableSockJs !== false && frame.sockJs) {
       payload = TreeView({
         key: "preview-sockjs",
         data: {"SockJS": frame.sockJs},
       });
-    } else if (frame.json) {
+    } else if (this.props.config.enableJson !== false && frame.json) {
       payload = TreeView({
         key: "preview-json",
         data: {"JSON": frame.json},
       });
-    } else if (frame.mqtt) {
+    } else if (this.props.config.enableMqtt !== false && frame.mqtt) {
       payload = TreeView({
         key: "preview-mqtt",
         data: {"MQTT": frame.mqtt},
