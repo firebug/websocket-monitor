@@ -20,5 +20,7 @@
 
     // Used in network-content-script
     "EVENTS": true,
+
+    "key": true,
   }
 }
