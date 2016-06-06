@@ -1,40 +1,39 @@
 /* See license.txt for terms of usage */
 
-define(function(require, exports/*, module*/) {
-
 "use strict";
 
-// Dependencies
-const React = require("react");
+define(function (require, exports) {
+  // Dependencies
+  const React = require("react");
 
-// Firebug SDK
-const { Reps } = require("reps/repository");
-const { TreeView } = require("reps/tree-view");
+  // Firebug SDK
+  const { Reps } = require("reps/repository");
+  const { TreeView } = require("reps/tree-view");
 
-// Shortcuts
-const { DIV } = Reps.DOM;
+  // Shortcuts
+  const { DIV } = Reps.DOM;
 
-/**
- * Component responsible for rendering the MQTT tab.
- */
-var MQTTTab = React.createClass({
-/** @lends MQTTTab */
+  /**
+   * Component responsible for rendering the MQTT tab.
+   */
+  let MQTTTab = React.createClass({
+  /** @lends MQTTTab */
 
-  displayName: "MQTTTab",
+    displayName: "MQTTTab",
 
-  render: function() {
-    var selectedFrame = this.props.selection || {};
-    var data = selectedFrame.mqtt;
+    render: function () {
+      let selectedFrame = this.props.selection || {};
+      let data = selectedFrame.mqtt;
 
-    return (
-      DIV({className: "details"},
-        TreeView({key: "MQTTTabTree", data: data})
-      )
-    );
-  }
-});
+      return (
+        DIV({className: "details"},
+          TreeView({key: "MQTTTabTree", data: data})
+        )
+      );
+    }
+  });
 
-// Exports from this module
-exports.MQTTTab = MQTTTab;
+  // Exports from this module
+  exports.MQTTTab = MQTTTab;
 });
 

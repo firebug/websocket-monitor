@@ -1,5 +1,7 @@
 /* See license.txt for terms of usage */
 
+"use strict";
+
 /**
  * Handle new requests addition.
  *
@@ -15,22 +17,22 @@
  * The icons serves also as a link to the 'Web Socket'
  * panel.
  */
-window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
-  var item = NetMonitorView.RequestsMenu.getItemByValue(from);
+window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (_, from) => {
+  let item = NetMonitorView.RequestsMenu.getItemByValue(from);
   if (!isWsUpgradeRequest(item)) {
     return;
   }
 
   // Append WebSocket icon in the UI
-  var hbox = item._target;
+  let hbox = item._target;
 
-  var method = hbox.querySelector(".requests-menu-method");
+  let method = hbox.querySelector(".requests-menu-method");
   method.classList.add("websocket");
 
   // Fx 45 changed the DOM layout in the network panel and also
   // the WS icon isn't overlapping the original status icon now.
   // But, we need a little indentation for pre Fx45.
-  var statusIconNode = hbox.querySelector(".requests-menu-status-icon");
+  let statusIconNode = hbox.querySelector(".requests-menu-status-icon");
   if (!statusIconNode) {
     // We are in pre Fx45 world, use a little indentation.
     method.classList.add("websocket-indent");
@@ -60,10 +62,10 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (event, from) => {
  * The Response tab displays a link to the WebSockets panel
  * for HTTP upgrade requests.
  */
-window.on(EVENTS.RESPONSE_BODY_DISPLAYED, (event) => {
-  var wsBox = $("#response-content-ws-box");
+window.on(EVENTS.RESPONSE_BODY_DISPLAYED, () => {
+  let wsBox = $("#response-content-ws-box");
 
-  var item = NetMonitorView.RequestsMenu.selectedItem;
+  let item = NetMonitorView.RequestsMenu.selectedItem;
   if (!isWsUpgradeRequest(item)) {
     if (wsBox) {
       $("#response-content-ws-box").hidden = true;
@@ -74,7 +76,7 @@ window.on(EVENTS.RESPONSE_BODY_DISPLAYED, (event) => {
   // Hide the default Response content.
   $("#response-content-textarea-box").hidden = true;
 
-  var wsBox = $("#response-content-ws-box");
+  wsBox = $("#response-content-ws-box");
   if (wsBox) {
     $("#response-content-ws-box").hidden = false;
     return;
@@ -86,19 +88,19 @@ window.on(EVENTS.RESPONSE_BODY_DISPLAYED, (event) => {
 
   // xxxHonza: localization
   wsBox.innerHTML =
-    '<div xmlns="http://www.w3.org/1999/xhtml" class="webSocketsInfo">' +
-    '<div class="title">Web Socket Protocol Handshake (101)</div>' +
-    '<div class="desc">No content for this request. If you want to ' +
-    'monitor WebSockets communication you need to switch to the ' +
-    '<a class="link">Web Sockets</a> panel.</div>' +
-    '</div>';
+    "<div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"webSocketsInfo\">" +
+    "<div class=\"title\">Web Socket Protocol Handshake (101)</div>" +
+    "<div class=\"desc\">No content for this request. If you want to " +
+    "monitor WebSockets communication you need to switch to the " +
+    "<a class=\"link\">Web Sockets</a> panel.</div>" +
+    "</div>";
 
   // Append into the DOM
-  var imageBox = $("#response-content-image-box");
-  var parentNode = imageBox.parentNode;
+  let imageBox = $("#response-content-image-box");
+  let parentNode = imageBox.parentNode;
   parentNode.appendChild(wsBox);
 
-  var link = parentNode.querySelector(".link");
+  let link = parentNode.querySelector(".link");
   link.addEventListener("click", event => {
     navigateToWebSocketPanel(item._value);
   });
@@ -113,11 +115,11 @@ function navigateToWebSocketPanel(requestId) {
 }
 
 function isWsUpgradeRequest(item) {
-  var attachment = item.attachment;
-  var requestHeaders = attachment.requestHeaders;
+  let attachment = item.attachment;
+  let requestHeaders = attachment.requestHeaders;
 
   // Find the 'upgrade' header.
-  var upgradeHeader = requestHeaders.headers.find(header => {
+  let upgradeHeader = requestHeaders.headers.find(header => {
     return (header.name == "Upgrade");
   });
 

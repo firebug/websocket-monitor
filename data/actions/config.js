@@ -1,24 +1,23 @@
 /* See license.txt for terms of usage */
 
-define(function(require, exports/*, module*/) {
-
 "use strict";
 
-const types = {
-  UPDATE_CONFIG: "UPDATE_CONFIG",
-}
-
-function updateConfig(key, newValue) {
-  var data = {
-    key,
-    newValue
+define(function (require, exports) {
+  const types = {
+    UPDATE_CONFIG: "UPDATE_CONFIG",
   };
 
-  return { type: types.UPDATE_CONFIG, data };
-}
+  function updateConfig(key, newValue) {
+    const data = {
+      key,
+      newValue
+    };
 
-// Exports from this module
-exports.updateConfig = updateConfig;
-exports.types = types;
+    return { type: types.UPDATE_CONFIG, data };
+  }
+
+  // Exports from this module
+  exports.updateConfig = updateConfig;
+  exports.types = types;
 });
 

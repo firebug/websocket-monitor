@@ -1,39 +1,38 @@
 /* See license.txt for terms of usage */
 
-define(function(require, exports/*, module*/) {
-
 "use strict";
 
-// Dependencies
-const React = require("react");
+define(function (require, exports) {
+  // Dependencies
+  const React = require("react");
 
-// Firebug SDK
-const { Reps } = require("reps/repository");
-const { TreeView } = require("reps/tree-view");
+  // Firebug SDK
+  const { Reps } = require("reps/repository");
+  const { TreeView } = require("reps/tree-view");
 
-// Shortcuts
-const { DIV } = Reps.DOM;
+  // Shortcuts
+  const { DIV } = Reps.DOM;
 
-/**
- * This component represents Details side panel and is responsible
- * for rendering all properties of a frame as an expandable tree.
- */
-var DetailsTab = React.createClass({
-/** @lends DetailsTab */
+  /**
+   * This component represents Details side panel and is responsible
+   * for rendering all properties of a frame as an expandable tree.
+   */
+  const DetailsTab = React.createClass({
+  /** @lends DetailsTab */
 
-  displayName: "DetailsTab",
+    displayName: "DetailsTab",
 
-  render: function() {
-    var selectedFrame = this.props.selection || {};
+    render: function () {
+      const selectedFrame = this.props.selection || {};
 
-    return (
-      DIV({className: "details"},
-        TreeView({key: "detailsTabTree", data: selectedFrame.data})
-      )
-    );
-  }
-});
+      return (
+        DIV({className: "details"},
+          TreeView({key: "detailsTabTree", data: selectedFrame.data})
+        )
+      );
+    }
+  });
 
-// Exports from this module
-exports.DetailsTab = DetailsTab;
+  // Exports from this module
+  exports.DetailsTab = DetailsTab;
 });
