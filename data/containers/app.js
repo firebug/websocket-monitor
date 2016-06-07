@@ -41,10 +41,6 @@ define(function (require, exports) {
       key.unbind("down", this.onKeyDown);
     },
 
-    onClickRow: function (frame) {
-      this.store.dispatch(selectFrame(frame));
-    },
-
     onKeyUp: function (event) {
       this.props.dispatch(selectPrevFrame());
       Events.cancelEvent(event);
