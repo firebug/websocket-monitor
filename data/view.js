@@ -61,6 +61,7 @@ define(function (require) {
             enableSockJs: Options.get("enableSockJs"),
             enableJson: Options.get("enableJson"),
             enableMqtt: Options.get("enableMqtt"),
+            enableQueryString: Options.get("enableQueryString"),
           }
         });
 

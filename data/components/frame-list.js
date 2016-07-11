@@ -211,6 +211,13 @@ define(function (require, exports) {
           data: {"MQTT": mqtt},
           mode: "tiny"
         });
+      } else if (this.props.config.enableQueryString !== false
+                 && frame.queryString) {
+        preview = TreeView({
+          key: "preview-query",
+          data: {"Query String": frame.queryString},
+          mode: "tiny"
+        });
       }
 
       const label = (type == "send") ?

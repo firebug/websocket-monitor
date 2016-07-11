@@ -208,6 +208,12 @@ define(function (require, exports) {
           key: "preview-mqtt",
           data: {"MQTT": frame.mqtt},
         });
+      } else if (this.props.config.enableQueryString !== false
+                 && frame.queryString) {
+        payload = TreeView({
+          key: "preview-query",
+          data: {"Query String": frame.queryString},
+        });
       } else {
         // Fall back to showing a string
         payload = Str.cropString(frame.data.payload, 50);
