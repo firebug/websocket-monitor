@@ -18,6 +18,7 @@ define(function (require, exports) {
   const { JSONTab } = createFactories(require("./json-tab"));
   const { WampTab } = createFactories(require("./wamp-tab"));
   const { MQTTTab } = createFactories(require("./mqtt-tab"));
+  const { QueryStringTab } = createFactories(require("./query-string-tab"));
 
   /**
    * @template This template represents a list of packets displayed
@@ -90,6 +91,14 @@ define(function (require, exports) {
           TabPanel({className: "mqtt", key: "mqtt",
             title: Locale.$STR("websocketmonitor.MQTT")},
             MQTTTab(this.props)
+        ));
+      }
+
+      if (selectedFrame && selectedFrame.queryString) {
+        tabs.push(
+          TabPanel({className: "mqtt", key: "queryString",
+            title: Locale.$STR("websocketmonitor.QueryString")},
+            QueryStringTab(this.props)
         ));
       }
 

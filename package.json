@@ -82,6 +82,13 @@
       "description": "Parse MQTT frames",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "enableQueryString",
+      "title": "Query string support",
+      "description": "Parse query string frames (frames that look like foo&bar=baz)",
+      "type": "bool",
+      "value": true
     }
   ]
 }
