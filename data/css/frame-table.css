@@ -60,6 +60,12 @@
   padding: 1px;
 }
 
+/* #65 Wrap extremely long connect URIs */
+.frameRow.eventRow td {
+  word-wrap: break-word;
+  max-width: 20px;
+}
+
 /******************************************************************************/
 /* Inline Packet Details Preview */
 
