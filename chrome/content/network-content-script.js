@@ -40,6 +40,9 @@ window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (_, from) => {
 
   // Register click handler and emit an event that is handled
   // in the 'WsmNetMonitorOverlay' overlay.
+  // xxxHonza: this registers multiple listeners on the window
+  // object that are all executed when the user clicks on the
+  // WS icon. FIXME
   window.addEventListener("click", event => {
     if (event.target.classList.contains("websocket")) {
       navigateToWebSocketPanel(from);
