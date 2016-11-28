@@ -17,47 +17,55 @@
  * The icons serves also as a link to the 'Web Socket'
  * panel.
  */
-window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (_, from) => {
-  let item = NetMonitorView.RequestsMenu.getItemByValue(from);
-  if (!isWsUpgradeRequest(item)) {
-    return;
-  }
-
-  // Append WebSocket icon in the UI
-  let hbox = item._target;
-
-  let method = hbox.querySelector(".requests-menu-method");
-  method.classList.add("websocket");
-
-  // Fx 45 changed the DOM layout in the network panel and also
-  // the WS icon isn't overlapping the original status icon now.
-  // But, we need a little indentation for pre Fx45.
-  let statusIconNode = hbox.querySelector(".requests-menu-status-icon");
-  if (!statusIconNode) {
-    // We are in pre Fx45 world, use a little indentation.
-    method.classList.add("websocket-indent");
-  }
-
-  // Register click handler and emit an event that is handled
-  // in the 'WsmNetMonitorOverlay' overlay.
-  // xxxHonza: this registers multiple listeners on the window
-  // object that are all executed when the user clicks on the
-  // WS icon. FIXME
-  window.addEventListener("click", event => {
-    if (event.target.classList.contains("websocket")) {
-      navigateToWebSocketPanel(from);
+if (EVENTS.REQUEST_ITEM_CLICKED) {
+  window.on(EVENTS.REQUEST_ITEM_CLICKED, (_, e, item) => {
+    if (e.target.closest(".request-list-item.websocket .requests-menu-method")) {
+      navigateToWebSocketPanel(item.id);
     }
   });
-
-  // Do not open the Network panel side-bar if the user clicks
-  // on the WS icon.
-  window.addEventListener("mousedown", event => {
-    if (event.target.classList.contains("websocket")) {
-      event.stopPropagation();
-      event.preventDefault();
+} else {
+  window.on(EVENTS.RECEIVED_REQUEST_HEADERS, (_, from) => {
+    let item = NetMonitorView.RequestsMenu.getItemByValue(from);
+    if (!isWsUpgradeRequest(item)) {
+      return;
     }
-  }, true);
-});
+
+    // Append WebSocket icon in the UI
+    let hbox = item._target;
+
+    let method = hbox.querySelector(".requests-menu-method");
+    method.classList.add("websocket");
+
+    // Fx 45 changed the DOM layout in the network panel and also
+    // the WS icon isn't overlapping the original status icon now.
+    // But, we need a little indentation for pre Fx45.
+    let statusIconNode = hbox.querySelector(".requests-menu-status-icon");
+    if (!statusIconNode) {
+      // We are in pre Fx45 world, use a little indentation.
+      method.classList.add("websocket-indent");
+    }
+
+    // Register click handler and emit an event that is handled
+    // in the 'WsmNetMonitorOverlay' overlay.
+    // xxxHonza: this registers multiple listeners on the window
+    // object that are all executed when the user clicks on the
+    // WS icon. FIXME
+    window.addEventListener("click", event => {
+      if (event.target.classList.contains("websocket")) {
+        navigateToWebSocketPanel(from);
+      }
+    });
+
+    // Do not open the Network panel side-bar if the user clicks
+    // on the WS icon.
+    window.addEventListener("mousedown", event => {
+      if (event.target.classList.contains("websocket")) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    }, true);
+  });
+}
 
 /**
  * Handle Response body displayed event.
