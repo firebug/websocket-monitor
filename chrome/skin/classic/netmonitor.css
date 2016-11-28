@@ -4,10 +4,11 @@
 /* Network Panel */
 
 /* Web Socket Icon */
-.requests-menu-method.websocket {
+.requests-menu-method.websocket,
+.request-list-item.websocket .requests-menu-method {
   background-image: url("./tool-websockets.svg");
   background-repeat: no-repeat;
-  background-position: 0 1px;
+  background-position: left center;
 }
 
 /* Make sure the icon works in all themes */
