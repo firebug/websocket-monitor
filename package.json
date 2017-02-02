@@ -40,6 +40,9 @@
     "eslint:watch": "esw -w data/**/*.js chrome/"
   },
   "preferences-branch": "websocketmonitor",
+  "permissions": {
+    "multiprocess": true
+  },
   "preferences": [
     {
       "name": "max_entries",
