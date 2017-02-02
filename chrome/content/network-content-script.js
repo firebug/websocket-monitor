@@ -19,7 +19,8 @@
  */
 if (EVENTS.REQUEST_ITEM_CLICKED) {
   window.on(EVENTS.REQUEST_ITEM_CLICKED, (_, e, item) => {
-    if (e.target.closest(".request-list-item.websocket .requests-menu-method")) {
+    let target = ".request-list-item.websocket .requests-menu-method";
+    if (e.target.closest(target)) {
       navigateToWebSocketPanel(item.id);
     }
   });
