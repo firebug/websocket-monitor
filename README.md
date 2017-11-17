@@ -1,5 +1,12 @@
 WebSocket Monitor
 =================
+
+**This extension is not supported in Firefox 57+ and we are planning to rewrite
+it on top of new WebExtension API. There is already an experimental
+[prototype](https://github.com/janodvarko/webext-websocket-monitor), but more
+work needed to make it useful.
+See [issue 75](https://github.com/firebug/websocket-monitor/issues/75) for more details**
+
 WebSocket monitor is an extension to Firefox developer tools that can be
 used to monitor WebSocket connections in Firefox. It allows inspecting all
 data sent and received.
